@@ -14,23 +14,28 @@ class PreventaController extends Controller
      */
     public function index()
     {
-        $recaudando = Preventa::where('state', 'Recaudando')
+        $recaudando = Preventa::select('preventas.*')
+            ->where('state', 'Recaudando')
             ->join('empresas', 'empresa_id', '=', 'empresas.id')
             ->orderBy('empresas.name', 'ASC')
             ->get();
-        $pendienteDeEntrega = Preventa::where('state', 'Pendiente de entrega')
+        $pendienteDeEntrega = Preventa::select('preventas.*')
+            ->where('state', 'Pendiente de entrega')
             ->join('empresas', 'empresa_id', '=', 'empresas.id')
             ->orderBy('empresas.name', 'ASC')
             ->get();
-        $parcialmenteEntregado = Preventa::where('state', 'Parcialmente entregado')
+        $parcialmenteEntregado = Preventa::select('preventas.*')
+            ->where('state', 'Parcialmente entregado')
             ->join('empresas', 'empresa_id', '=', 'empresas.id')
             ->orderBy('empresas.name', 'ASC')
             ->get();
-        $entregado = Preventa::where('state', 'Entregado')
+        $entregado = Preventa::select('preventas.*')
+            ->where('state', 'Entregado')
             ->join('empresas', 'empresa_id', '=', 'empresas.id')
             ->orderBy('empresas.name', 'ASC')
             ->get();
-        $sinDefinir = Preventa::where('state', 'Sin definir')
+        $sinDefinir = Preventa::select('preventas.*')
+            ->where('state', 'Sin definir')
             ->join('empresas', 'empresa_id', '=', 'empresas.id')
             ->orderBy('empresas.name', 'ASC')
             ->get();
