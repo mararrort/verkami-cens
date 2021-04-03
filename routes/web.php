@@ -19,5 +19,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('editoriales', EmpresaController::class)->only(['index', 'create', 'store']);
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';
+
+Route::resource('editoriales', EmpresaController::class)->only(['index']);
+Route::resource('editoriales', EmpresaController::class)->only(['create', 'store'])->middleware('auth');
 Route::resource('preventas', PreventaController::class)->only(['index']);
+Route::resource('preventas', PreventaController::class)->only(['create', 'store'])->middleware('auth');

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Preventa;
+use App\Models\Empresa;
 use Illuminate\Http\Request;
+use Ramsey\Uuid\Uuid;
 
 class PreventaController extends Controller
 {
@@ -55,7 +57,9 @@ class PreventaController extends Controller
      */
     public function create()
     {
-        //
+        $empresas = Empresa::orderBy('name', 'asc')->get();
+
+        return view('preventa.create', ['editoriales' => $empresas]);
     }
 
     /**
@@ -66,7 +70,17 @@ class PreventaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $preventa = new Preventa();
+
+        $preventa->name = $request->name;
+        $preventa->state = $request->state;
+        $preventa->empresa_id = $request->editorial;
+        $preventa->url = $request->url;
+        $preventa->id = Uuid::uuid4();
+
+        $preventa->save();
+
+        return redirect('/preventas');
     }
 
     /**
