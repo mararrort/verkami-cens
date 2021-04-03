@@ -14,7 +14,9 @@ class PreventaController extends Controller
      */
     public function index()
     {
-        //
+        $preventas = Preventa::all();
+
+        return view('preventa.index', ['preventas' => $preventas]);
     }
 
     /**

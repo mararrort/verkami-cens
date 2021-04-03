@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EmpresaController;
+use App\Http\Controllers\PreventaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +18,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::resource('editoriales', EmpresaController::class)->only(['index']);
+Route::resource('preventas', PreventaController::class)->only(['index']);
