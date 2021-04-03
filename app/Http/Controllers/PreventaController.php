@@ -102,7 +102,9 @@ class PreventaController extends Controller
      */
     public function edit(Preventa $preventa)
     {
-        //
+        $empresas = Empresa::orderBy('name', 'asc')->get();
+
+        return view('preventa.edit', ['preventa' => $preventa, 'editoriales' => $empresas]);
     }
 
     /**
@@ -114,7 +116,14 @@ class PreventaController extends Controller
      */
     public function update(Request $request, Preventa $preventa)
     {
-        //
+        $preventa->name = $request->name;
+        $preventa->state = $request->state;
+        $preventa->empresa_id = $request->editorial;
+        $preventa->url = $request->url;
+
+        $preventa->save();
+
+        return redirect('/preventas');
     }
 
     /**
