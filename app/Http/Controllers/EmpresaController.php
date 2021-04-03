@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Empresa;
 use Illuminate\Http\Request;
+use Ramsey\Uuid\Uuid;
 
 class EmpresaController extends Controller
 {
@@ -26,7 +27,7 @@ class EmpresaController extends Controller
      */
     public function create()
     {
-        //
+        return view('empresa.create');
     }
 
     /**
@@ -37,7 +38,15 @@ class EmpresaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $empresa = new Empresa();
+
+        $empresa->name = $request->input('name');
+        $empresa->url = $request->input('url');
+        $empresa->id = Uuid::uuid4();
+
+        $empresa->save();
+
+        return redirect('/editoriales');
     }
 
     /**

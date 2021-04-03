@@ -19,5 +19,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('editoriales', EmpresaController::class)->only(['index']);
+Route::resource('editoriales', EmpresaController::class)->only(['index', 'create', 'store']);
 Route::resource('preventas', PreventaController::class)->only(['index']);
