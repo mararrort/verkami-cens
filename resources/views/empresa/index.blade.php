@@ -1,3 +1,8 @@
+@extends('base')
+
+@section('title', 'Listado de Editoriales')
+
+@section('body')
 <table>
     <caption>
         Listado de editoriales y resumen del estado de sus preventas.
@@ -30,3 +35,4 @@
         @endforeach
     </tbody>
 </table>
+@endsection

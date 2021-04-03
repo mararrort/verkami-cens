@@ -1,3 +1,6 @@
+@extends('base')
+
+@section('body')
 <table>
     <caption>
         Listado de preventas recaudando.
@@ -97,3 +100,4 @@
         @endforeach
     </tbody>
 </table>
+@endsection
