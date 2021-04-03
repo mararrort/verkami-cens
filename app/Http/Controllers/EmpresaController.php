@@ -14,7 +14,7 @@ class EmpresaController extends Controller
      */
     public function index()
     {
-        $empresas = Empresa::all();
+        $empresas = Empresa::orderBy('name', 'ASC')->get();
 
         return view('empresa.index', ['empresas' => $empresas]);
     }
