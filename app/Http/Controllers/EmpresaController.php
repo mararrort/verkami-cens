@@ -15,7 +15,10 @@ class EmpresaController extends Controller
      */
     public function index()
     {
-        $empresas = Empresa::orderBy('name', 'ASC')->get();
+        $empresas = Empresa::withCount('preventas')
+            ->orderBy('preventas_count', 'DESC')
+            ->orderBy('name', 'ASC')
+            ->get();
 
         return view('empresa.index', ['empresas' => $empresas]);
     }
