@@ -20,7 +20,7 @@ class SolicitudAdicionPreventaController extends Controller
      */
     public function index()
     {
-        $sap = SolicitudAdicionPreventa::where('solved', false)->get();
+        $sap = SolicitudAdicionPreventa::all();
         
         return view('solicitudAdicionPreventa.index', ['sap' => $sap]);
     }
@@ -53,8 +53,19 @@ class SolicitudAdicionPreventaController extends Controller
             'state' => ['required', Rule::in(['Recaudando', 'Pendiente de entrega', 'Parcialmente entregado', 'Entregado', 'Sin definir']),],
         ]);
 
-        return redirect()->route('preventas.index');
+        $sap = new SolicitudAdicionPreventa();
         
+        $sap->presale_name = $request->presale_name;
+        $sap->presale_url = $request->presale_url;
+        $sap->editorial_id = $request->editorial_id;
+        $sap->editorial_name = $request->editorial_name;
+        $sap->editorial_url = $request->editorial_url;
+        $sap->state = $request->state;
+        $sap->late = $request->has('late');
+        $sap->id = Uuid::uuid4();
+        $sap->save();
+
+        return redirect()->route('preventas.index');
     }
 
     /**
