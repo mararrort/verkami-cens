@@ -10,6 +10,7 @@
         con información numérica respecto a la situación de sus preventas.</p>
         <p>Los nombres de las preventas son enlaces a su sitio web.</p>
         <p>Tan solo se registran editoriales de las que haya preventas a registrar.</p>
+        @auth<a href="{{route('editoriales.create')}}">Añadir empresa</a>@endauth
     </div>
 </div>
 <div class="row">
