@@ -30,4 +30,8 @@ class Empresa extends Model
         
         return $preventas->get();
     }
+
+    public function getTardias() {
+        return $this->hasMany(Preventa::class)->where('tarde', true)->count();;
+    }
 }

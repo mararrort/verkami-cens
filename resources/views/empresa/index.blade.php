@@ -31,6 +31,7 @@
                     <td>Parcialmente entregado</td>
                     <td>Entregado</td>
                     <td>Sin definir</td>
+                    <td>Con retraso</td>
             </thead>
             <tbody>
                 @foreach ($empresas as $empresa)
@@ -42,6 +43,7 @@
                     <td>{{count($empresa->getPreventas('Parcialmente entregado'))}}</td>
                     <td>{{count($empresa->getPreventas('Entregado'))}}</td>
                     <td>{{count($empresa->getPreventas('Sin definir'))}}</td>
+                    <td>{{$empresa->getTardias()}} de {{count($empresa->preventas)}}</td>
                 <tr>
                 @endforeach
             </tbody>
