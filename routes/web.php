@@ -32,3 +32,4 @@ Route::resource('preventas', PreventaController::class)->only(['index']);
 Route::resource('preventas', PreventaController::class)->only(['create', 'store', 'edit', 'update'])->middleware('auth');
 Route::resource('peticion', SolicitudAdicionPreventaController::class)->only(['create', 'store']);
 Route::resource('peticion', SolicitudAdicionPreventaController::class)->only(['index', 'edit', 'update', 'show'])->middleware('auth');
+Route::view('info', 'about')->name('info');

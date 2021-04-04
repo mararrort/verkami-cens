@@ -15,6 +15,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('preventas.index')}}">Preventas</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('info')}}">Info</a>
+                    </li>
                 </ul>
             </nav>
             @yield('body')
