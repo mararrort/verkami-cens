@@ -76,7 +76,7 @@ class PreventaController extends Controller
         $preventa->state = $request->state;
         $preventa->empresa_id = $request->editorial;
         $preventa->url = $request->url;
-        $preventa->tarde = !$request->has('tarde');
+        $preventa->tarde = $request->has('tarde');
         $preventa->id = Uuid::uuid4();
 
         $preventa->save();
@@ -121,7 +121,7 @@ class PreventaController extends Controller
         $preventa->state = $request->state;
         $preventa->empresa_id = $request->editorial;
         $preventa->url = $request->url;
-        $preventa->tarde = !$request->has('tarde');
+        $preventa->tarde = $request->has('tarde');
 
         $preventa->save();
 
