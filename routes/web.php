@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\PreventaController;
+use App\Http\Controllers\SolicitudAdicionPreventaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +30,5 @@ Route::resource('editoriales', EmpresaController::class)->only(['index']);
 Route::resource('editoriales', EmpresaController::class)->only(['create', 'store'])->middleware('auth');
 Route::resource('preventas', PreventaController::class)->only(['index']);
 Route::resource('preventas', PreventaController::class)->only(['create', 'store', 'edit', 'update'])->middleware('auth');
+Route::resource('peticion', SolicitudAdicionPreventaController::class)->only(['create', 'store']);
+Route::resource('peticion', SolicitudAdicionPreventaController::class)->only(['index', 'edit', 'update', 'show'])->middleware('auth');

@@ -10,6 +10,7 @@
         <p>Los nombres de las preventas son enlaces al sitio web donde se gestionaron
         (Comunmente Verkami).</p>
         <p>La clasificación de su estado se basa en la última información accedida.</p>
+        <p><a href="{{route('peticion.create')}}">Puedes solicitar añadir una preventa a través de este enlace</a></p>
     </div>
 </div>
 <div class="row">
