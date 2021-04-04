@@ -16,9 +16,7 @@ use App\Http\Controllers\SolicitudAdicionPreventaController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::redirect('/', '/preventas');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
