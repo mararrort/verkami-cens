@@ -7,6 +7,16 @@
     </head>
     <body>
         <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('editoriales.index')}}">Editoriales</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('preventas.index')}}">Preventas</a>
+                    </li>
+                </ul>
+            </nav>
             @yield('body')
         </div>
     </body>
