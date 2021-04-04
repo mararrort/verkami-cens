@@ -33,6 +33,11 @@
                     <option @if($preventa->state == 'Entregado') selected @endif>Entregado</option>
                     <option @if($preventa->state == 'Sin definir') selected @endif>Sin definir</option>
                 </select>
+            
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="{{$preventa->tarde}}">
+                <label for="Tarde" class="form-check-label">Tarde</label>
+            </div>
 
             <button type="submit" class="btn btn-primary">Editar</button>
         </form>

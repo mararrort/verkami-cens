@@ -22,6 +22,7 @@
                 <tr>
                     <th>Nombre</th>
                     <th>Editorial</th>
+                    <th>Puntualidad</th>
                 </tr>
             </thead>
             <tbody>
@@ -29,6 +30,7 @@
                 <tr>
                     <td><a href="{{$item->url}}">{{$item->name}}</a> @auth <a href="/preventas/{{$item->id}}/edit">Editar</a>@endauth</td>
                     <td>{{$item->empresa->name}}</td>
+                    <td>{{$item->tarde ? "No" : "Si" }}</td>
                 <tr>
                 @endforeach
             </tbody>

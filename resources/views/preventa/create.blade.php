@@ -33,6 +33,11 @@
                     <option>Sin definir</option>
                 </select>
 
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox">
+                <label for="Tarde" class="form-check-label">Tarde</label>
+            </div>
+
             <button type="submit" class="btn btn-primary">Crear</button>
         </form>
     </div>
