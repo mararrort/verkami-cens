@@ -3,8 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\SolicitudAdicionPreventa;
+use App\Models\Preventa;
+use App\Models\Empresa;
 use Illuminate\Http\Request;
 use Ramsey\Uuid\Uuid;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Validator;
+
 
 class SolicitudAdicionPreventaController extends Controller
 {
@@ -27,7 +32,8 @@ class SolicitudAdicionPreventaController extends Controller
      */
     public function create()
     {
-        return view('solicitudAdicionPreventa.create');
+        $editorials = Empresa::orderBy('name', 'ASC')->get();
+        return view('solicitudAdicionPreventa.create', ['editorials' => $editorials]);
     }
 
     /**
@@ -38,14 +44,14 @@ class SolicitudAdicionPreventaController extends Controller
      */
     public function store(Request $request)
     {
-        if (strlen($request->text) <= 500) {
-            $sap = new SolicitudAdicionPreventa();
-
-            $sap->text = $request->text;
-            $sap->id = Uuid::uuid4();
-
-            $sap->save();
-        }
+        $validated = $request->validate([
+            'presale_name' => 'required|string|max:50',
+            'presale_url' => 'required|string|max:100',
+            'editorial_id' => 'required_without:editorial_name,editorial_url|nullable|exists:empresas,id',
+            'editorial_name' => 'required_without:editorial_id|nullable|string|max:50',
+            'editorial_url' => 'required_without:editorial_id|nullable|string|max:100',
+            'state' => ['required', Rule::in(['Recaudando', 'Pendiente de entrega', 'Parcialmente entregado', 'Entregado', 'Sin definir']),],
+        ]);
 
         return redirect()->route('preventas.index');
         
