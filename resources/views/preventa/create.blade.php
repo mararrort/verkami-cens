@@ -34,8 +34,8 @@
                 </select>
 
             <div class="form-check">
-                <input class="form-check-input" type="checkbox">
-                <label for="Tarde" class="form-check-label">Tarde</label>
+                <input class="form-check-input" type="checkbox" name="tarde">
+                <label for="tarde" class="form-check-label">Tarde</label>
             </div>
 
             <button type="submit" class="btn btn-primary">Crear</button>

@@ -35,8 +35,8 @@
                 </select>
             
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="{{$preventa->tarde}}">
-                <label for="Tarde" class="form-check-label">Tarde</label>
+                <input class="form-check-input" type="checkbox" value="{{$preventa->tarde}}" name="tarde">
+                <label for="tarde" class="form-check-label">Tarde</label>
             </div>
 
             <button type="submit" class="btn btn-primary">Editar</button>
