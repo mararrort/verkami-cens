@@ -14,7 +14,9 @@
         @auth<a href="{{route('preventas.create')}}">Añadir preventa</a>@endauth
     </div>
 </div>
+
 <div class="row">
+    @if(count($recaudando))
     <div class="col-md-auto">
         <table class="table caption-top">
             <caption>
@@ -38,6 +40,8 @@
             </tbody>
         </table>
     </div>
+    @endif
+    @if(count($pendienteDeEntrega))
     <div class="col-md-auto">
         <table class="table caption-top">
             <caption>
@@ -47,6 +51,7 @@
                 <tr>
                     <th>Nombre</th>
                     <th>Editorial</th>
+                    <th>Puntualidad</th>
                 </tr>
             </thead>
             <tbody>
@@ -54,11 +59,14 @@
                 <tr>
                     <td><a href="{{$item->url}}">{{$item->name}}</a> @auth <a href="/preventas/{{$item->id}}/edit">Editar</a>@endauth</td>
                     <td>{{$item->empresa->name}}</td>
+                    <td>{{$item->tarde ? "No" : "Si" }}</td>
                 <tr>
                 @endforeach
             </tbody>
         </table>
     </div>
+    @endif
+    @if(count($parcialmenteEntregado))
     <div class="col-md-auto">
         <table class="table caption-top">
             <caption>
@@ -68,6 +76,7 @@
                 <tr>
                     <th>Nombre</th>
                     <th>Editorial</th>
+                    <th>Puntualidad</th>
                 </tr>
             </thead>
             <tbody>
@@ -75,11 +84,14 @@
                 <tr>
                     <td><a href="{{$item->url}}">{{$item->name}}</a> @auth <a href="/preventas/{{$item->id}}/edit">Editar</a>@endauth</td>
                     <td>{{$item->empresa->name}}</td>
+                    <td>{{$item->tarde ? "No" : "Si" }}</td>
                 <tr>
                 @endforeach
             </tbody>
         </table>
     </div>
+    @endif
+    @if(count($entregado))
     <div class="col-md-auto">
         <table class="table caption-top">
             <caption>
@@ -89,6 +101,7 @@
                 <tr>
                     <th>Nombre</th>
                     <th>Editorial</th>
+                    <th>Puntualidad</th>
                 </tr>
             </thead>
             <tbody>
@@ -96,11 +109,14 @@
                 <tr>
                     <td><a href="{{$item->url}}">{{$item->name}}</a> @auth <a href="/preventas/{{$item->id}}/edit">Editar</a>@endauth</td>
                     <td>{{$item->empresa->name}}</td>
+                    <td>{{$item->tarde ? "No" : "Si" }}</td>
                 <tr>
                 @endforeach
             </tbody>
         </table>
     </div>
+    @endif
+    @if(count($sinDefinir))
     <div class="col-md-auto">
         <table class="table caption-top">
             <caption>
@@ -110,6 +126,7 @@
                 <tr>
                     <th>Nombre</th>
                     <th>Editorial</th>
+                    <th>Puntualidad</th>
                 </tr>
             </thead>
             <tbody>
@@ -117,10 +134,12 @@
                 <tr>
                     <td><a href="{{$item->url}}">{{$item->name}}</a> @auth <a href="/preventas/{{$item->id}}/edit">Editar</a>@endauth</td>
                     <td>{{$item->empresa->name}}</td>
+                    <td>{{$item->tarde ? "No" : "Si" }}</td>
                 <tr>
                 @endforeach
             </tbody>
         </table>
     </div>
+    @endif
 </div>
 @endsection
