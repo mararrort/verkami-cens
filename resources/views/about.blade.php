@@ -8,7 +8,10 @@ de rol en españa, de forma que ayude a les consumidores a valorar si confían e
 a través de <a href="https://twitter.com/mararrort">mi cuenta de Twitter</a>
 
 <h2>Características pendientes de implementar</h2>
-<b>Por ahora no hay nada</b>
+<ul>
+    <li>Vincular a cuenta de Twitter que envíe un tweet cada vez que haya una actualización.</li>
+    <li>Hacer más accesible el envío de peticiones de modificación y adición.</li>
+</ul>
 
 <h2>Condiciones para que se contemple añadir una Característica</h2>
 <p>Mi filosofía es "Simplicidad". Que las herramientas hagan el mínimo y de la mejor forma.
