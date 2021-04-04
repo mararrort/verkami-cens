@@ -4,6 +4,15 @@
 
 @section('body')
 <div class="row">
+    <div class="col-md-auto">
+        <h1>Listado de editoriales</h1>
+        <p>A continuación se muestra un listado de las editoriales registradas, 
+        con información numérica respecto a la situación de sus preventas.</p>
+        <p>Los nombres de las preventas son enlaces a su sitio web.</p>
+        <p>Tan solo se registran editoriales de las que haya preventas a registrar.</p>
+    </div>
+</div>
+<div class="row">
     <div class="col">
         <table class="table">
             <caption>
