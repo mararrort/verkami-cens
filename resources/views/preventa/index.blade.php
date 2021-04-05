@@ -55,7 +55,7 @@
             <tbody>
                 @foreach ($pendienteDeEntrega as $item)
                 <tr>
-                    <td><a href="{{$item->url}}">{{$item->name}}</a> @auth <a href="/preventas/{{$item->id}}/edit">Editar</a>@endauth</td>
+                    <td><a href="{{route('peticion.create', ['presale' => $item->id])}}"><i class="bi bi-pencil"></a></i><a href="{{$item->url}}">{{$item->name}}</a> @auth <a href="/preventas/{{$item->id}}/edit">Editar</a>@endauth</td>
                     <td>{{$item->empresa->name}}</td>
                     <td>{{$item->tarde ? "No" : "Si" }}</td>
                 <tr>
@@ -80,7 +80,7 @@
             <tbody>
                 @foreach ($parcialmenteEntregado as $item)
                 <tr>
-                    <td><a href="{{$item->url}}">{{$item->name}}</a> @auth <a href="/preventas/{{$item->id}}/edit">Editar</a>@endauth</td>
+                    <td><a href="{{route('peticion.create', ['presale' => $item->id])}}"><i class="bi bi-pencil"></a></i><a href="{{$item->url}}">{{$item->name}}</a> @auth <a href="/preventas/{{$item->id}}/edit">Editar</a>@endauth</td>
                     <td>{{$item->empresa->name}}</td>
                     <td>{{$item->tarde ? "No" : "Si" }}</td>
                 <tr>
@@ -105,7 +105,7 @@
             <tbody>
                 @foreach ($entregado as $item)
                 <tr>
-                    <td><a href="{{$item->url}}">{{$item->name}}</a> @auth <a href="/preventas/{{$item->id}}/edit">Editar</a>@endauth</td>
+                    <td><a href="{{route('peticion.create', ['presale' => $item->id])}}"><i class="bi bi-pencil"></a></i><a href="{{$item->url}}">{{$item->name}}</a> @auth <a href="/preventas/{{$item->id}}/edit">Editar</a>@endauth</td>
                     <td>{{$item->empresa->name}}</td>
                     <td>{{$item->tarde ? "No" : "Si" }}</td>
                 <tr>
@@ -130,7 +130,7 @@
             <tbody>
                 @foreach ($sinDefinir as $item)
                 <tr>
-                    <td><a href="{{$item->url}}">{{$item->name}}</a> @auth <a href="/preventas/{{$item->id}}/edit">Editar</a>@endauth</td>
+                    <td><a href="{{route('peticion.create', ['presale' => $item->id])}}"><i class="bi bi-pencil"></a></i><a href="{{$item->url}}">{{$item->name}}</a> @auth <a href="/preventas/{{$item->id}}/edit">Editar</a>@endauth</td>
                     <td>{{$item->empresa->name}}</td>
                     <td>{{$item->tarde ? "No" : "Si" }}</td>
                 <tr>
