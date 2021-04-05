@@ -76,7 +76,7 @@ class SolicitudAdicionPreventaController extends Controller
      */
     public function show(SolicitudAdicionPreventa $peticion)
     {      
-        return view('solicitudAdicionPreventa.show', ['sap' => $solicitudAdicionPreventa]);
+        return view('solicitudAdicionPreventa.show', ['sap' => $peticion]);
     }
 
     /**
@@ -87,7 +87,8 @@ class SolicitudAdicionPreventaController extends Controller
      */
     public function edit(SolicitudAdicionPreventa $peticion)
     {
-        return view('solicitudAdicionPreventa.edit', ['sap' => $solicitudAdicionPreventa]);
+        $editorials = Empresa::all();
+        return view('solicitudAdicionPreventa.edit', ['peticion' => $peticion, 'editorials' => $editorials]);
     }
 
     /**
@@ -99,11 +100,17 @@ class SolicitudAdicionPreventaController extends Controller
      */
     public function update(Request $request, SolicitudAdicionPreventa $peticion)
     {
-        $solicitudAdicionPreventa->solved = $request->has('solved');
+        $peticion->presale_name = $request->presale_name;
+        $peticion->presale_url = $request->presale_url;
+        $peticion->editorial_id = $request->editorial_id;
+        $peticion->editorial_name = $request->editorial_name;
+        $peticion->editorial_url = $request->editorial_url;
+        $peticion->state = $request->state;
+        $peticion->late = $request->has('late');
 
-        $solicitudAdicionPreventa->save();
+        $peticion->save();
 
-        return redirect()->route('peticion.index');
+        return redirect()->route('peticion.show', ['peticion' => $peticion]);
     }
 
     /**

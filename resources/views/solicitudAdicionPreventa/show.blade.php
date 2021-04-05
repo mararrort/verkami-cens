@@ -27,6 +27,9 @@
         </form>
     </div>
     <div class="col-auto">
+        <a href="{{route('peticion.edit', ['peticion' => $sap])}}"><button type="submit" class="btn btn-primary">Editar</button></a>
+    </div>
+    <div class="col-auto">
         <form action="{{route('peticion.destroy', ['peticion' => $sap])}}" method="post">
             @csrf
             @method('delete')
