@@ -1,19 +1,37 @@
 @extends('base')
-
+@if($presale)
+@section('title', 'Solicitar modificación')
+@else
+@section('title', 'Solicitar adición')
+@endif
 @section('body')
 <div class="row">
     <div class="col-md-auto">
-        <h1>Solicitar añadir una preventa</h1>
-        <p>Rellena el campo de texto con información sobre la preventa a añadir.
+        <h1>{{$presale ? "Solicitar modificación" : "Solicitar adición"}}</h1>
+        @if($presale)
+        <p>Introduce la modificación sobre el estado o la puntualidad. Si deseas modificar otra cosa,
+        deberás pedírmelo a <a href="https://twitter.com/mararrort">mi cuenta de Twitter</a></p>
+        @else
+        <p>Rellena los campos con información sobre la preventa a añadir.
         Tras enviar la solicitud, se te redirigirá al índice de preventas.
         </p>
+        @endif
     </div>
 </div>
-
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 <div class="row">
     <div class="col-md-12">
         <form method="POST" action="{{route('peticion.store')}}">
         @csrf
+        @if (!$presale)
         <div class="row">
             <div class="col-md-12">
                 Introduce el nombre y URL del mecenazgo
@@ -78,6 +96,10 @@
                 </div>
             </div>
         </div>
+        @else
+        <input name="presale_id" type="hidden" value="{{$presale->id}}">
+        <input name="editorial_id" type="hidden" value="{{$presale->empresa->id}}">
+        @endif
 
         <div class="row">
             <div class="col-md-12">
@@ -101,6 +123,6 @@
                 <input class="form-check-input" type="checkbox" name="late" value="{{old('late')}}">
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">Solicitar adición</button>
+        <button type="submit" class="btn btn-primary">{{$presale ? "Solicitar modificación" : "Solicitar adición"}}</button>
     </form>
 @endsection

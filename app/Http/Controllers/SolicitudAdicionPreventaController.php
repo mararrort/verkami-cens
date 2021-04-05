@@ -30,10 +30,10 @@ class SolicitudAdicionPreventaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request, Preventa $presale = null)
     {
         $editorials = Empresa::orderBy('name', 'ASC')->get();
-        return view('solicitudAdicionPreventa.create', ['editorials' => $editorials]);
+        return view('solicitudAdicionPreventa.create', ['editorials' => $editorials, 'presale' => $presale]);
     }
 
     /**
@@ -45,8 +45,9 @@ class SolicitudAdicionPreventaController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'presale_name' => 'required|string|max:50',
-            'presale_url' => 'required|string|max:100',
+            'presale_id' => 'required_without:presale_name,presale_url|nullable|exists:preventas,id',
+            'presale_name' => 'requred_without:presale_id|nullable|string|max:50',
+            'presale_url' => 'requred_without:presale_id|nullable|string|max:100',
             'editorial_id' => 'required_without:editorial_name,editorial_url|nullable|exists:empresas,id',
             'editorial_name' => 'required_without:editorial_id|nullable|string|max:50',
             'editorial_url' => 'required_without:editorial_id|nullable|string|max:100',
@@ -55,6 +56,7 @@ class SolicitudAdicionPreventaController extends Controller
 
         $sap = new SolicitudAdicionPreventa();
         
+        $sap->presale_id = $request->presale_id;
         $sap->presale_name = $request->presale_name;
         $sap->presale_url = $request->presale_url;
         $sap->editorial_id = $request->editorial_id;
@@ -146,13 +148,19 @@ class SolicitudAdicionPreventaController extends Controller
             $editorial->save();
         }
 
-        $presale = new Preventa();
-        $presale->id = UUID::uuid4();
-        $presale->name = $peticion->presale_name;
-        $presale->url = $peticion->presale_url;
+        if($peticion->presale_id) {
+            $presale = Preventa::find($peticion->presale_id);
+        } else {
+            $presale = new Preventa();
+            $presale->id = UUID::uuid4();
+            $presale->name = $peticion->presale_name;
+            $presale->url = $peticion->presale_url;
+            $presale->empresa_id = $editorial->id;
+        }
+
         $presale->state = $peticion->state;
         $presale->tarde = $peticion->late;
-        $presale->empresa_id = $editorial->id;
+        
         $presale->save(); 
 
         $peticion->delete();

@@ -31,7 +31,7 @@
             <tbody>
                 @foreach ($recaudando as $item)
                 <tr>
-                    <td><a href="{{$item->url}}">{{$item->name}}</a> @auth <a href="/preventas/{{$item->id}}/edit">Editar</a>@endauth</td>
+                    <td><a href="{{route('peticion.create', ['presale' => $item->id])}}"><i class="bi bi-pencil"></a></i><a href="{{$item->url}}">{{$item->name}}</a> @auth <a href="/preventas/{{$item->id}}/edit">Editar</a>@endauth</td>
                     <td>{{$item->empresa->name}}</td>
                 <tr>
                 @endforeach

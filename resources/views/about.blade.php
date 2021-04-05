@@ -10,7 +10,7 @@ a través de <a href="https://twitter.com/mararrort">mi cuenta de Twitter</a>
 <h2>Características pendientes de implementar</h2>
 <ul>
     <li>Vincular a cuenta de Twitter que envíe un tweet cada vez que haya una actualización.</li>
-    <li>Hacer más accesible el envío de peticiones de modificación.</li>
+    <li>Añadir un campo de texto a las peticiones.</li>
 </ul>
 
 <h2>Condiciones para que se contemple añadir una Característica</h2>

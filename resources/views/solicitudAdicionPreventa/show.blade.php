@@ -3,7 +3,7 @@
 @section('body')
 <div class="row">
     <div class="col-md-auto">
-        Preventa: <a href="{{$sap->presale_url}}">{{$sap->presale_name}}</a>
+        Preventa: <a href="{{$sap->presale_id ? $sap->preventa->url : $sap->presale_url}}">{{$sap->presale_id ? $sap->preventa->name : $sap->presale_name}}</a>
     </div>
     <div class="col-md-auto">
         @if ($sap->editorial_id)

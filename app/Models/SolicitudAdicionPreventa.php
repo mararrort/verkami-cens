@@ -22,4 +22,9 @@ class SolicitudAdicionPreventa extends Model
      {
         return $this->belongsTo(Empresa::class, 'editorial_id');
      }
+
+     public function preventa()
+     {
+        return $this->belongsTo(Preventa::class, 'presale_id');
+     }
 }
