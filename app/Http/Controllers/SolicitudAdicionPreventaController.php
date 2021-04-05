@@ -74,13 +74,9 @@ class SolicitudAdicionPreventaController extends Controller
      * @param  \App\Models\SolicitudAdicionPreventa  $solicitudAdicionPreventa
      * @return \Illuminate\Http\Response
      */
-    public function show(string $solicitudAdicionPreventa)
-    {
-        // For some reason it is not working with the auto load.
-        $solicitudAdicionPreventa = SolicitudAdicionPreventa::find($solicitudAdicionPreventa);        
-
-        return view('solicitudAdicionPreventa.show', ['sap' => $solicitudAdicionPreventa]
-        );
+    public function show(SolicitudAdicionPreventa $peticion)
+    {      
+        return view('solicitudAdicionPreventa.show', ['sap' => $solicitudAdicionPreventa]);
     }
 
     /**
@@ -89,10 +85,8 @@ class SolicitudAdicionPreventaController extends Controller
      * @param  \App\Models\SolicitudAdicionPreventa  $solicitudAdicionPreventa
      * @return \Illuminate\Http\Response
      */
-    public function edit(string $solicitudAdicionPreventa)
+    public function edit(SolicitudAdicionPreventa $peticion)
     {
-        // For some reason it is not working with the auto load.
-        $solicitudAdicionPreventa = SolicitudAdicionPreventa::find($solicitudAdicionPreventa);
         return view('solicitudAdicionPreventa.edit', ['sap' => $solicitudAdicionPreventa]);
     }
 
@@ -103,11 +97,8 @@ class SolicitudAdicionPreventaController extends Controller
      * @param  \App\Models\SolicitudAdicionPreventa  $solicitudAdicionPreventa
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, string $solicitudAdicionPreventa)
+    public function update(Request $request, SolicitudAdicionPreventa $peticion)
     {
-        // For some reason it is not working with the auto load.
-        $solicitudAdicionPreventa = SolicitudAdicionPreventa::find($solicitudAdicionPreventa);
-
         $solicitudAdicionPreventa->solved = $request->has('solved');
 
         $solicitudAdicionPreventa->save();
