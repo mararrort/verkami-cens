@@ -121,9 +121,11 @@ class SolicitudAdicionPreventaController extends Controller
      * @param  \App\Models\SolicitudAdicionPreventa  $solicitudAdicionPreventa
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SolicitudAdicionPreventa $solicitudAdicionPreventa)
+    public function destroy(SolicitudAdicionPreventa $peticion)
     {
-        //
+        $peticion->delete();
+
+        return redirect()->route('peticion.index');
     }
 
     /**

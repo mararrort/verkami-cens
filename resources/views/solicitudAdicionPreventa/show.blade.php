@@ -26,5 +26,11 @@
             <button type="submit" class="btn btn-primary">Accept</button>
         </form>
     </div>
+    <div class="col-auto">
+        <form action="{{route('peticion.destroy', ['peticion' => $sap])}}" method="post">
+            @csrf
+            @method('delete')
+            <button type="submit" class="btn btn-danger">Delete</button>
+    </div>
 </div>
 @endsection
