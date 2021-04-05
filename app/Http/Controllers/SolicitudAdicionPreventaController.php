@@ -77,8 +77,10 @@ class SolicitudAdicionPreventaController extends Controller
     public function show(string $solicitudAdicionPreventa)
     {
         // For some reason it is not working with the auto load.
-        $solicitudAdicionPreventa = SolicitudAdicionPreventa::find($solicitudAdicionPreventa);
-        return view('solicitudAdicionPreventa.show', ['sap' => $solicitudAdicionPreventa]);
+        $solicitudAdicionPreventa = SolicitudAdicionPreventa::find($solicitudAdicionPreventa);        
+
+        return view('solicitudAdicionPreventa.show', ['sap' => $solicitudAdicionPreventa]
+        );
     }
 
     /**
@@ -122,5 +124,39 @@ class SolicitudAdicionPreventaController extends Controller
     public function destroy(SolicitudAdicionPreventa $solicitudAdicionPreventa)
     {
         //
+    }
+
+    /**
+     * Accept the request and then destroy it.
+     * 
+     * The request is for adding a new presale, which can have a new editorial.
+     * The editorial will be new if the field editorial_id is null.
+     * If the editorial is new, it will be created and persisted.
+     */
+    public function accept(SolicitudAdicionPreventa $peticion)
+    {
+        // Get the editorial
+        if ($peticion->editorial_id) {
+            $editorial = Empresa::find($peticion->editorial_id);
+        } else {
+            $editorial = new Empresa();
+            $editorial->name = $peticion->editorial_name;
+            $editorial->url = $peticion->editorial_url;
+            $editorial->id = UUID::uuid4();
+            $editorial->save();
+        }
+
+        $presale = new Preventa();
+        $presale->id = UUID::uuid4();
+        $presale->name = $peticion->presale_name;
+        $presale->url = $peticion->presale_url;
+        $presale->state = $peticion->state;
+        $presale->tarde = $peticion->late;
+        $presale->empresa_id = $editorial->id;
+        $presale->save(); 
+
+        $peticion->delete();
+
+        return redirect()->route('peticion.index');
     }
 }

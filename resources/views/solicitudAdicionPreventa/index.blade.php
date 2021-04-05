@@ -5,7 +5,7 @@
     <div class="col-md-auto">
         <ul>
             @foreach($sap as $item)
-                <li>{{ substr($item->text, 0, 40).'...' }} <a href="{{route('peticion.show', ['peticion' => $item->id])}}">Show</a></li>
+                <li><a href="{{route('peticion.show', ['peticion' => $item])}}">{{ $item->presale_name }}</a></li>
             @endforeach
         </ul>
     </div>
