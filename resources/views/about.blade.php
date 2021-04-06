@@ -13,6 +13,12 @@ a través de <a href="https://twitter.com/mararrort">mi cuenta de Twitter</a>
     <li>Añadir un campo de texto a las peticiones.</li>
 </ul>
 
+<h2>Características que se debaten sobre si implementar</h2>
+<ul>
+    <li>Unificar todas las preventas en una sola tabla y añadir una columna de estado</li>
+    <li>Añadir columnas de fecha de entrega anunciada y fecha de entrega real</li>
+</ul>
+
 <h2>Condiciones para que se contemple añadir una Característica</h2>
 <p>Mi filosofía es "Simplicidad". Que las herramientas hagan el mínimo y de la mejor forma.
 No se valorará añadir ninguna característica que viole este principio. Por ejemplo, esto no es
