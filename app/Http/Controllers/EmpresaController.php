@@ -69,9 +69,9 @@ class EmpresaController extends Controller
      * @param  \App\Models\Empresa  $empresa
      * @return \Illuminate\Http\Response
      */
-    public function edit(Empresa $empresa)
+    public function edit(Empresa $editoriale)
     {
-        //
+        return view('empresa.edit', ['editorial' => $editoriale]);
     }
 
     /**
@@ -81,9 +81,13 @@ class EmpresaController extends Controller
      * @param  \App\Models\Empresa  $empresa
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Empresa $empresa)
+    public function update(Request $request, Empresa $editoriale)
     {
-        //
+        $editoriale->name = $request->name;
+        $editoriale->url = $request->url;
+        $editoriale->save();
+
+        return redirect()->route('editoriales.index');
     }
 
     /**

@@ -37,7 +37,7 @@
             <tbody>
                 @foreach ($empresas as $empresa)
                 <tr>
-                    <td><a href="{{$empresa->url}}">{{$empresa->name}}</a></td>
+                    <td>@auth <a href="{{route('editoriales.edit', ['editoriale' => $empresa->id])}}"><i class="bi bi-pencil"></a></i>@endauth<a href="{{$empresa->url}}">{{$empresa->name}}</a></td>
                     <td>{{count($empresa->preventas)}}</td>
                     <td>{{count($empresa->getPreventas('Recaudando'))}}</td>
                     <td>{{count($empresa->getPreventas('Pendiente de entrega'))}}</td>

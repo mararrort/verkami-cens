@@ -25,7 +25,7 @@ Route::get('/dashboard', function () {
 require __DIR__.'/auth.php';
 
 Route::resource('editoriales', EmpresaController::class)->only(['index']);
-Route::resource('editoriales', EmpresaController::class)->only(['create', 'store'])->middleware('auth');
+Route::resource('editoriales', EmpresaController::class)->only(['create', 'store', 'edit', 'update'])->middleware('auth');
 Route::resource('preventas', PreventaController::class)->only(['index']);
 Route::resource('preventas', PreventaController::class)->only(['create', 'store', 'edit', 'update'])->middleware('auth');
 Route::resource('peticion', SolicitudAdicionPreventaController::class)->only(['store']);

@@ -13,6 +13,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $user = new \App\Models\User();
+        $user->name = "Mar";
+        $user->email = "mar@example.org";
+        $user->password = password_hash('password', PASSWORD_BCRYPT);
+        $user->save();
+
          \App\Models\Empresa::factory(10)->create();
          $empresas = \App\Models\Empresa::all();
 
