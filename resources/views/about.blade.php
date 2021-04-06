@@ -5,7 +5,7 @@
 <p>La intención de esta web es mantener un registro sobre el estado de las preventas
 de rol en españa, de forma que ayude a les consumidores a valorar si confían en sumarse.</p>
 <p>La web se encuentra actualmente en estado Beta. El feedback es muy importante. Puedes escribirme
-a través de <a href="https://twitter.com/mararrort">mi cuenta de Twitter</a>
+a través de <a href="https://twitter.com/roltrasos">mi cuenta de Twitter</a>
 
 <h2>Características pendientes de implementar</h2>
 <ul>
