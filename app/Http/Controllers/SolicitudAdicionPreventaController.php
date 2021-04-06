@@ -46,11 +46,11 @@ class SolicitudAdicionPreventaController extends Controller
     {
         $validated = $request->validate([
             'presale_id' => 'required_without:presale_name,presale_url|nullable|exists:preventas,id',
-            'presale_name' => 'required_without:presale_id|nullable|string|max:50',
-            'presale_url' => 'required_without:presale_id|nullable|string|max:100',
+            'presale_name' => 'required_without:presale_id|nullable|string|max:64',
+            'presale_url' => 'required_without:presale_id|nullable|string|max:128',
             'editorial_id' => 'required_without:editorial_name,editorial_url|nullable|exists:empresas,id',
-            'editorial_name' => 'required_without:editorial_id|nullable|string|max:50',
-            'editorial_url' => 'required_without:editorial_id|nullable|string|max:100',
+            'editorial_name' => 'required_without:editorial_id|nullable|string|max:64',
+            'editorial_url' => 'required_without:editorial_id|nullable|string|max:128',
             'state' => ['required', Rule::in(['Recaudando', 'Pendiente de entrega', 'Parcialmente entregado', 'Entregado', 'Sin definir']),],
         ]);
 
