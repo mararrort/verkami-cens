@@ -22,7 +22,11 @@ class CreatePreventasTable extends Migration
             $table->unique('url');
             $table->enum('state', ['Recaudando', 'Pendiente de entrega', 'Parcialmente entregado', 'Entregado', 'Sin definir']);
             $table->uuid('empresa_id');
-            $table->foreign('empresa_id')->references('id')->on('empresas');
+            $table->foreign('empresa_id')
+                ->references('id')
+                ->on('empresas')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
 
             $table->timestamps();
         });

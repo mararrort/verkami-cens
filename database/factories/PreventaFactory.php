@@ -25,7 +25,8 @@ class PreventaFactory extends Factory
             'id' => $this->faker->uuid,
             'name' => $this->faker->words(3, true),
             'url' => $this->faker->url,
-            'state' => $this->faker->randomElement(['Recaudando', 'Pendiente de entrega', 'Parcialmente entregado', 'Entregado', 'Sin definir'])
+            'state' => $this->faker->randomElement(['Recaudando', 'Pendiente de entrega', 'Parcialmente entregado', 'Entregado', 'Sin definir']),
+            'tarde' => $this->faker->boolean
         ];
     }
 }

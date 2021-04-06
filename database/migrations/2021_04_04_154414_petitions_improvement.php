@@ -18,13 +18,15 @@ class PetitionsImprovement extends Migration
             $table->dropColumn('solved');
             
             $table->uuid('presale_id')->nullable();
-            $table->foreign('presale_id')->references('id')->on('preventas');
+            $table->foreign('presale_id')->references('id')->on('preventas')->onUpdate('cascade')
+            ->onDelete('cascade');
 
             $table->string('presale_name')->nullable();
             $table->string('presale_url')->nullable();
 
             $table->uuid('editorial_id')->nullable();
-            $table->foreign('editorial_id')->references('id')->on('empresas');
+            $table->foreign('editorial_id')->references('id')->on('empresas')->onUpdate('cascade')
+            ->onDelete('cascade');
 
             $table->string('editorial_name')->nullable();
             $table->string('editorial_url')->nullable();
@@ -47,6 +49,8 @@ class PetitionsImprovement extends Migration
             $table->text('text');
             $table->boolean('solved')->default(false);
 
+            $table->dropForeign(['editorial_id']);
+            $table->dropForeign(['presale_id']);
             $table->dropColumn(['presale_id', 'presale_name', 'presale_url', 'editorial_id', 'editorial_name', 'editorial_url', 'state', 'late', 'deleted_at']);
         });
     }

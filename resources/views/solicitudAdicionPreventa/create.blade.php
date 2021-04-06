@@ -123,6 +123,6 @@
                 <input class="form-check-input" type="checkbox" name="late" value="{{old('late')}}">
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">{{$presale ? "Solicitar modificación" : "Solicitar adición"}}</button>
+        <button type="submit" class="btn btn-primary" dusk="submit">{{$presale ? "Solicitar modificación" : "Solicitar adición"}}</button>
     </form>
 @endsection
