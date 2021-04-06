@@ -16,6 +16,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('preventas.index')}}">Preventas</a>
                     </li>
+                    @auth
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('peticion.index')}}">Peticiones</a>
+                    </li>
+                    @endauth
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('info')}}">Info</a>
                     </li>
