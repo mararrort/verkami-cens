@@ -10,13 +10,16 @@ a través de <a href="https://twitter.com/mararrort">mi cuenta de Twitter</a>
 <h2>Características pendientes de implementar</h2>
 <ul>
     <li>Vincular a cuenta de Twitter que envíe un tweet cada vez que haya una actualización.</li>
-    <li>Añadir un campo de texto a las peticiones.</li>
+    <li>Añadir un campo de texto a las peticiones de actualización justificándola con enlaces a noticias, tweets o similares.</li>
+    <li>Añadir un campo de texto a las peticiones de actualización o adición donde le peticionarie pueda introducir su alias de twitter para ser reconocide por el trabajo</li>
+    <li>Cambiar el enlace de las editoriales para que dirija al listado de sus preventas en lugar de a su web</li>
 </ul>
 
 <h2>Características que se debaten sobre si implementar</h2>
 <ul>
     <li>Unificar todas las preventas en una sola tabla y añadir una columna de estado</li>
     <li>Añadir columnas de fecha de entrega anunciada y fecha de entrega real</li>
+    <li>Añadir una columna en las preentas indicando en que plataforma se ha realizado</li>
 </ul>
 
 <h2>Condiciones para que se contemple añadir una Característica</h2>
