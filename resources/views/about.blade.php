@@ -9,10 +9,11 @@ a través de <a href="https://twitter.com/mararrort">mi cuenta de Twitter</a>
 
 <h2>Características pendientes de implementar</h2>
 <ul>
-    <li>Vincular a cuenta de Twitter que envíe un tweet cada vez que haya una actualización.</li>
     <li>Añadir un campo de texto a las peticiones de actualización justificándola con enlaces a noticias, tweets o similares.</li>
-    <li>Añadir un campo de texto a las peticiones de actualización o adición donde le peticionarie pueda introducir su alias de twitter para ser reconocide por el trabajo</li>
     <li>Cambiar el enlace de las editoriales para que dirija al listado de sus preventas en lugar de a su web</li>
+    <li>Añadir una columna en las preventas indicando la fecha de la última noticia que se tiene del proyecto y un enlace hacia la misma</li>
+    <li>Vincular a cuenta de Twitter que envíe un tweet cada vez que haya una actualización.</li>
+    <li>Añadir un campo de texto a las peticiones de actualización o adición donde le peticionarie pueda introducir su alias de twitter para ser reconocide por el trabajo</li>
 </ul>
 
 <h2>Características que se debaten sobre si implementar</h2>
