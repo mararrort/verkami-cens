@@ -37,7 +37,7 @@ Route::get('/peticion/create/{presale?}', [SolicitudAdicionPreventaController::c
 Route::resource('peticion', SolicitudAdicionPreventaController::class)->only(['index', 'edit', 'update', 'show', 'destroy'])->middleware('auth');
 Route::post('/peticion/{peticion}/accept', [SolicitudAdicionPreventaController::class, 'accept'])->name('peticion.accept')->middleware('auth');
 
-Route::resource('TODO', TODOController::class)->only(['create', 'store', 'edit', 'update', 'destroy'])->middleware('auth');
+Route::resource('todo', TODOController::class)->only(['create', 'store', 'edit', 'update', 'destroy'])->middleware('auth');
 
 Route::get('info', function() {
     $privateTodo = TODO::where('type', 'private')->get();

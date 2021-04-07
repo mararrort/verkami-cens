@@ -2,7 +2,7 @@
 @section('title', "Crear TODO")
 
 @section('body')
-<form method="POST" action="{{route('TODO.store')}}">
+<form method="POST" action="{{route('todo.store')}}">
     @csrf
     <div>
         <label for="text" class="form-label">
@@ -19,6 +19,6 @@
             <option value="undecided">Indefinido</option>
         </select>
     </div>
-    <button type="submit" class="btn btn-primary">Crear</button>
+    <button type="submit" class="btn btn-primary" dusk="create">Crear</button>
 </form>
 @endsection

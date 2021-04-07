@@ -26,7 +26,7 @@ class TODOController extends Controller
      */
     public function create()
     {
-        return view('TODO.create');
+        return view('todo.create');
     }
 
     /**
@@ -39,7 +39,7 @@ class TODOController extends Controller
     {
         $valid = $request->validate([
             'text' => 'string|max:64',
-            'type' => [Rule::in(['private', 'public', 'undefined'])]
+            'type' => [Rule::in(['private', 'public', 'undecided'])]
         ]);
 
         $todo = new TODO();
@@ -70,9 +70,9 @@ class TODOController extends Controller
      * @param  \App\Models\TODO  $tODO
      * @return \Illuminate\Http\Response
      */
-    public function edit(TODO $TODO)
+    public function edit(TODO $todo)
     {
-        return view('TODO.edit', ['todo' => $TODO]);
+        return view('todo.edit', ['todo' => $todo]);
     }
 
     /**
@@ -82,17 +82,17 @@ class TODOController extends Controller
      * @param  \App\Models\TODO  $tODO
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TODO $TODO)
+    public function update(Request $request, TODO $todo)
     {
         $valid = $request->validate([
             'text' => 'string|max:64',
-            'type' => [Rule::in(['private', 'public', 'undefined'])]
+            'type' => [Rule::in(['private', 'public', 'undecided'])]
         ]);
 
-        $TODO->text = $request->text;
-        $TODO->type = $request->type;
+        $todo->text = $request->text;
+        $todo->type = $request->type;
 
-        $TODO->save();
+        $todo->save();
 
         return redirect()->route('info');
     }
@@ -103,9 +103,9 @@ class TODOController extends Controller
      * @param  \App\Models\TODO  $tODO
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TODO $TODO)
+    public function destroy(TODO $todo)
     {
-        $TODO->delete();
+        $todo->delete();
 
         return redirect()->route('info');
     }

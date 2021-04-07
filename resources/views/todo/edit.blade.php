@@ -2,7 +2,7 @@
 @section('title', "Crear TODO")
 
 @section('body')
-<form method="POST" action="{{route('TODO.update', ['TODO' => $todo ])}}">
+<form method="POST" action="{{route('todo.update', ['todo' => $todo ])}}">
     @csrf
     @method('PUT')
     <div>
@@ -17,6 +17,6 @@
             <option value="undecided" @if($todo->type == "undecided") selected @endif>Indefinido</option>
         </select>
     </div>
-    <button type="submit" class="btn btn-primary">Actualizar</button>
+    <button type="submit" class="btn btn-primary" dusk="edit">Actualizar</button>
 </form>
 @endsection

@@ -14,8 +14,8 @@ a través de <a href="https://twitter.com/roltrasos">mi cuenta de Twitter</a>
         @foreach($privateTodo as $todo)
         <li>
             {{$todo->text}}        
-            <a dusk="editTodo" href="{{route('TODO.edit', ['TODO' => $todo])}}"><i class="bi bi-pencil"></i></a>
-            <form method="POST" action="{{route('TODO.destroy', ['TODO' => $todo])}}">@csrf @method('DELETE')<input type="submit" value="Eliminar" dusk="deleteTodo"></form>
+            <a dusk="editTodo" href="{{route('todo.edit', ['todo' => $todo])}}"><i class="bi bi-pencil"></i></a>
+            <form method="POST" action="{{route('todo.destroy', ['todo' => $todo])}}">@csrf @method('DELETE')<input type="submit" value="Eliminar" dusk="deleteTodo"></form>
         </li>
         @endforeach
     </ul>
@@ -29,8 +29,8 @@ a través de <a href="https://twitter.com/roltrasos">mi cuenta de Twitter</a>
     <li>
         {{$todo->text}}
         @auth
-        <a dusk="editTodo" href="{{route('TODO.edit', ['TODO' => $todo])}}"><i class="bi bi-pencil"></i></a>
-        <form method="POST" action="{{route('TODO.destroy', ['TODO' => $todo])}}">@csrf @method('DELETE')<input type="submit" value="Eliminar" dusk="deleteTodo"></form>
+        <a dusk="editTodo" href="{{route('todo.edit', ['todo' => $todo])}}"><i class="bi bi-pencil"></i></a>
+        <form method="POST" action="{{route('todo.destroy', ['todo' => $todo])}}">@csrf @method('DELETE')<input type="submit" value="Eliminar" dusk="deleteTodo"></form>
         @endauth
     </li>    
     @endforeach
@@ -44,8 +44,8 @@ a través de <a href="https://twitter.com/roltrasos">mi cuenta de Twitter</a>
     <li>
         {{$todo->text}}
         @auth
-        <a dusk="editTodo" href="{{route('TODO.edit', ['TODO' => $todo])}}"><i class="bi bi-pencil"></i></a>
-        <form method="POST" action="{{route('TODO.destroy', ['TODO' => $todo])}}">@csrf @method('DELETE')<input type="submit" value="Eliminar" dusk="deleteTodo"></form>
+        <a dusk="editTodo" href="{{route('todo.edit', ['todo' => $todo])}}"><i class="bi bi-pencil"></i></a>
+        <form method="POST" action="{{route('todo.destroy', ['todo' => $todo])}}">@csrf @method('DELETE')<input type="submit" value="Eliminar" dusk="deleteTodo"></form>
         @endauth
     </li>
     @endforeach
@@ -73,6 +73,6 @@ una red social y no se implementará un foro ni un chat.</p>
 </ul>
 
 @auth
-<a href="{{route('TODO.create')}}">Añadir TODO</a>
+<a href="{{route('todo.create')}}">Añadir TODO</a>
 @endauth
 @endsection
