@@ -57,6 +57,7 @@ class TodoTest extends DuskTestCase
         $user = User::factory()->create();
         $faker = Faker\Factory::create();
         $todoText = substr($faker->sentence,0,128);
+        $todoPrevAmount = TODO::all()->count();
         $this->browse(function (Browser $browser) use ($user, $todoText) {
             $browser->loginAs($user);
             $browser->visit('/info');
@@ -68,6 +69,8 @@ class TodoTest extends DuskTestCase
             $browser->assertRouteIs('info');
             $browser->assertSee($todoText);
         });
+        $todoPostAmount = TODO::all()->count();
+        $this->assertEquals($todoPrevAmount+1, $todoPostAmount); 
     }
 
     public function testEdit()
@@ -94,6 +97,7 @@ class TodoTest extends DuskTestCase
     {
         $user = User::factory()->create();
         $todo = TODO::factory()->create();
+        $todoPrevAmount = TODO::all()->count();
         $this->browse(function (Browser $browser) use ($user, $todo) {
             $browser->loginAs($user);
             $browser->visit('/info');
@@ -101,5 +105,7 @@ class TodoTest extends DuskTestCase
             $browser->assertRouteIs('info');
             $browser->assertDontSee($todo->text);
         });
+        $todoPostAmount = TODO::all()->count();
+        $this->assertEquals($todoPrevAmount, $todoPostAmount+1);
     }
 }

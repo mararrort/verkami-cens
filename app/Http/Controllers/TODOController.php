@@ -38,7 +38,7 @@ class TODOController extends Controller
     public function store(Request $request)
     {
         $valid = $request->validate([
-            'text' => 'string|max:64',
+            'text' => 'string|max:128',
             'type' => [Rule::in(['private', 'public', 'undecided'])]
         ]);
 
@@ -85,7 +85,7 @@ class TODOController extends Controller
     public function update(Request $request, TODO $todo)
     {
         $valid = $request->validate([
-            'text' => 'string|max:64',
+            'text' => 'string|max:128',
             'type' => [Rule::in(['private', 'public', 'undecided'])]
         ]);
 
