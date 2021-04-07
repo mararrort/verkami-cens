@@ -28,5 +28,7 @@ class DatabaseSeeder extends Seeder
                 \App\Models\Preventa::factory()->count($amount)->for($empresa)->create();
             }
         }
+
+        \App\Models\TODO::factory(9)->create();
     }
 }

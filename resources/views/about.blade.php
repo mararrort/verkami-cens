@@ -7,21 +7,50 @@ de rol en españa, de forma que ayude a les consumidores a valorar si confían e
 <p>La web se encuentra actualmente en estado Beta. El feedback es muy importante. Puedes escribirme
 a través de <a href="https://twitter.com/roltrasos">mi cuenta de Twitter</a>
 
-<h2>Características pendientes de implementar</h2>
-<ul>
-    <li>Añadir un campo de texto a las peticiones de actualización justificándola con enlaces a noticias, tweets o similares.</li>
-    <li>Cambiar el enlace de las editoriales para que dirija al listado de sus preventas en lugar de a su web</li>
-    <li>Añadir una columna en las preventas indicando la fecha de la última noticia que se tiene del proyecto y un enlace hacia la misma</li>
-    <li>Vincular a cuenta de Twitter que envíe un tweet cada vez que haya una actualización.</li>
-    <li>Añadir un campo de texto a las peticiones de actualización o adición donde le peticionarie pueda introducir su alias de twitter para ser reconocide por el trabajo</li>
-</ul>
+@auth
+    @if(count($privateTodo) > 0)
+    <h2 dusk="privateTodo">Características privadas de implementar</h2>
+    <ul>
+        @foreach($privateTodo as $todo)
+        <li>
+            {{$todo->text}}        
+            <a dusk="editTodo" href="{{route('TODO.edit', ['TODO' => $todo])}}"><i class="bi bi-pencil"></i></a>
+            <form method="POST" action="{{route('TODO.destroy', ['TODO' => $todo])}}">@csrf @method('DELETE')<input type="submit" value="Eliminar" dusk="deleteTodo"></form>
+        </li>
+        @endforeach
+    </ul>
+    @endif
+@endauth
 
-<h2>Características que se debaten sobre si implementar</h2>
+@if(count($publicTodo) > 0)
+<h2 dusk="publicTodo">Características pendientes de implementar</h2>
 <ul>
-    <li>Unificar todas las preventas en una sola tabla y añadir una columna de estado</li>
-    <li>Añadir columnas de fecha de entrega anunciada y fecha de entrega real</li>
-    <li>Añadir una columna en las preentas indicando en que plataforma se ha realizado</li>
+    @foreach($publicTodo as $todo)
+    <li>
+        {{$todo->text}}
+        @auth
+        <a dusk="editTodo" href="{{route('TODO.edit', ['TODO' => $todo])}}"><i class="bi bi-pencil"></i></a>
+        <form method="POST" action="{{route('TODO.destroy', ['TODO' => $todo])}}">@csrf @method('DELETE')<input type="submit" value="Eliminar" dusk="deleteTodo"></form>
+        @endauth
+    </li>    
+    @endforeach
 </ul>
+@endif
+
+@if(count($undefinedTodo) > 0)
+<h2 dusk="undecidedTodo">Características que se debaten sobre si implementar</h2>
+<ul>
+    @foreach($undefinedTodo as $todo)
+    <li>
+        {{$todo->text}}
+        @auth
+        <a dusk="editTodo" href="{{route('TODO.edit', ['TODO' => $todo])}}"><i class="bi bi-pencil"></i></a>
+        <form method="POST" action="{{route('TODO.destroy', ['TODO' => $todo])}}">@csrf @method('DELETE')<input type="submit" value="Eliminar" dusk="deleteTodo"></form>
+        @endauth
+    </li>
+    @endforeach
+</ul>
+@endif
 
 <h2>Condiciones para que se contemple añadir una Característica</h2>
 <p>Mi filosofía es "Simplicidad". Que las herramientas hagan el mínimo y de la mejor forma.
@@ -42,4 +71,8 @@ una red social y no se implementará un foro ni un chat.</p>
     pero no estaría realmente relacionada. Nos importa saber cuantas preventas hay pendientes de
     entregar, no guardar las publicaciones en Twitter del editor en las que enseña partidas de prueba</em>
 </ul>
+
+@auth
+<a href="{{route('TODO.create')}}">Añadir TODO</a>
+@endauth
 @endsection
