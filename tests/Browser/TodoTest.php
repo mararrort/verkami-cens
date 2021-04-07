@@ -56,7 +56,7 @@ class TodoTest extends DuskTestCase
     {
         $user = User::factory()->create();
         $faker = Faker\Factory::create();
-        $todoText = substr($faker->sentence,0,64);
+        $todoText = substr($faker->sentence,0,128);
         $this->browse(function (Browser $browser) use ($user, $todoText) {
             $browser->loginAs($user);
             $browser->visit('/info');
@@ -75,7 +75,7 @@ class TodoTest extends DuskTestCase
         $user = User::factory()->create();
         $todo = TODO::factory()->create();
         $faker = Faker\Factory::create();
-        $todoText = substr($faker->sentence,0,64);
+        $todoText = substr($faker->sentence,0,128);
         $this->browse(function (Browser $browser) use ($user, $todo, $todoText) {
             $browser->loginAs($user);
             $browser->visit('/info');
