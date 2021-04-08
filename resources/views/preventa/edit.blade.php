@@ -1,5 +1,5 @@
 @extends('base')
-@section('title', 'Crear preventa')
+@section('title', 'Editar preventa')
 @section('body')
 <div class="row">
     <div class="col">
@@ -35,11 +35,11 @@
                 </select>
             
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="{{$preventa->tarde}}" name="tarde">
+                <input class="form-check-input" type="checkbox" @if($preventa->tarde) checked @endif name="tarde">
                 <label for="tarde" class="form-check-label">Tarde</label>
             </div>
 
-            <button type="submit" class="btn btn-primary">Editar</button>
+            <button type="submit" class="btn btn-primary" dusk="edit">Editar</button>
         </form>
     </div>
 </div>

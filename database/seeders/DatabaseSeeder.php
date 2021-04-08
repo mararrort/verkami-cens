@@ -25,7 +25,12 @@ class DatabaseSeeder extends Seeder
         foreach ($empresas as $empresa) {
             $amount = rand(1,8);
             if ($amount > 0) {
-                \App\Models\Preventa::factory()->count($amount)->for($empresa)->create();
+                for ($i = 0; $i < $amount; $i++) {
+                    $presale = \App\Models\Preventa::factory()->for($empresa)->create();
+                    if (rand(0,1) {
+                        \App\Models\SolicitudAdicionPreventa::factory()->preventa($presale)->create();
+                    }
+                }
             }
         }
 

@@ -90,7 +90,7 @@
             <div class="row">
                 <div class="form-check">
                     <label for="late" class="form-check-label">La entrega de la preventa está fuera de plazo</label>
-                    <input class="form-check-input" type="checkbox" name="late" value="{{ $peticion->late }}">
+                    <input class="form-check-input" type="checkbox" name="late" @if($peticion->late) checked @endif>
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">Aceptar</button>

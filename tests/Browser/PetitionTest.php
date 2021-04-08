@@ -10,8 +10,9 @@ use Ramsey\Uuid\Uuid;
 use App\Models\SolicitudAdicionPreventa;
 use App\Models\Empresa;
 use App\Models\Preventa;
+use App\Models\User;
 
-class CreatePetitionTest extends DuskTestCase
+class PetitionTest extends DuskTestCase
 {
     use DatabaseMigrations;
 
@@ -71,7 +72,51 @@ class CreatePetitionTest extends DuskTestCase
 
         $postCount = SolicitudAdicionPreventa::all()->count();
         $this->assertEquals($prevCount+1, $postCount);  
+    }
 
+    public function testEditPetitionOfModifyPresale()
+    {
+        $this->browse(function (Browser $browser) {
+            $user = User::factory()->create();
+            $editorial = Empresa::factory()->create();
+            $presale = Preventa::factory()->for($editorial)->create();
+            $presaleData = Preventa::factory()->for($editorial)->make();
+            $petition = SolicitudAdicionPreventa::factory()->presale($presale)->create();
+
+            // Trave to the editor
+            $browser->loginAs($user);
+            $browser->visitRoute('peticion.index');
+            $browser->clickLink($presale->name);
+            $browser->clickLink("Editar");
+
+            // Assert information
+            $browser->assertRouteIs('peticion.edit', [$petition->id]);
+            $browser->assertSelected('state', $presale->state);
+            
+            if($presale->tarde) {
+                $browser->assertChecked('late');
+            } else {
+                $browser->assertNotChecked('late');
+            }
+
+            // Edit information
+            $browser->select('state', $presaleData->state);
+            if ($presaleData->tarde) {
+                $browser->check('late');
+            } else {
+                $browser->uncheck('late');
+            }
+
+            $browser->press("Aceptar");
+
+            // Assert information
+            $browser->assertRouteIs('peticion.show', ['peticion' => $petition]);
+            
+            $petition->refresh();
+
+            $this->assertEquals($presaleData->state, $petition->state);
+            $this->assertEquals($presaleData->tarde, $petition->late);
+        });
     }
 
     private function createFakeEditorial() {
