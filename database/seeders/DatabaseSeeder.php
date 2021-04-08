@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
         $user->password = password_hash('password', PASSWORD_BCRYPT);
         $user->save();
 
-         \App\Models\Empresa::factory(10)->create();
+         \App\Models\Empresa::factory(32)->create();
          $empresas = \App\Models\Empresa::all();
 
         foreach ($empresas as $empresa) {
@@ -27,13 +27,14 @@ class DatabaseSeeder extends Seeder
             if ($amount > 0) {
                 for ($i = 0; $i < $amount; $i++) {
                     $presale = \App\Models\Preventa::factory()->for($empresa)->create();
-                    if (rand(0,1) {
-                        \App\Models\SolicitudAdicionPreventa::factory()->preventa($presale)->create();
+                    if (rand(0,1)) {
+                        \App\Models\SolicitudAdicionPreventa::factory()->presale($presale)->create();
                     }
                 }
             }
         }
 
         \App\Models\TODO::factory(9)->create();
+        \App\Models\SolicitudAdicionPreventa::factory(10)->create();
     }
 }

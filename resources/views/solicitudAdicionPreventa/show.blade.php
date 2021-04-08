@@ -1,24 +1,29 @@
 @extends('base')
 
 @section('body')
-<div class="row">
-    <div class="col-md-auto">
+<h2>{{ $sap->presale_id ? 'Actualización' : 'Creación' }}</h2>
+    <div class="row">
         Preventa: <a href="{{$sap->presale_id ? $sap->preventa->url : $sap->presale_url}}">{{$sap->presale_id ? $sap->preventa->name : $sap->presale_name}}</a>
     </div>
-    <div class="col-md-auto">
+    <div class="row">
         @if ($sap->editorial_id)
             Editorial: <a href="{{$sap->empresa->url}}">{{$sap->empresa->name}}</a>
         @else 
             Editorial: <a href="{{$sap->editorial_url}}">{{$sap->editorial_name}}</a>
         @endif
     </div>
-    <div class="col-md-auto">
-        Estado: {{$sap->state}}
+    <div class="row">
+        Estado actual: {{$sap->preventa->state}} | Estado propuesto: {{ $sap->state }}
     </div>
-    <div class="col-md-auto">
-        Retraso: {{$sap->late ? "Si" : "No"}}
+    <div class="row">
+        Retraso: {{ $sap->preventa->late ? "Si" : "No" }} | Retraso propuesto: {{ $sap->late ? "Si" : "No" }}
     </div>
-</div>
+    @if($sap->presale_id)
+    <div class="row">
+        Información: <p>{{ $sap->info }}</p>
+    </div>
+    @endif
+
 <div class="row">
     <div class="col-auto">
         <form action="{{route('peticion.accept', ['peticion' => $sap])}}" method="post">

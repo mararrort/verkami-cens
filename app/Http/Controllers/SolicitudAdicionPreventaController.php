@@ -55,6 +55,7 @@ class SolicitudAdicionPreventaController extends Controller
             'editorial_name' => 'required_without:editorial_id|nullable|string|max:64',
             'editorial_url' => 'required_without:editorial_id|nullable|string|max:128',
             'state' => ['required', Rule::in(['Recaudando', 'Pendiente de entrega', 'Parcialmente entregado', 'Entregado', 'Sin definir']),],
+            'info' => 'nullable|string'
         ]);
 
         $sap = new SolicitudAdicionPreventa();
@@ -67,6 +68,7 @@ class SolicitudAdicionPreventaController extends Controller
         $sap->editorial_url = $request->editorial_url;
         $sap->state = $request->state;
         $sap->late = $request->has('late');
+        $sap->info = $request->info;
         $sap->id = Uuid::uuid4();
         $sap->save();
 
@@ -112,6 +114,7 @@ class SolicitudAdicionPreventaController extends Controller
         $peticion->editorial_url = $request->editorial_url;
         $peticion->state = $request->state;
         $peticion->late = $request->has('late');
+        $peticion->info = $request->info;
 
         $peticion->save();
 

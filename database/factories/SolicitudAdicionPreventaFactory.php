@@ -44,8 +44,7 @@ class SolicitudAdicionPreventaFactory extends Factory
                 'editorial_id' => $preventa->empresa->id,
                 'editorial_name' => null,
                 'editorial_url' => null,
-                'state' => $preventa->state,
-                'late' => $preventa->tarde
+                'info' => $this->faker->paragraph,
             ];
         });
     }

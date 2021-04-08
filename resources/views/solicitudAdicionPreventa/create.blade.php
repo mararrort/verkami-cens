@@ -123,6 +123,15 @@
                 <input class="form-check-input" type="checkbox" name="late" value="{{old('late')}}">
             </div>
         </div>
+
+        @if($presale)
+        <div class="row">
+            <div class="mb-3">
+                <label for="info" class="form-label">Aporta fuentes sobre la información</label>
+                <textarea class="form-control" name="info" rows="3"></textarea>
+            </div>
+        </div>
+        @endif
         <button type="submit" class="btn btn-primary" dusk="submit">{{$presale ? "Solicitar modificación" : "Solicitar adición"}}</button>
     </form>
 @endsection

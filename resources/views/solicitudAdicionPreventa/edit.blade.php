@@ -93,7 +93,18 @@
                     <input class="form-check-input" type="checkbox" name="late" @if($peticion->late) checked @endif>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary">Aceptar</button>
+
+            @if($peticion->presale_id)
+            <div class="row">
+                <div class="mb-3">
+                    <label for="info" class="form-label">Aporta fuentes sobre la información</label>
+                    <textarea class="form-control" name="info" rows="3">{{$peticion->info}}</textarea>
+                </div>
+            </div>
+            @endif
+            <div class="row">
+                <button type="submit" class="btn btn-primary">Aceptar</button>
+            </div>
         </form>
     </div>
 </div>
