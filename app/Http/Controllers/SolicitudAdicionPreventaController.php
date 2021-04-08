@@ -20,9 +20,12 @@ class SolicitudAdicionPreventaController extends Controller
      */
     public function index()
     {
-        $sap = SolicitudAdicionPreventa::all();
+        $createPetitions = SolicitudAdicionPreventa::whereNull('presale_id')->get();
+
+        $updatePetitions = SolicitudAdicionPreventa::whereNotNull('presale_id')->get();
         
-        return view('solicitudAdicionPreventa.index', ['sap' => $sap]);
+        return view('solicitudAdicionPreventa.index', 
+            ['createPetitions' => $createPetitions, 'updatePetitions' => $updatePetitions]);
     }
 
     /**

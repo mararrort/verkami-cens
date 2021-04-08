@@ -2,9 +2,19 @@
 
 @section('body')
 <div class="row">
-    <div class="col-md-auto">
+    <div class="col-auto">
+        <h2>Peticiones de creación</h2>
         <ul>
-            @foreach($sap as $item)
+            @foreach($createPetitions as $item)
+                <li><a href="{{route('peticion.show', ['peticion' => $item])}}">{{ $item->presale_id ? $item->preventa->name : $item->presale_name }}</a></li>
+            @endforeach
+        </ul>
+    </div>
+
+    <div class="col-auto">
+        <h2>Peticiones de actualización</h2>
+        <ul>
+            @foreach($updatePetitions as $item)
                 <li><a href="{{route('peticion.show', ['peticion' => $item])}}">{{ $item->presale_id ? $item->preventa->name : $item->presale_name }}</a></li>
             @endforeach
         </ul>

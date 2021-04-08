@@ -49,4 +49,14 @@ class SolicitudAdicionPreventaFactory extends Factory
             ];
         });
     }
+
+    public function editorial(Empresa $editorial) {
+        return $this->state(function (array $attributes) use ($editorial) {
+            return [
+                'editorial_id' => $editorial->id,
+                'editorial_name' => null,
+                'editorial_url' => null,
+            ];
+        });
+    }
 }
