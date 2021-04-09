@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Http;
 
 
 class SolicitudAdicionPreventaController extends Controller
@@ -154,6 +155,7 @@ class SolicitudAdicionPreventaController extends Controller
             $editorial->save();
         }
 
+        // Get the presale
         if($peticion->presale_id) {
             $presale = Preventa::find($peticion->presale_id);
         } else {
@@ -167,7 +169,19 @@ class SolicitudAdicionPreventaController extends Controller
         $presale->state = $peticion->state;
         $presale->tarde = $peticion->late;
         
+        // Save the status
         $presale->save(); 
+
+        $text = 'La preventa '.$presale->name.' de  ' . $editorial->name 
+            . ' ha sido '  . ($peticion->presale_id ? 'actualizada' : 'creada')
+            . '. Se encuentra en estado ' . $presale->state . ' y ' . ($presale->tarde ? 'no ' : '')
+            . 'es puntual.';
+
+        // Notify by Telegram
+        HTTP::get('https://api.telegram.org/bot'.env('TELEGRAM_TOKEN').'/sendMessage', [
+            'chat_id' => env('TELEGRAM_CHAT'),
+            'text' => $text
+        ]);
 
         $peticion->delete();
 
