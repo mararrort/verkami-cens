@@ -2,23 +2,22 @@
 
 namespace Tests\Browser;
 
+use App\Models\TODO;
+use App\Models\User;
+use Faker;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
-use App\Models\TODO;
-use App\Models\User;
-
-use Faker;
-
 class TodoTest extends DuskTestCase
 {
     use DatabaseMigrations;
+
     public function testGuestCannotCreate(Type $var = null)
     {
         $this->browse(function (Browser $browser) {
             $browser->visit('/info');
-            $browser->assertDontSeeLink("Añadir TODO");
+            $browser->assertDontSeeLink('Añadir TODO');
         });
     }
 
@@ -28,7 +27,7 @@ class TodoTest extends DuskTestCase
 
         $this->browse(function (Browser $browser) {
             $browser->visit('/info');
-            $browser->assertNotPresent("@editTodo");
+            $browser->assertNotPresent('@editTodo');
         });
     }
 
@@ -38,7 +37,7 @@ class TodoTest extends DuskTestCase
 
         $this->browse(function (Browser $browser) {
             $browser->visit('/info');
-            $browser->assertNotPresent("@deleteTodo");
+            $browser->assertNotPresent('@deleteTodo');
         });
     }
 
@@ -48,7 +47,7 @@ class TodoTest extends DuskTestCase
 
         $this->browse(function (Browser $browser) {
             $browser->visit('/info');
-            $browser->assertNotPresent("@privateTodo");
+            $browser->assertNotPresent('@privateTodo');
         });
     }
 
@@ -56,7 +55,7 @@ class TodoTest extends DuskTestCase
     {
         $user = User::factory()->create();
         $faker = Faker\Factory::create();
-        $todoText = substr($faker->sentence,0,128);
+        $todoText = substr($faker->sentence, 0, 128);
         $todoPrevAmount = TODO::all()->count();
         $this->browse(function (Browser $browser) use ($user, $todoText) {
             $browser->loginAs($user);
@@ -70,7 +69,7 @@ class TodoTest extends DuskTestCase
             $browser->assertSee($todoText);
         });
         $todoPostAmount = TODO::all()->count();
-        $this->assertEquals($todoPrevAmount+1, $todoPostAmount); 
+        $this->assertEquals($todoPrevAmount + 1, $todoPostAmount);
     }
 
     public function testEdit()
@@ -78,7 +77,7 @@ class TodoTest extends DuskTestCase
         $user = User::factory()->create();
         $todo = TODO::factory()->create();
         $faker = Faker\Factory::create();
-        $todoText = substr($faker->sentence,0,128);
+        $todoText = substr($faker->sentence, 0, 128);
         $this->browse(function (Browser $browser) use ($user, $todo, $todoText) {
             $browser->loginAs($user);
             $browser->visit('/info');
@@ -106,6 +105,6 @@ class TodoTest extends DuskTestCase
             $browser->assertDontSee($todo->text);
         });
         $todoPostAmount = TODO::all()->count();
-        $this->assertEquals($todoPrevAmount, $todoPostAmount+1);
+        $this->assertEquals($todoPrevAmount, $todoPostAmount + 1);
     }
 }

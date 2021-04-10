@@ -2,16 +2,16 @@
 
 namespace App\Models;
 
+use App\Models\Empresa;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Empresa;
 
 class Preventa extends Model
 {
     use HasFactory;
 
     /**
-     * Will use UUID as id
+     * Will use UUID as id.
      */
     public $incrementing = false;
     protected $keyType = 'string';
@@ -25,7 +25,8 @@ class Preventa extends Model
         'state' => 'Sin definir',
     ];
 
-    public function empresa() {
+    public function empresa()
+    {
         return $this->belongsTo(Empresa::class);
     }
 }

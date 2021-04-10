@@ -1,11 +1,11 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\PreventaController;
 use App\Http\Controllers\SolicitudAdicionPreventaController;
 use App\Http\Controllers\TODOController;
 use App\Models\TODO;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,9 +39,10 @@ Route::post('/peticion/{peticion}/accept', [SolicitudAdicionPreventaController::
 
 Route::resource('todo', TODOController::class)->only(['create', 'store', 'edit', 'update', 'destroy'])->middleware('auth');
 
-Route::get('info', function() {
+Route::get('info', function () {
     $privateTodo = TODO::where('type', 'private')->get();
     $publicTodo = TODO::where('type', 'public')->get();
     $undefinedTodo = TODO::where('type', 'undecided')->get();
+
     return view('about', ['privateTodo' => $privateTodo, 'publicTodo' => $publicTodo, 'undefinedTodo' => $undefinedTodo]);
 })->name('info');

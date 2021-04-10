@@ -2,11 +2,10 @@
 
 namespace Database\Factories;
 
+use App\Models\Empresa;
+use App\Models\Preventa;
 use App\Models\SolicitudAdicionPreventa;
 use Illuminate\Database\Eloquent\Factories\Factory;
-
-use App\Models\Preventa;
-use App\Models\Empresa;
 
 class SolicitudAdicionPreventaFactory extends Factory
 {
@@ -35,7 +34,8 @@ class SolicitudAdicionPreventaFactory extends Factory
         ];
     }
 
-    public function presale(Preventa $preventa) {
+    public function presale(Preventa $preventa)
+    {
         return $this->state(function (array $attributes) use ($preventa) {
             return [
                 'presale_name' => null,
@@ -49,7 +49,8 @@ class SolicitudAdicionPreventaFactory extends Factory
         });
     }
 
-    public function editorial(Empresa $editorial) {
+    public function editorial(Empresa $editorial)
+    {
         return $this->state(function (array $attributes) use ($editorial) {
             return [
                 'editorial_id' => $editorial->id,

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Preventa;
 use App\Models\Empresa;
+use App\Models\Preventa;
 use Illuminate\Http\Request;
 use Ramsey\Uuid\Uuid;
 
@@ -47,12 +47,12 @@ class PreventaController extends Controller
             ->orderBy('preventas.name', 'ASC')
             ->get();
 
-        return view('preventa.index', 
-            ['recaudando' => $recaudando, 
-            'pendienteDeEntrega' => $pendienteDeEntrega, 
-            'parcialmenteEntregado' => $parcialmenteEntregado,
-            'entregado' => $entregado,
-            'sinDefinir' => $sinDefinir]);
+        return view('preventa.index',
+            ['recaudando' => $recaudando,
+                'pendienteDeEntrega' => $pendienteDeEntrega,
+                'parcialmenteEntregado' => $parcialmenteEntregado,
+                'entregado' => $entregado,
+                'sinDefinir' => $sinDefinir, ]);
     }
 
     /**
