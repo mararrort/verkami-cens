@@ -124,58 +124,38 @@ class PetitionTest extends DuskTestCase
         });
     }
 
-    public function testEditPetitionOfModifyPresale()
+    public function testAuthCanSeeCreatePresaleAndEditorialPetition() 
     {
         $this->browse(function (Browser $browser) {
             $user = User::factory()->create();
+            $petition = SolicitudAdicionPreventa::factory()->create();
 
-            $editorial = Empresa::factory()->create();
-            $presale = Preventa::factory()->for($editorial)->create();
-            $petition = SolicitudAdicionPreventa::factory()->presale($presale)->create();
-            
-            $newPetition = SolicitudAdicionPreventa::factory()->presale($presale)->make();
-
-            // Travel to the editor
             $browser->loginAs($user);
             $browser->visitRoute('peticion.index');
-            $browser->clickLink($presale->name);
-            $browser->clickLink("Editar");
-
-            // Assert information
-            $browser->assertRouteIs('peticion.edit', [$petition->id]);
-            $browser->assertSelected('state', $petition->state);
-            
-            if($petition->late) {
-                $browser->assertChecked('late');
-            } else {
-                $browser->assertNotChecked('late');
-            }
-            $browser->assertInputValue('info', $petition->info);
-
-            // Edit information
-            $browser->select('state', $newPetition->state);
-            if ($newPetition->late) {
-                $browser->check('late');
-            } else {
-                $browser->uncheck('late');
-            }
-            $browser->clear('info');
-            $browser->type('info', $newPetition->info);
-
-            $browser->press("Aceptar");
-
-            // Assert information
+            $browser->assertRouteIs('peticion.index');
+            $browser->clickLink($petition->presale_name);
             $browser->assertRouteIs('peticion.show', ['peticion' => $petition]);
-            
-            $petition->refresh();
-
-            $this->assertEquals($newPetition->state, $petition->state);
-            $this->assertEquals($newPetition->late, $petition->late);
-            $this->assertEquals($newPetition->info, $petition->info);
+            $browser->assertPresent('@header');
         });
     }
 
-    public function testAuthCanSeePetition() 
+    public function testAuthCanSeeCreatePresalePetition() 
+    {
+        $this->browse(function (Browser $browser) {
+            $user = User::factory()->create();
+            $editorial = Empresa::factory()->create();
+            $petition = SolicitudAdicionPreventa::factory()->editorial($editorial)->create();
+
+            $browser->loginAs($user);
+            $browser->visitRoute('peticion.index');
+            $browser->assertRouteIs('peticion.index');
+            $browser->clickLink($petition->presale_name);
+            $browser->assertRouteIs('peticion.show', ['peticion' => $petition]);
+            $browser->assertPresent('@header');
+        });
+    }
+
+    public function testAuthCanSeeEditPetition() 
     {
         $this->browse(function (Browser $browser) {
             $user = User::factory()->create();
@@ -188,6 +168,7 @@ class PetitionTest extends DuskTestCase
             $browser->assertRouteIs('peticion.index');
             $browser->clickLink($presale->name);
             $browser->assertRouteIs('peticion.show', ['peticion' => $petition]);
+            $browser->assertPresent('@header');
         });
     }
 
@@ -336,6 +317,57 @@ class PetitionTest extends DuskTestCase
             $this->assertEquals($otherEditorial->id, $petition->editorial_id);
             $this->assertEquals($correctedPresale->state, $petition->state);
             $this->assertEquals($correctedPresale->tarde, $petition->late);
+        });
+    }
+
+    public function testEditPetitionOfModifyPresale()
+    {
+        $this->browse(function (Browser $browser) {
+            $user = User::factory()->create();
+
+            $editorial = Empresa::factory()->create();
+            $presale = Preventa::factory()->for($editorial)->create();
+            $petition = SolicitudAdicionPreventa::factory()->presale($presale)->create();
+            
+            $newPetition = SolicitudAdicionPreventa::factory()->presale($presale)->make();
+
+            // Travel to the editor
+            $browser->loginAs($user);
+            $browser->visitRoute('peticion.index');
+            $browser->clickLink($presale->name);
+            $browser->clickLink("Editar");
+
+            // Assert information
+            $browser->assertRouteIs('peticion.edit', [$petition->id]);
+            $browser->assertSelected('state', $petition->state);
+            
+            if($petition->late) {
+                $browser->assertChecked('late');
+            } else {
+                $browser->assertNotChecked('late');
+            }
+            $browser->assertInputValue('info', $petition->info);
+
+            // Edit information
+            $browser->select('state', $newPetition->state);
+            if ($newPetition->late) {
+                $browser->check('late');
+            } else {
+                $browser->uncheck('late');
+            }
+            $browser->clear('info');
+            $browser->type('info', $newPetition->info);
+
+            $browser->press("Aceptar");
+
+            // Assert information
+            $browser->assertRouteIs('peticion.show', ['peticion' => $petition]);
+            
+            $petition->refresh();
+
+            $this->assertEquals($newPetition->state, $petition->state);
+            $this->assertEquals($newPetition->late, $petition->late);
+            $this->assertEquals($newPetition->info, $petition->info);
         });
     }
 }

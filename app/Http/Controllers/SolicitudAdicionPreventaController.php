@@ -175,7 +175,9 @@ class SolicitudAdicionPreventaController extends Controller
         $text = 'La preventa '.$presale->name.' de  ' . $editorial->name 
             . ' ha sido '  . ($peticion->presale_id ? 'actualizada' : 'creada')
             . '. Se encuentra en estado ' . $presale->state . ' y ' . ($presale->tarde ? 'no ' : '')
-            . 'es puntual.';
+            . 'es puntual.
+            
+            ' . $presale->url;
 
         // Notify by Telegram
         HTTP::get('https://api.telegram.org/bot'.env('TELEGRAM_TOKEN').'/sendMessage', [

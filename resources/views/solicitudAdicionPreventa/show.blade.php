@@ -1,7 +1,7 @@
 @extends('base')
 
 @section('body')
-<h2>{{ $sap->presale_id ? 'Actualización' : 'Creación' }}</h2>
+<h2 dusk="header">{{ $sap->presale_id ? 'Actualización' : 'Creación' }}</h2>
     <div class="row">
         Preventa: <a href="{{$sap->presale_id ? $sap->preventa->url : $sap->presale_url}}">{{$sap->presale_id ? $sap->preventa->name : $sap->presale_name}}</a>
     </div>
@@ -13,10 +13,18 @@
         @endif
     </div>
     <div class="row">
-        Estado actual: {{$sap->preventa->state}} | Estado propuesto: {{ $sap->state }}
+        @if ($sap->presale_id)
+            Estado actual: {{$sap->preventa->state}} | Estado propuesto: {{ $sap->state }}
+        @else
+            Estado: {{ $sap->state }}
+        @endif
     </div>
     <div class="row">
-        Retraso: {{ $sap->preventa->late ? "Si" : "No" }} | Retraso propuesto: {{ $sap->late ? "Si" : "No" }}
+        @if ($sap->presale_id)
+            Retraso: {{ $sap->preventa->late ? "Si" : "No" }} | Retraso propuesto: {{ $sap->late ? "Si" : "No" }}
+        @else
+            Retraso: {{ $sap->late ? "Si" : "No" }}
+        @endif
     </div>
     @if($sap->presale_id)
     <div class="row">
