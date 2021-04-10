@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\TODO;
+use Illuminate\Database\Seeder;
 
 class TODOSeeder extends Seeder
 {

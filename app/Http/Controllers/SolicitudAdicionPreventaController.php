@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SolicitudAdicionPreventa;
-use App\Models\Preventa;
 use App\Models\Empresa;
+use App\Models\Preventa;
+use App\Models\SolicitudAdicionPreventa;
 use Illuminate\Http\Request;
-use Ramsey\Uuid\Uuid;
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Http;
-
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+use Ramsey\Uuid\Uuid;
 
 class SolicitudAdicionPreventaController extends Controller
 {
@@ -24,8 +23,8 @@ class SolicitudAdicionPreventaController extends Controller
         $createPetitions = SolicitudAdicionPreventa::whereNull('presale_id')->get();
 
         $updatePetitions = SolicitudAdicionPreventa::whereNotNull('presale_id')->get();
-        
-        return view('solicitudAdicionPreventa.index', 
+
+        return view('solicitudAdicionPreventa.index',
             ['createPetitions' => $createPetitions, 'updatePetitions' => $updatePetitions]);
     }
 
@@ -37,6 +36,7 @@ class SolicitudAdicionPreventaController extends Controller
     public function create(Request $request, Preventa $presale = null)
     {
         $editorials = Empresa::orderBy('name', 'ASC')->get();
+
         return view('solicitudAdicionPreventa.create', ['editorials' => $editorials, 'presale' => $presale]);
     }
 
@@ -55,12 +55,12 @@ class SolicitudAdicionPreventaController extends Controller
             'editorial_id' => 'required_without:editorial_name,editorial_url|nullable|exists:empresas,id',
             'editorial_name' => 'required_without:editorial_id|nullable|string|max:64',
             'editorial_url' => 'required_without:editorial_id|nullable|string|max:128',
-            'state' => ['required', Rule::in(['Recaudando', 'Pendiente de entrega', 'Parcialmente entregado', 'Entregado', 'Sin definir']),],
-            'info' => 'nullable|string'
+            'state' => ['required', Rule::in(['Recaudando', 'Pendiente de entrega', 'Parcialmente entregado', 'Entregado', 'Sin definir'])],
+            'info' => 'nullable|string',
         ]);
 
         $sap = new SolicitudAdicionPreventa();
-        
+
         $sap->presale_id = $request->presale_id;
         $sap->presale_name = $request->presale_name;
         $sap->presale_url = $request->presale_url;
@@ -83,7 +83,7 @@ class SolicitudAdicionPreventaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(SolicitudAdicionPreventa $peticion)
-    {      
+    {
         return view('solicitudAdicionPreventa.show', ['sap' => $peticion]);
     }
 
@@ -96,6 +96,7 @@ class SolicitudAdicionPreventaController extends Controller
     public function edit(SolicitudAdicionPreventa $peticion)
     {
         $editorials = Empresa::all();
+
         return view('solicitudAdicionPreventa.edit', ['peticion' => $peticion, 'editorials' => $editorials]);
     }
 
@@ -137,7 +138,7 @@ class SolicitudAdicionPreventaController extends Controller
 
     /**
      * Accept the request and then destroy it.
-     * 
+     *
      * The request is for adding a new presale, which can have a new editorial.
      * The editorial will be new if the field editorial_id is null.
      * If the editorial is new, it will be created and persisted.
@@ -156,7 +157,7 @@ class SolicitudAdicionPreventaController extends Controller
         }
 
         // Get the presale
-        if($peticion->presale_id) {
+        if ($peticion->presale_id) {
             $presale = Preventa::find($peticion->presale_id);
         } else {
             $presale = new Preventa();
@@ -168,21 +169,21 @@ class SolicitudAdicionPreventaController extends Controller
 
         $presale->state = $peticion->state;
         $presale->tarde = $peticion->late;
-        
-        // Save the status
-        $presale->save(); 
 
-        $text = 'La preventa '.$presale->name.' de  ' . $editorial->name 
-            . ' ha sido '  . ($peticion->presale_id ? 'actualizada' : 'creada')
-            . '. Se encuentra en estado ' . $presale->state . ' y ' . ($presale->tarde ? 'no ' : '')
-            . 'es puntual.
+        // Save the status
+        $presale->save();
+
+        $text = 'La preventa '.$presale->name.' de  '.$editorial->name
+            .' ha sido '.($peticion->presale_id ? 'actualizada' : 'creada')
+            .'. Se encuentra en estado '.$presale->state.' y '.($presale->tarde ? 'no ' : '')
+            .'es puntual.
             
-            ' . $presale->url;
+            '.$presale->url;
 
         // Notify by Telegram
         HTTP::get('https://api.telegram.org/bot'.env('TELEGRAM_TOKEN').'/sendMessage', [
             'chat_id' => env('TELEGRAM_CHAT'),
-            'text' => $text
+            'text' => $text,
         ]);
 
         $peticion->delete();

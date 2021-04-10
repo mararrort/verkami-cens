@@ -39,7 +39,7 @@ class TODOController extends Controller
     {
         $valid = $request->validate([
             'text' => 'string|max:128',
-            'type' => [Rule::in(['private', 'public', 'undecided'])]
+            'type' => [Rule::in(['private', 'public', 'undecided'])],
         ]);
 
         $todo = new TODO();
@@ -49,7 +49,7 @@ class TODOController extends Controller
         $todo->type = $request->type;
 
         $todo->save();
-    
+
         return redirect()->route('info');
     }
 
@@ -86,7 +86,7 @@ class TODOController extends Controller
     {
         $valid = $request->validate([
             'text' => 'string|max:128',
-            'type' => [Rule::in(['private', 'public', 'undecided'])]
+            'type' => [Rule::in(['private', 'public', 'undecided'])],
         ]);
 
         $todo->text = $request->text;

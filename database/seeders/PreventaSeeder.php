@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\Empresa;
 use App\Models\Preventa;
+use Illuminate\Database\Seeder;
 
 class PreventaSeeder extends Seeder
 {
@@ -18,7 +18,7 @@ class PreventaSeeder extends Seeder
         $empresas = Empresa::all();
 
         foreach ($empresas as $empresa) {
-            $amount = rand(0,2);
+            $amount = rand(0, 2);
             if ($amount > 0) {
                 Preventa::factory()->count($amount)->for($empresa)->create();
             }

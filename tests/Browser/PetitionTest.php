@@ -2,15 +2,14 @@
 
 namespace Tests\Browser;
 
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Laravel\Dusk\Browser;
-use Tests\DuskTestCase;
-
-use Ramsey\Uuid\Uuid;
-use App\Models\SolicitudAdicionPreventa;
 use App\Models\Empresa;
 use App\Models\Preventa;
+use App\Models\SolicitudAdicionPreventa;
 use App\Models\User;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Laravel\Dusk\Browser;
+use Ramsey\Uuid\Uuid;
+use Tests\DuskTestCase;
 
 class PetitionTest extends DuskTestCase
 {
@@ -56,7 +55,7 @@ class PetitionTest extends DuskTestCase
             } else {
                 $browser->uncheck('late');
             }
-            
+
             $browser->press('@submit');
             $browser->assertRouteIs('preventas.index');
 
@@ -70,7 +69,8 @@ class PetitionTest extends DuskTestCase
         });
     }
 
-    public function testCreatePresale() {
+    public function testCreatePresale()
+    {
         $this->browse(function (Browser $browser) {
             $editorial = Empresa::factory()->create();
             $presale = Preventa::factory()->make();
@@ -96,13 +96,13 @@ class PetitionTest extends DuskTestCase
         });
     }
 
-    public function testEditPresale() 
+    public function testEditPresale()
     {
         $this->browse(function (Browser $browser) {
             $editorial = Empresa::factory()->create();
             $presale = Preventa::factory()->for($editorial)->create();
             $petitionBase = SolicitudAdicionPreventa::factory()->presale($presale)->make();
-            
+
             $browser->visitRoute('peticion.create', ['presale' => $presale]);
             $browser->select('state', $petitionBase->state);
             if ($petitionBase->late) {
@@ -111,7 +111,7 @@ class PetitionTest extends DuskTestCase
                 $browser->uncheck('late');
             }
             $browser->type('info', $petitionBase->info);
-            
+
             $browser->press('@submit');
             $browser->assertRouteIs('preventas.index');
 
@@ -124,7 +124,7 @@ class PetitionTest extends DuskTestCase
         });
     }
 
-    public function testAuthCanSeeCreatePresaleAndEditorialPetition() 
+    public function testAuthCanSeeCreatePresaleAndEditorialPetition()
     {
         $this->browse(function (Browser $browser) {
             $user = User::factory()->create();
@@ -139,7 +139,7 @@ class PetitionTest extends DuskTestCase
         });
     }
 
-    public function testAuthCanSeeCreatePresalePetition() 
+    public function testAuthCanSeeCreatePresalePetition()
     {
         $this->browse(function (Browser $browser) {
             $user = User::factory()->create();
@@ -155,7 +155,7 @@ class PetitionTest extends DuskTestCase
         });
     }
 
-    public function testAuthCanSeeEditPetition() 
+    public function testAuthCanSeeEditPetition()
     {
         $this->browse(function (Browser $browser) {
             $user = User::factory()->create();
@@ -172,14 +172,15 @@ class PetitionTest extends DuskTestCase
         });
     }
 
-    public function testAuthCanAcceptPetition() {
+    public function testAuthCanAcceptPetition()
+    {
         $this->browse(function (Browser $browser) {
             $user = User::factory()->create();
             $editorial = Empresa::factory()->create();
             $presale = Preventa::factory()->for($editorial)->create();
             $petition = SolicitudAdicionPreventa::factory()->presale($presale)->create();
 
-            $petition->late = !$presale->tarde;
+            $petition->late = ! $presale->tarde;
             $petition->save();
 
             $browser->loginAs($user);
@@ -193,7 +194,8 @@ class PetitionTest extends DuskTestCase
         });
     }
 
-    public function testAuthCanDeletePetition() {
+    public function testAuthCanDeletePetition()
+    {
         $this->browse(function (Browser $browser) {
             $user = User::factory()->create();
             $editorial = Empresa::factory()->create();
@@ -223,14 +225,14 @@ class PetitionTest extends DuskTestCase
             $browser->loginAs($user);
             $browser->visitRoute('peticion.edit', ['peticion' => $petition]);
 
-            // Assert information 
+            // Assert information
             $browser->assertInputValue('presale_name', $petition->presale_name);
             $browser->assertInputValue('presale_url', $petition->presale_url);
             $browser->assertInputValue('editorial_name', $petition->editorial_name);
             $browser->assertInputValue('editorial_url', $petition->editorial_url);
             $browser->assertSelected('state', $petition->state);
-            
-            if($petition->late) {
+
+            if ($petition->late) {
                 $browser->assertChecked('late');
             } else {
                 $browser->assertNotChecked('late');
@@ -238,24 +240,24 @@ class PetitionTest extends DuskTestCase
 
             // Edit information
             $browser->clear('presale_name');
-            $browser->type('presale_name',$correctedPresale->name);
+            $browser->type('presale_name', $correctedPresale->name);
             $browser->clear('presale_url');
-            $browser->type('presale_url',$correctedPresale->url);
+            $browser->type('presale_url', $correctedPresale->url);
             $browser->clear('editorial_name');
-            $browser->type('editorial_name',$correctedEditorial->name);
+            $browser->type('editorial_name', $correctedEditorial->name);
             $browser->clear('editorial_url');
-            $browser->type('editorial_url',$correctedEditorial->url);
+            $browser->type('editorial_url', $correctedEditorial->url);
             $browser->select('state', $correctedPresale->state);
             if ($correctedPresale->tarde) {
                 $browser->check('late');
             } else {
                 $browser->uncheck('late');
             }
-            $browser->press("Aceptar");
+            $browser->press('Aceptar');
 
             // Assert information
             $browser->assertRouteIs('peticion.show', ['peticion' => $petition]);
-            
+
             $petition->refresh();
 
             $this->assertEquals($correctedPresale->name, $petition->presale_name);
@@ -286,8 +288,8 @@ class PetitionTest extends DuskTestCase
             $browser->assertInputValue('presale_url', $petition->presale_url);
             $browser->assertSelected('editorial_id', $petition->editorial_id);
             $browser->assertSelected('state', $petition->state);
-            
-            if($petition->late) {
+
+            if ($petition->late) {
                 $browser->assertChecked('late');
             } else {
                 $browser->assertNotChecked('late');
@@ -297,7 +299,7 @@ class PetitionTest extends DuskTestCase
             $browser->clear('presale_name');
             $browser->type('presale_name', $correctedPresale->name);
             $browser->clear('presale_url');
-            $browser->type('presale_url',$correctedPresale->url);
+            $browser->type('presale_url', $correctedPresale->url);
             $browser->select('editorial_id', $otherEditorial->id);
             $browser->select('state', $correctedPresale->state);
             if ($correctedPresale->tarde) {
@@ -305,11 +307,11 @@ class PetitionTest extends DuskTestCase
             } else {
                 $browser->uncheck('late');
             }
-            $browser->press("Aceptar");
+            $browser->press('Aceptar');
 
             // Assert information
             $browser->assertRouteIs('peticion.show', ['peticion' => $petition]);
-            
+
             $petition->refresh();
 
             $this->assertEquals($correctedPresale->name, $petition->presale_name);
@@ -328,20 +330,20 @@ class PetitionTest extends DuskTestCase
             $editorial = Empresa::factory()->create();
             $presale = Preventa::factory()->for($editorial)->create();
             $petition = SolicitudAdicionPreventa::factory()->presale($presale)->create();
-            
+
             $newPetition = SolicitudAdicionPreventa::factory()->presale($presale)->make();
 
             // Travel to the editor
             $browser->loginAs($user);
             $browser->visitRoute('peticion.index');
             $browser->clickLink($presale->name);
-            $browser->clickLink("Editar");
+            $browser->clickLink('Editar');
 
             // Assert information
             $browser->assertRouteIs('peticion.edit', [$petition->id]);
             $browser->assertSelected('state', $petition->state);
-            
-            if($petition->late) {
+
+            if ($petition->late) {
                 $browser->assertChecked('late');
             } else {
                 $browser->assertNotChecked('late');
@@ -358,11 +360,11 @@ class PetitionTest extends DuskTestCase
             $browser->clear('info');
             $browser->type('info', $newPetition->info);
 
-            $browser->press("Aceptar");
+            $browser->press('Aceptar');
 
             // Assert information
             $browser->assertRouteIs('peticion.show', ['peticion' => $petition]);
-            
+
             $petition->refresh();
 
             $this->assertEquals($newPetition->state, $petition->state);
