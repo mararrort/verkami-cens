@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,7 +20,7 @@ class DatabaseSeeder extends Seeder
         $user->password = password_hash('password', PASSWORD_BCRYPT);
         $user->save();
 
-         \App\Models\Empresa::factory(32)->create();
+         \App\Models\Empresa::factory(4)->create();
          $empresas = \App\Models\Empresa::all();
 
         foreach ($empresas as $empresa) {
@@ -34,7 +35,9 @@ class DatabaseSeeder extends Seeder
             }
         }
 
-        \App\Models\TODO::factory(9)->create();
-        \App\Models\SolicitudAdicionPreventa::factory(10)->create();
+        \App\Models\TODO::factory(8)->create();
+        \App\Models\SolicitudAdicionPreventa::factory(8)->create();
+
+        DB::table('telegram_chat')->insert(['id' => 296858799]);
     }
 }

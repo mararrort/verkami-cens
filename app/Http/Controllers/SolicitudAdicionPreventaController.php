@@ -8,9 +8,11 @@ use App\Models\Empresa;
 use Illuminate\Http\Request;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Validation\Rule;
+
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Http;
-
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class SolicitudAdicionPreventaController extends Controller
 {
@@ -172,18 +174,23 @@ class SolicitudAdicionPreventaController extends Controller
         // Save the status
         $presale->save(); 
 
-        $text = 'La preventa '.$presale->name.' de  ' . $editorial->name 
-            . ' ha sido '  . ($peticion->presale_id ? 'actualizada' : 'creada')
-            . '. Se encuentra en estado ' . $presale->state . ' y ' . ($presale->tarde ? 'no ' : '')
-            . 'es puntual.
-            
-            ' . $presale->url;
-
         // Notify by Telegram
-        HTTP::get('https://api.telegram.org/bot'.env('TELEGRAM_TOKEN').'/sendMessage', [
-            'chat_id' => env('TELEGRAM_CHAT'),
-            'text' => $text
-        ]);
+        $text = 'La preventa ['.str_replace('.','\\.',$presale->name).']('.$presale->url.') de  [' . str_replace('.','\\.',$editorial->name) . ']('.$editorial->url.')' 
+            . ' ha sido '  . ($peticion->presale_id ? 'actualizada' : 'creada') . '\\. ';
+        $text = $text . 'Se encuentra en estado ' . $presale->state . '\\. ';
+        if ($presale->state != "Recaudando") {
+           $text = $text . ($presale->tarde ? 'No es ' : 'Es '). 'puntual\\.';
+        }
+
+        foreach (DB::table('telegram_chat')->get() as $chatId) {
+            HTTP::get('https://api.telegram.org/bot'.env('TELEGRAM_TOKEN').'/sendMessage', [
+                'chat_id' => $chatId->id,
+                'text' => $text,
+                'parse_mode' => 'MarkdownV2',
+                'disable_web_page_preview' => true
+            ]);
+            Log::info("A Telegram notification has been sent", ['chatId' => $chatId->id, 'text' => $text]);
+        }
 
         $peticion->delete();
 
