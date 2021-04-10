@@ -24,7 +24,7 @@ class EmpresaFactory extends Factory
         return [
             'id' => $this->faker->uuid,
             'name' => $this->faker->company,
-            'url' => $this->faker->url
+            'url' => $this->faker->url,
         ];
     }
 }

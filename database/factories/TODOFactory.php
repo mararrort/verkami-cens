@@ -23,7 +23,7 @@ class TODOFactory extends Factory
     {
         return [
             'id' => $this->faker->uuid,
-            'text' => substr($this->faker->sentence,0,128),
+            'text' => substr($this->faker->sentence, 0, 128),
             'type' => $this->faker->randomElement(['private', 'public', 'undecided']),
         ];
     }

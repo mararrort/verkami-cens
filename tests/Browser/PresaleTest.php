@@ -2,18 +2,17 @@
 
 namespace Tests\Browser;
 
+use App\Models\Empresa;
+use App\Models\Preventa;
+use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
-
-use App\Models\Empresa;
-use App\Models\Preventa;
-use App\Models\User;
-
 class PresaleTest extends DuskTestCase
 {
     use DatabaseMigrations;
+
     public function testEdit()
     {
         $this->browse(function (Browser $browser) {
@@ -28,7 +27,7 @@ class PresaleTest extends DuskTestCase
             $browser->visitRoute('preventas.index');
             $browser->clickLink('Editar');
             $browser->assertRouteIs('preventas.edit', ['preventa' => $preventa]);
-            
+
             $browser->assertInputValue('name', $preventa->name);
             $browser->clear('name');
             $browser->type('name', $newPresaleData->name);
@@ -56,9 +55,9 @@ class PresaleTest extends DuskTestCase
             $browser->assertSee($otherEditorial->name);
 
             if ($newPresaleData->tarde) {
-                $browser->assertSee("No");
+                $browser->assertSee('No');
             } else {
-                $browser->assertSee("Si");
+                $browser->assertSee('Si');
             }
 
             $browser->assertSourceHas($newPresaleData->url);

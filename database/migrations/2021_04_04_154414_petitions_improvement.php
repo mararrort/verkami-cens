@@ -16,7 +16,7 @@ class PetitionsImprovement extends Migration
         Schema::table('solicitud_adicion_preventas', function (Blueprint $table) {
             $table->dropColumn('text');
             $table->dropColumn('solved');
-            
+
             $table->uuid('presale_id')->nullable();
             $table->foreign('presale_id')->references('id')->on('preventas')->onUpdate('cascade')
             ->onDelete('cascade');
