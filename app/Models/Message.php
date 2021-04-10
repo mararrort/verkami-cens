@@ -30,12 +30,12 @@ class Message extends Model
 
     public function isStartRequest(): bool
     {
-        return $this->text == '/start';
+        return strpos($this->text, 'start') !== false && strpos($this->text, 'stop') === false;
     }
 
     public function isStopRequest(): bool
     {
-        return $this->text == '/stop';
+        return strpos($this->text, 'start') === false && strpos($this->text, 'stop') !== false;
     }
 
     public function getChatId(): int
