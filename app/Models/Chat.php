@@ -8,11 +8,12 @@ class Chat extends Model
 {
     private int $id;
 
-    public function __construct($var) {
+    public function __construct($var)
+    {
         $this->id = $var->id;
     }
 
-    public function getId() : int
+    public function getId(): int
     {
         return $this->id;
     }

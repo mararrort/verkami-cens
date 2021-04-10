@@ -6,13 +6,12 @@ use App\Models\Empresa;
 use App\Models\Preventa;
 use App\Models\SolicitudAdicionPreventa;
 use Illuminate\Http\Request;
-use Ramsey\Uuid\Uuid;
-use Illuminate\Validation\Rule;
-
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+use Ramsey\Uuid\Uuid;
 
 class SolicitudAdicionPreventaController extends Controller
 {
@@ -177,11 +176,11 @@ class SolicitudAdicionPreventaController extends Controller
         $presale->save();
 
         // Notify by Telegram
-        $text = 'La preventa ['.str_replace('.','\\.',$presale->name).']('.$presale->url.') de  [' . str_replace('.','\\.',$editorial->name) . ']('.$editorial->url.')' 
-            . ' ha sido '  . ($peticion->presale_id ? 'actualizada' : 'creada') . '\\. ';
-        $text = $text . 'Se encuentra en estado ' . $presale->state . '\\. ';
-        if ($presale->state != "Recaudando") {
-           $text = $text . ($presale->tarde ? 'No es ' : 'Es '). 'puntual\\.';
+        $text = 'La preventa ['.str_replace('.', '\\.', $presale->name).']('.$presale->url.') de  ['.str_replace('.', '\\.', $editorial->name).']('.$editorial->url.')'
+            .' ha sido '.($peticion->presale_id ? 'actualizada' : 'creada').'\\. ';
+        $text = $text.'Se encuentra en estado '.$presale->state.'\\. ';
+        if ($presale->state != 'Recaudando') {
+            $text = $text.($presale->tarde ? 'No es ' : 'Es ').'puntual\\.';
         }
 
         foreach (DB::table('telegram_chat')->get() as $chatId) {
@@ -189,9 +188,9 @@ class SolicitudAdicionPreventaController extends Controller
                 'chat_id' => $chatId->id,
                 'text' => $text,
                 'parse_mode' => 'MarkdownV2',
-                'disable_web_page_preview' => true
+                'disable_web_page_preview' => true,
             ]);
-            Log::info("A Telegram notification has been sent", ['chatId' => $chatId->id, 'text' => $text]);
+            Log::info('A Telegram notification has been sent', ['chatId' => $chatId->id, 'text' => $text]);
         }
 
         $peticion->delete();

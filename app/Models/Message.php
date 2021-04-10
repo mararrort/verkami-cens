@@ -2,12 +2,11 @@
 
 namespace App\Models;
 
+use App\Models\Chat;
 use Illuminate\Database\Eloquent\Model;
 
-use App\Models\Chat;
-
 /**
- * Message of the Telegram API
+ * Message of the Telegram API.
  */
 class Message extends Model
 {
@@ -15,7 +14,8 @@ class Message extends Model
     private Chat $chat;
     private string $text;
 
-    public function __construct($var) {
+    public function __construct($var)
+    {
         $this->message_id = $var->message_id;
         $this->chat = new Chat($var->chat);
         if (isset($var->text)) {
@@ -23,21 +23,22 @@ class Message extends Model
         }
     }
 
-    public function hasText() :bool {
+    public function hasText(): bool
+    {
         return isset($this->text);
     }
 
-    public function isStartRequest() : bool
+    public function isStartRequest(): bool
     {
-        return $this->text == "/start";
+        return $this->text == '/start';
     }
 
-    public function isStopRequest() : bool
+    public function isStopRequest(): bool
     {
-        return $this->text == "/stop";
+        return $this->text == '/stop';
     }
 
-    public function getChatId() : int
+    public function getChatId(): int
     {
         return $this->chat->getId();
     }

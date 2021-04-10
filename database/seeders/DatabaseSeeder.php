@@ -20,8 +20,8 @@ class DatabaseSeeder extends Seeder
         $user->password = password_hash('password', PASSWORD_BCRYPT);
         $user->save();
 
-         \App\Models\Empresa::factory(4)->create();
-         $empresas = \App\Models\Empresa::all();
+        \App\Models\Empresa::factory(4)->create();
+        $empresas = \App\Models\Empresa::all();
 
         foreach ($empresas as $empresa) {
             $amount = rand(1, 8);
