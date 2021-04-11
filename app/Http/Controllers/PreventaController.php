@@ -16,43 +16,15 @@ class PreventaController extends Controller
      */
     public function index()
     {
-        $recaudando = Preventa::select('preventas.*')
-            ->where('state', 'Recaudando')
+        // The orderByRaw solution has been got here: https://stackoverflow.com/a/25954745
+        $presales = Preventa::select('preventas.*')
             ->join('empresas', 'empresa_id', '=', 'empresas.id')
-            ->orderBy('empresas.name', 'ASC')
-            ->orderBy('preventas.name', 'ASC')
-            ->get();
-        $pendienteDeEntrega = Preventa::select('preventas.*')
-            ->where('state', 'Pendiente de entrega')
-            ->join('empresas', 'empresa_id', '=', 'empresas.id')
-            ->orderBy('empresas.name', 'ASC')
-            ->orderBy('preventas.name', 'ASC')
-            ->get();
-        $parcialmenteEntregado = Preventa::select('preventas.*')
-            ->where('state', 'Parcialmente entregado')
-            ->join('empresas', 'empresa_id', '=', 'empresas.id')
-            ->orderBy('empresas.name', 'ASC')
-            ->orderBy('preventas.name', 'ASC')
-            ->get();
-        $entregado = Preventa::select('preventas.*')
-            ->where('state', 'Entregado')
-            ->join('empresas', 'empresa_id', '=', 'empresas.id')
-            ->orderBy('empresas.name', 'ASC')
-            ->orderBy('preventas.name', 'ASC')
-            ->get();
-        $sinDefinir = Preventa::select('preventas.*')
-            ->where('state', 'Sin definir')
-            ->join('empresas', 'empresa_id', '=', 'empresas.id')
+            ->orderByRaw('FIELD(state, "Sin Definir", "Recaudando", "Pendiente de entrega", "Parcialmente entregado", "Entregado")')
             ->orderBy('empresas.name', 'ASC')
             ->orderBy('preventas.name', 'ASC')
             ->get();
 
-        return view('preventa.index',
-            ['recaudando' => $recaudando,
-                'pendienteDeEntrega' => $pendienteDeEntrega,
-                'parcialmenteEntregado' => $parcialmenteEntregado,
-                'entregado' => $entregado,
-                'sinDefinir' => $sinDefinir, ]);
+        return view('preventa.index', ['presales' => $presales]);
     }
 
     /**

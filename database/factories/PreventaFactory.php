@@ -21,12 +21,14 @@ class PreventaFactory extends Factory
      */
     public function definition()
     {
+        $state = $this->faker->randomElement(['Recaudando', 'Pendiente de entrega', 'Parcialmente entregado', 'Entregado', 'Sin definir']);
+        $tarde = ($state == "Recaudando" || $state == "Sin definir") ? false : $this->faker->boolean;
         return [
             'id' => $this->faker->uuid,
             'name' => $this->faker->words(3, true),
             'url' => $this->faker->url,
-            'state' => $this->faker->randomElement(['Recaudando', 'Pendiente de entrega', 'Parcialmente entregado', 'Entregado', 'Sin definir']),
-            'tarde' => $this->faker->boolean,
+            'state' => $state,
+            'tarde' => $tarde
         ];
     }
 }

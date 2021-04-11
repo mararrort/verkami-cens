@@ -13,6 +13,59 @@ class PresaleTest extends DuskTestCase
 {
     use DatabaseMigrations;
 
+    public function testSee()
+    {
+        $this->browse(function (Browser $browser) {
+            $editorial = Empresa::factory()->create();
+            $presale = Preventa::factory()->for($editorial)->create();
+
+            $browser->visitRoute('preventas.index');
+            $browser->assertRouteIs('preventas.index');
+            $browser->assertSeeLink($presale->name);
+        });
+    }
+
+    public function testThereIsNoCodeColour()
+    {
+        $this->browse(function (Browser $browser) {
+            $editorial = Empresa::factory()->create();
+            $presale = Preventa::factory()->for($editorial)->state([
+                'tarde' => false,
+            ])->create();
+
+            $browser->visitRoute('preventas.index');
+            $browser->assertNotPresent('@danger');
+            $browser->assertNotPresent('@success');
+        });
+    }
+
+    public function testThereIsDangerCodeColour()
+    {
+        $this->browse(function (Browser $browser) {
+            $editorial = Empresa::factory()->create();
+            $presale = Preventa::factory()->for($editorial)->state([
+                'tarde' => true,
+            ])->create();
+
+            $browser->visitRoute('preventas.index');
+            $browser->assertPresent('@danger');
+        });
+    }
+
+    public function testThereIsSuccessCodeColour()
+    {
+        $this->browse(function (Browser $browser) {
+            $editorial = Empresa::factory()->create();
+            $presale = Preventa::factory()->for($editorial)->state([
+                'tarde' => false,
+                'state' => 'Entregado'
+            ])->create();
+
+            $browser->visitRoute('preventas.index');
+            $browser->assertPresent('@success');
+        });
+    }
+
     public function testEdit()
     {
         $this->browse(function (Browser $browser) {
