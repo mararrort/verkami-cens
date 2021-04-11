@@ -31,6 +31,14 @@
         Información: <p>{{ $sap->info }}</p>
     </div>
     @endif
+    <div class="row">
+        <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="sendTelegramNotification" @if($sap->sendTelegramNotification) checked @endif disabled>
+        <label class="form-check-label" for="sendTelegramNotification">
+            Enviar notificación por Telegram
+        </label>
+    </div>
+</div>
 
 <div class="row">
     <div class="col-auto">

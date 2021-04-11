@@ -103,6 +103,14 @@
             </div>
             @endif
             <div class="row">
+                <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="sendTelegramNotification" @if($peticion->sendTelegramNotification) checked @endif>
+                <label class="form-check-label" for="sendTelegramNotification">
+                    Enviar notificación por Telegram
+                </label>
+                </div>
+            </div>
+            <div class="row">
                 <button type="submit" class="btn btn-primary">Aceptar</button>
             </div>
         </form>

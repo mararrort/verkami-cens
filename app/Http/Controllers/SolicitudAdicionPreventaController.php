@@ -73,6 +73,7 @@ class SolicitudAdicionPreventaController extends Controller
         $sap->late = $request->has('late');
         $sap->info = $request->info;
         $sap->id = Uuid::uuid4();
+        $sap->sendTelegramNotification = true;
         $sap->save();
 
         return redirect()->route('preventas.index');
@@ -119,6 +120,7 @@ class SolicitudAdicionPreventaController extends Controller
         $peticion->state = $request->state;
         $peticion->late = $request->has('late');
         $peticion->info = $request->info;
+        $peticion->sendTelegramNotification = $request->has('sendTelegramNotification');
 
         $peticion->save();
 
@@ -176,21 +178,23 @@ class SolicitudAdicionPreventaController extends Controller
         $presale->save();
 
         // Notify by Telegram
-        $text = 'La preventa ['.str_replace('.', '\\.', $presale->name).']('.$presale->url.') de  ['.str_replace('.', '\\.', $editorial->name).']('.$editorial->url.')'
-            .' ha sido '.($peticion->presale_id ? 'actualizada' : 'creada').'\\. ';
-        $text = $text.'Se encuentra en estado '.$presale->state.'\\. ';
-        if ($presale->state != 'Recaudando') {
-            $text = $text.($presale->tarde ? 'No es ' : 'Es ').'puntual\\.';
-        }
+        if ($peticion->sendTelegramNotification) {
+            $text = 'La preventa ['.str_replace('.', '\\.', $presale->name).']('.$presale->url.') de  ['.str_replace('.', '\\.', $editorial->name).']('.$editorial->url.')'
+                .' ha sido '.($peticion->presale_id ? 'actualizada' : 'creada').'\\. ';
+            $text = $text.'Se encuentra en estado '.$presale->state.'\\. ';
+            if ($presale->tarde) {
+                $text = $text.'Es impuntual\\.';
+            }
 
-        foreach (DB::table('telegram_chat')->get() as $chatId) {
-            HTTP::get('https://api.telegram.org/bot'.env('TELEGRAM_TOKEN').'/sendMessage', [
-                'chat_id' => $chatId->id,
-                'text' => $text,
-                'parse_mode' => 'MarkdownV2',
-                'disable_web_page_preview' => true,
-            ]);
-            Log::info('A Telegram notification has been sent', ['chatId' => $chatId->id, 'text' => $text]);
+            foreach (DB::table('telegram_chat')->get() as $chatId) {
+                HTTP::get('https://api.telegram.org/bot'.env('TELEGRAM_TOKEN').'/sendMessage', [
+                    'chat_id' => $chatId->id,
+                    'text' => $text,
+                    'parse_mode' => 'MarkdownV2',
+                    'disable_web_page_preview' => true,
+                ]);
+                Log::info('A Telegram notification has been sent', ['chatId' => $chatId->id, 'text' => $text]);
+            }
         }
 
         $peticion->delete();
