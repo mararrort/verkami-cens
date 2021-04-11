@@ -58,7 +58,7 @@ class PresaleTest extends DuskTestCase
             $editorial = Empresa::factory()->create();
             $presale = Preventa::factory()->for($editorial)->state([
                 'tarde' => false,
-                'state' => 'Entregado'
+                'state' => 'Entregado',
             ])->create();
 
             $browser->visitRoute('preventas.index');
