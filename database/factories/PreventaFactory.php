@@ -22,7 +22,19 @@ class PreventaFactory extends Factory
     public function definition()
     {
         $state = $this->faker->randomElement(['Recaudando', 'Pendiente de entrega', 'Parcialmente entregado', 'Entregado', 'Sin definir']);
-        $tarde = ($state == 'Recaudando' || $state == 'Sin definir') ? false : $this->faker->boolean;
+
+        $hasDates = $this->faker->boolean;
+
+        if ($hasDates) {
+            $start = $this->faker->dateTimeBetween('-5 years');
+            $announcedEnd = $this->faker->dateTimeBetween($start, '+5 years');
+        }
+
+        if ($hasDates && $state == "Entregado") {
+            $end = $this->faker->dateTimeBetween($start, '+5 years');
+        }
+
+        $tarde = (isset($end) && isset($announcedEnd) && ($end > $announcedEnd)) ? true : false;
 
         return [
             'id' => $this->faker->uuid,
@@ -30,6 +42,9 @@ class PreventaFactory extends Factory
             'url' => $this->faker->url,
             'state' => $state,
             'tarde' => $tarde,
+            'start' => $start ?? null,
+            'announced_end' => $announcedEnd ?? null,
+            'end' => $end ?? null,
         ];
     }
 }

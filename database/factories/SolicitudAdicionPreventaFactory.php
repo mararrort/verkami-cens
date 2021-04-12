@@ -23,14 +23,20 @@ class SolicitudAdicionPreventaFactory extends Factory
      */
     public function definition()
     {
+        $editorial = Empresa::factory()->make();
+        $presale = Preventa::factory()->make();
+
         return [
             'id' => $this->faker->uuid,
-            'presale_name' => $this->faker->words(3, true),
-            'presale_url' => $this->faker->URL,
-            'editorial_name' => $this->faker->company,
-            'editorial_url' => $this->faker->url,
-            'state' => $this->faker->randomElement(['Recaudando', 'Pendiente de entrega', 'Parcialmente entregado', 'Entregado', 'Sin definir']),
-            'late' => $this->faker->boolean,
+            'presale_name' => $presale->name,
+            'presale_url' => $presale->url,
+            'editorial_name' => $editorial->name,
+            'editorial_url' => $editorial->url,
+            'state' => $presale->state,
+            'late' => $presale->tarde,
+            'start' => $presale->start,
+            'announced_end' => $presale->announced_end,
+            'end' => $presale->end,
         ];
     }
 

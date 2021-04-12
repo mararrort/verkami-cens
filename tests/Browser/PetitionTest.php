@@ -180,9 +180,6 @@ class PetitionTest extends DuskTestCase
             $presale = Preventa::factory()->for($editorial)->create();
             $petition = SolicitudAdicionPreventa::factory()->presale($presale)->create();
 
-            $petition->late = ! $presale->tarde;
-            $petition->save();
-
             $browser->loginAs($user);
             $browser->visitRoute('peticion.show', ['peticion' => $petition]);
             $browser->press('Accept');
@@ -357,8 +354,6 @@ class PetitionTest extends DuskTestCase
             } else {
                 $browser->uncheck('late');
             }
-            $browser->clear('info');
-            $browser->type('info', $newPetition->info);
 
             $browser->press('Aceptar');
 
@@ -369,7 +364,6 @@ class PetitionTest extends DuskTestCase
 
             $this->assertEquals($newPetition->state, $petition->state);
             $this->assertEquals($newPetition->late, $petition->late);
-            $this->assertEquals($newPetition->info, $petition->info);
         });
     }
 }

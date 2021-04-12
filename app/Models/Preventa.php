@@ -16,6 +16,12 @@ class Preventa extends Model
     public $incrementing = false;
     protected $keyType = 'string';
 
+    protected $casts = [
+        'start' => 'date',
+        'announced_end' => 'date',
+        'end' => 'date',
+    ];
+
     /**
      * The model's default values for attributes.
      *

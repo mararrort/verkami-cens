@@ -28,6 +28,9 @@
                     <th>Nombre</th>
                     <th>Editorial</th>
                     <th>Estado</th>
+                    <th>F. de financiación</th>
+                    <th>F. de entrega anunciada</th>
+                    <th>F. de entrega</th>
                     <th>Puntualidad</th>
                 </tr>
             </thead>
@@ -43,6 +46,9 @@
                     <td><a dusk="editPresale" href="{{route('peticion.create', ['presale' => $item->id])}}"><i class="bi bi-pencil"></a></i><a href="{{$item->url}}">{{$item->name}}</a> @auth <a href="/preventas/{{$item->id}}/edit">Editar</a>@endauth</td>
                     <td>{{$item->empresa->name}}</td>
                     <td>{{$item->state}}</td>
+                    <td>{{$item->start ? $item->start->format('Y-m-d') : '-'}}</td>
+                    <td>{{$item->announced_end ? $item->announced_end->format('Y-m-d') : '-'}}</td>
+                    <td>{{$item->end ? $item->end->format('Y-m-d') : '-'}}</td>
                     <td>{{ ($item->state == "Sin definir" || $item->state == "Recaudando") ?
                         "-" : ($item->tarde ? "No" : "Si") }}</td>
                 <tr>

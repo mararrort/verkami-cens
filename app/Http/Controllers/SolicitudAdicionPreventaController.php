@@ -59,6 +59,9 @@ class SolicitudAdicionPreventaController extends Controller
             'editorial_url' => 'required_without:editorial_id|nullable|string|max:128',
             'state' => ['required', Rule::in(['Recaudando', 'Pendiente de entrega', 'Parcialmente entregado', 'Entregado', 'Sin definir'])],
             'info' => 'nullable|string',
+            'start' => 'nullable|date',
+            'announced_end' => 'nullable|date',
+            'end' => 'nullable|date'
         ]);
 
         $sap = new SolicitudAdicionPreventa();
@@ -74,6 +77,10 @@ class SolicitudAdicionPreventaController extends Controller
         $sap->info = $request->info;
         $sap->id = Uuid::uuid4();
         $sap->sendTelegramNotification = true;
+        $sap->start = $request->start;
+        $sap->announced_end = $request->announced_end;
+        $sap->end = $request->end;
+
         $sap->save();
 
         return redirect()->route('preventas.index');
@@ -121,6 +128,9 @@ class SolicitudAdicionPreventaController extends Controller
         $peticion->late = $request->has('late');
         $peticion->info = $request->info;
         $peticion->sendTelegramNotification = $request->has('sendTelegramNotification');
+        $peticion->start = $request->start;
+        $peticion->announced_end = $request->announced_end;
+        $peticion->end = $request->end; 
 
         $peticion->save();
 
@@ -173,6 +183,10 @@ class SolicitudAdicionPreventaController extends Controller
 
         $presale->state = $peticion->state;
         $presale->tarde = $peticion->late;
+
+        $presale->start = $peticion->start;
+        $presale->announced_end = $peticion->announced_end;
+        $presale->end = $peticion->end;
 
         // Save the status
         $presale->save();

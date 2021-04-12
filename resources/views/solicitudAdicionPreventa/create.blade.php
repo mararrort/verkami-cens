@@ -18,15 +18,6 @@
         @endif
     </div>
 </div>
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
 <div class="row">
     <div class="col-md-12">
         <form method="POST" action="{{route('peticion.store')}}">
@@ -112,6 +103,36 @@
                     <option>Sin definir</option>
                 </select>
                 @error('state')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="mb-3">
+                <label for="start" class="form-label">Inicio de la preventa</label>
+                <input dusk="start" type="date" name="start" class="form-control" value="{{old('start')}}">
+                @error('start')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="mb-3">
+                <label for="announced_end" class="form-label">Fecha de entrega anunciada</label>
+                <input dusk="announced_end" type="date" name="announced_end" class="form-control" value="{{old('announced_end')}}">
+                @error('announced_end')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="mb-3">
+                <label for="end" class="form-label">Fecha de entrega</label>
+                <input dusk="end" type="date" name="end" class="form-control" value="{{old('end')}}">
+                @error('end')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
             </div>

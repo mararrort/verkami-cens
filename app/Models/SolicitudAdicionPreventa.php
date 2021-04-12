@@ -18,6 +18,12 @@ class SolicitudAdicionPreventa extends Model
     public $incrementing = false;
     protected $keyType = 'string';
 
+    protected $casts = [
+        'start' => 'date',
+        'announced_end' => 'date',
+        'end' => 'date',
+    ];
+
     public function empresa()
     {
         return $this->belongsTo(Empresa::class, 'editorial_id');

@@ -102,6 +102,36 @@
                 </div>
             </div>
             @endif
+            
+        <div class="row">
+            <div class="mb-3">
+                <label for="start" class="form-label">Inicio de la preventa</label>
+                <input dusk="start" type="date" name="start" class="form-control" value="{{$peticion->start ? $peticion->start->format('Y-m-d') : ''}}">
+                @error('start')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="mb-3">
+                <label for="announced_end" class="form-label">Fecha de entrega anunciada</label>
+                <input dusk="announced_end" type="date" name="announced_end" class="form-control" value="{{$peticion->announced_end ? $peticion->announced_end->format('Y-m-d') : ''}}">
+                @error('announced_end')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="mb-3">
+                <label for="end" class="form-label">Fecha de entrega</label>
+                <input dusk="end" type="date" name="end" class="form-control" value="{{$peticion->end ? $peticion->end->format('Y-m-d') : ''}}">
+                @error('end')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+            </div>
+        </div>
             <div class="row">
                 <div class="form-check">
                 <input class="form-check-input" type="checkbox" name="sendTelegramNotification" @if($peticion->sendTelegramNotification) checked @endif>
