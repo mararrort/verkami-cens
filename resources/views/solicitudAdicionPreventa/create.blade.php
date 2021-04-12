@@ -9,8 +9,7 @@
     <div class="col-md-auto">
         <h1>{{$presale ? "Solicitar modificación" : "Solicitar adición"}}</h1>
         @if($presale)
-        <p>Introduce la modificación sobre el estado o la puntualidad. Si deseas modificar otra cosa,
-        deberás pedírmelo a <a href="https://twitter.com/mararrort">mi cuenta de Twitter</a></p>
+        <p>Si deseas modificar otra cosa, deberás pedírmelo a <a href="https://twitter.com/roltrasos">mi cuenta de Twitter</a> o <a href="https://t.me/SafeForCrowdfunding">grupo de Telegram</a>.</p>
         @else
         <p>Rellena los campos con información sobre la preventa a añadir.
         Tras enviar la solicitud, se te redirigirá al índice de preventas.
@@ -96,11 +95,11 @@
             <div class="col-md-12">
                 <label for="state" class="form-label">Estado</label>
                 <select name="state" class="form-select">
-                    <option>Recaudando</option>
-                    <option>Pendiente de entrega</option>
-                    <option>Parcialmente entregado</option>
-                    <option>Entregado</option>
-                    <option>Sin definir</option>
+                    <option @if(isset($presale) && $presale->status == "Recaudando") checked @endif>Recaudando</option>
+                    <option @if(isset($presale) && $presale->status == "Pendiente de entrega") checked @endif>Pendiente de entrega</option>
+                    <option @if(isset($presale) && $presale->status == "Parcialmente entregado") checked @endif>Parcialmente entregado</option>
+                    <option @if(isset($presale) && $presale->status == "Entregado") checked @endif>Entregado</option>
+                    <option @if(isset($presale) && $presale->status == "Sin definir") checked @endif>Sin definir</option>
                 </select>
                 @error('state')
                     <div class="alert alert-danger">{{ $message }}</div>
@@ -109,29 +108,25 @@
         </div>
 
         <div class="row">
-            <div class="mb-3">
-                <label for="start" class="form-label">Inicio de la preventa</label>
-                <input dusk="start" type="date" name="start" class="form-control" value="{{old('start')}}">
+            <div class="col-auto">
+                <label for="start" class="form-label">Finalización de la preventa</label>
+                <input dusk="start" type="date" name="start" class="form-control" @if(isset($presale) && isset($presale->start)) value="{{$presale->start->format('Y-m-d')}}" @endif>
                 @error('start')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
             </div>
-        </div>
 
-        <div class="row">
-            <div class="mb-3">
+            <div class="col-auto">
                 <label for="announced_end" class="form-label">Fecha de entrega anunciada</label>
-                <input dusk="announced_end" type="date" name="announced_end" class="form-control" value="{{old('announced_end')}}">
+                <input dusk="announced_end" type="date" name="announced_end" class="form-control" @if(isset($presale) && isset($presale->announced_end)) value="{{$presale->announced_end->format('Y-m-d')}}" @endif>
                 @error('announced_end')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
             </div>
-        </div>
 
-        <div class="row">
-            <div class="mb-3">
+            <div class="col-auto">
                 <label for="end" class="form-label">Fecha de entrega</label>
-                <input dusk="end" type="date" name="end" class="form-control" value="{{old('end')}}">
+                <input dusk="end" type="date" name="end" class="form-control" @if(isset($presale) && isset($presale->end)) value="{{$presale->end->format('Y-m-d')}}" @endif>
                 @error('end')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
@@ -139,9 +134,11 @@
         </div>
 
         <div class="row">
-            <div class="form-check">
-                <label for="late" class="form-check-label">La entrega de la preventa está fuera de plazo</label>
-                <input class="form-check-input" type="checkbox" name="late" value="{{old('late')}}">
+            <div class="col-auto">
+                <div class="form-check">
+                    <label for="late" class="form-check-label">La entrega de la preventa está fuera de plazo</label>    
+                    <input class="form-check-input" type="checkbox" name="late" @if(isset($presale) && $presale->tarde) checked @endif>
+                </div>
             </div>
         </div>
 
