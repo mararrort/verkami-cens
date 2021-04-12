@@ -39,25 +39,43 @@
         </label>
     </div>
     <div class="row">
-            <div class="mb-3">
-                <label for="start" class="form-label">Inicio de la preventa</label>
-                <input type="date" name="start" class="form-control" value="{{$sap->start ? $sap->start->format('Y-m-d') : ''}}" disabled>
-            </div>
+        @if($sap->presale_id)
+        <div class="mb-3">
+            <label for="start" class="form-label">Inicio de la preventa</label>
+            <input type="date" name="start" class="form-control" value="{{$sap->preventa->start ? $sap->preventa->start->format('Y-m-d') : ''}}" disabled>
         </div>
+        @endif
+        <div class="mb-3">
+            <label for="start_p" class="form-label">Inicio de la preventa propuesto</label>
+            <input type="date" name="start_p" class="form-control" value="{{$sap->start ? $sap->start->format('Y-m-d') : ''}}" disabled>
+        </div>
+    </div>
 
-        <div class="row">
-            <div class="mb-3">
-                <label for="announced_end" class="form-label">Fecha de entrega anunciada</label>
-                <input type="date" name="announced_end" class="form-control" value="{{$sap->announced_end ? $sap->announced_end->format('Y-m-d') : ''}}" disabled>
-            </div>
+    <div class="row">
+        @if($sap->presale_id)
+        <div class="mb-3">
+            <label for="announced_end" class="form-label">Fecha de entrega anunciada</label>
+            <input type="date" name="announced_end" class="form-control" value="{{$sap->preventa->announced_end ? $sap->preventa->announced_end->format('Y-m-d') : ''}}" disabled>
         </div>
+        @endif
+        <div class="mb-3">
+            <label for="announced_end_p" class="form-label">Fecha de entrega anunciada propuesta</label>
+            <input type="date" name="announced_end_p" class="form-control" value="{{$sap->announced_end ? $sap->announced_end->format('Y-m-d') : ''}}" disabled>
+        </div>
+    </div>
 
-        <div class="row">
-            <div class="mb-3">
-                <label for="end" class="form-label">Fecha de entrega</label>
-                <input type="date" name="end" class="form-control" value="{{$sap->end ? $sap->end->format('Y-m-d') : ''}}" disabled>
-            </div>
+    <div class="row">
+        @if($sap->presale_id)
+        <div class="mb-3">
+            <label for="end_p" class="form-label">Fecha de entrega</label>
+            <input type="date" name="end_p" class="form-control" value="{{$sap->preventa->end ? $sap->preventa->end->format('Y-m-d') : ''}}" disabled>
         </div>
+        @endif
+        <div class="mb-3">
+            <label for="end_p" class="form-label">Fecha de entrega propuesta</label>
+            <input type="date" name="end_p" class="form-control" value="{{$sap->end ? $sap->end->format('Y-m-d') : ''}}" disabled>
+        </div>
+    </div>
 </div>
 
 <div class="row">
