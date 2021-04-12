@@ -61,7 +61,7 @@ class SolicitudAdicionPreventaController extends Controller
             'info' => 'nullable|string',
             'start' => 'nullable|date',
             'announced_end' => 'nullable|date',
-            'end' => 'nullable|date'
+            'end' => 'nullable|date',
         ]);
 
         $sap = new SolicitudAdicionPreventa();
@@ -130,7 +130,7 @@ class SolicitudAdicionPreventaController extends Controller
         $peticion->sendTelegramNotification = $request->has('sendTelegramNotification');
         $peticion->start = $request->start;
         $peticion->announced_end = $request->announced_end;
-        $peticion->end = $request->end; 
+        $peticion->end = $request->end;
 
         $peticion->save();
 
