@@ -30,7 +30,7 @@ class PreventaFactory extends Factory
             $announcedEnd = $this->faker->dateTimeBetween($start, '+5 years');
         }
 
-        if ($hasDates && $state == "Entregado") {
+        if ($hasDates && $state == 'Entregado') {
             $end = $this->faker->dateTimeBetween($start, '+5 years');
         }
 
