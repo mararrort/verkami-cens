@@ -18,4 +18,4 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::post('/'.env('TELEGRAM_TOKEN'), [TelegramController::class, 'setUpdate']);
+Route::post('/'.env('TELEGRAM_BOT_TOKEN'), [TelegramController::class, 'setUpdate']);

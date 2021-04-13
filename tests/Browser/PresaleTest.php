@@ -30,6 +30,7 @@ class PresaleTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $editorial = Editorial::factory()->create();
             $presale = Presale::factory()->for($editorial)->state([
+                'state' => 'Sin definir',
                 'late' => false,
             ])->create();
 

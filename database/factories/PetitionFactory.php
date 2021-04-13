@@ -37,6 +37,7 @@ class PetitionFactory extends Factory
             'start' => $presale->start,
             'announced_end' => $presale->announced_end,
             'end' => $presale->end,
+            'sendTelegramNotification' => true
         ];
     }
 

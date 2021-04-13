@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Update;
+use App\Models\TelegramUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -17,35 +18,55 @@ class TelegramController extends Controller
 
         // Check if the update has already been processed
         if (DB::table('telegram')->where('id', $update->getId())->doesntExist()) {
-            // Check if it is a start request
-            if ($update->isStartRequest()) {
-                Log::info('The update is a start request');
+            // Check if it is a bot command
+            if ($update->isBotCommand()) {
                 $chatId = $update->getChatId();
-                // Check if it is already in the DDBB
-                if (DB::table('telegram_chat')->where('id', $chatId)->doesntExist()) {
-                    DB::table('telegram_chat')->insert(['id' => $chatId]);
-                    Log::info('A chat has been added to the DDBB', ['chat' => $chatId]);
-
+                $telegramUser = TelegramUser::firstOrCreate(['id' => $chatId]);
+                $telegramUser->id = $chatId;
+                if ($update->isStartRequest()) {
+                    Log::info("Is start petition");
+                    $telegramUser->setAcceptedPetitions(true);
                     // Notify the user
+                    $response = response()->json([
+                            'method' => 'sendMessage',
+                            'chat_id' => $chatId,
+                            'text' => 'A partir de ahora enviaré notificaciones a este chat',
+                        ]);
+                }
+                if ($update->isStopRequest()) {
+                    Log::info("Is stop petition");
+                    $telegramUser->setAcceptedPetitions(false);
                     $response = response()->json([
                         'method' => 'sendMessage',
                         'chat_id' => $chatId,
-                        'text' => 'A partir de ahora enviaré notificaciones a este chat',
+                        'text' => 'A partir de ahora no enviaré notificaciones a este chat',
                     ]);
                 }
-            } elseif ($update->isStopRequest()) {
-                $chatId = $update->getChatId();
-                Log::info('The update is a stop request, the chat will be removed from the DDBB', ['chat' => $chatId]);
-                DB::table('telegram_chat')->where('id', $chatId)->delete();
-
-                // Notify the user
-                $response = response()->json([
-                    'method' => 'sendMessage',
-                    'chat_id' => $chatId,
-                    'text' => 'A partir de ahora dejaré de enviar notificaciones a este chat',
-                ]);
+                if ($update->isStartPetitionsRequest()) {
+                    Log::info("Is start petitions petition");
+                    $telegramUser->setCreatedPetitions(true);
+                    $response = response()->json([
+                        'method' => 'sendMessage',
+                        'chat_id' => $chatId,
+                        'text' => 'A partir de ahora enviaré notificaciones sobre las peticiones creadas a este chat',
+                    ]);
+                }
+                if ($update->isStopPetitionsRequest()) {
+                    Log::info("Is stop petitions petition");
+                    $telegramUser->setCreatedPetitions(false);
+                    $response = response()->json([
+                        'method' => 'sendMessage',
+                        'chat_id' => $chatId,
+                        'text' => 'A partir de ahora no enviaré notificaciones sobre las peticiones creadas a este chat',
+                    ]);
+                }
+                // Remove the User if they do not want any update, persist either way.
+                if (!$telegramUser->isAcceptedPetitions() && !$telegramUser->isCreatedPetitions()){
+                    $telegramUser->delete();
+                } else {
+                    $telegramUser->save();
+                }
             }
-            DB::table('telegram')->insert(['id' => $update->getId()]);
         } else {
             Log::info('Duplicated update, has been ignored');
         }

@@ -35,4 +35,12 @@ class Presale extends Model
     {
         return $this->belongsTo(Editorial::class);
     }
+
+    /**
+    * Returns the text formated as Markdown for Telegram
+    * @return string */
+    public function getMarkdown() : string
+    {
+        return '['.$this->name.']('.$this->url.')';
+    }
 }

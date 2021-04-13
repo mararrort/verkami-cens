@@ -32,4 +32,16 @@ class Petition extends Model
     {
         return $this->belongsTo(Presale::class, 'presale_id');
     }
+
+    /**
+    * Check if the petition is an update.
+    
+    * The check is based in the existene of a relation with an existent presale
+    
+    * @return bool
+    */
+    public function isUpdate() : bool
+    {
+        return isset($this->presale_id);
+    }
 }

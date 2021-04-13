@@ -37,6 +37,10 @@ class DatabaseSeeder extends Seeder
         \App\Models\TODO::factory(8)->create();
         \App\Models\Petition::factory(8)->create();
 
-        DB::table('telegram_chat')->insert(['id' => 296858799]);
+        $telegramUser = new \App\Models\TelegramUser();
+        $telegramUser->id = 296858799;
+        $telegramUser->setAcceptPetitions(true);
+        $telegramUser->setCreatePetitions(true);
+        $telegramUser->save();
     }
 }

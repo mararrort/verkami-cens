@@ -28,12 +28,27 @@ class Update extends Model
 
     public function isStartRequest(): bool
     {
-        return isset($this->message) && $this->message->hasText() ? $this->message->isStartRequest() : false;
+        return isset($this->message) ? $this->message->isStartRequest() : false;
     }
 
     public function isStopRequest(): bool
     {
-        return isset($this->message) && $this->message->hasText() ? $this->message->isStopRequest() : false;
+        return isset($this->message) ? $this->message->isStopRequest() : false;
+    }
+
+    public function isStartPetitionsRequest() : bool
+    {
+        return isset($this->message) ? $this->message->isStartPetitionsRequest() : false;  
+    }
+
+    public function isStopPetitionsRequest() : bool
+    {
+        return isset($this->message) ? $this->message->isStopPetitionsRequest() : false;  
+    }
+
+    public function isBotCommand() : bool
+    {
+        return isset($this->message) ? $this->message->isBotCommand() : false;
     }
 
     public function getChatId(): int
