@@ -28,14 +28,14 @@ class DatabaseSeeder extends Seeder
                 for ($i = 0; $i < $amount; $i++) {
                     $presale = \App\Models\Presale::factory()->for($editorial)->create();
                     if (rand(0, 1)) {
-                        \App\Models\SolicitudAdicionPreventa::factory()->presale($presale)->create();
+                        \App\Models\Petition::factory()->presale($presale)->create();
                     }
                 }
             }
         }
 
         \App\Models\TODO::factory(8)->create();
-        \App\Models\SolicitudAdicionPreventa::factory(8)->create();
+        \App\Models\Petition::factory(8)->create();
 
         DB::table('telegram_chat')->insert(['id' => 296858799]);
     }

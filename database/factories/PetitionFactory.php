@@ -4,17 +4,17 @@ namespace Database\Factories;
 
 use App\Models\Editorial;
 use App\Models\Presale;
-use App\Models\SolicitudAdicionPreventa;
+use App\Models\Petition;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class SolicitudAdicionPreventaFactory extends Factory
+class PetitionFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = SolicitudAdicionPreventa::class;
+    protected $model = Petition::class;
 
     /**
      * Define the model's default state.

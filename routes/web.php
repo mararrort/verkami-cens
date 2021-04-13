@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\EditorialController;
 use App\Http\Controllers\PresaleController;
-use App\Http\Controllers\SolicitudAdicionPreventaController;
+use App\Http\Controllers\PetitionController;
 use App\Http\Controllers\TODOController;
 use App\Models\TODO;
 use Illuminate\Support\Facades\Route;
@@ -30,10 +30,10 @@ Route::resource('editorial', EditorialController::class)->only(['index']);
 
 Route::resource('preventas', PresaleController::class)->only(['index']);
 
-Route::resource('peticion', SolicitudAdicionPreventaController::class)->only(['store']);
-Route::get('/peticion/create/{presale?}', [SolicitudAdicionPreventaController::class, 'create'])->name('peticion.create');
-Route::resource('peticion', SolicitudAdicionPreventaController::class)->only(['index', 'edit', 'update', 'show', 'destroy'])->middleware('auth');
-Route::post('/peticion/{peticion}/accept', [SolicitudAdicionPreventaController::class, 'accept'])->name('peticion.accept')->middleware('auth');
+Route::resource('peticion', PetitionController::class)->only(['store']);
+Route::get('/peticion/create/{presale?}', [PetitionController::class, 'create'])->name('peticion.create');
+Route::resource('peticion', PetitionController::class)->only(['index', 'edit', 'update', 'show', 'destroy'])->middleware('auth');
+Route::post('/peticion/{peticion}/accept', [PetitionController::class, 'accept'])->name('peticion.accept')->middleware('auth');
 
 Route::resource('todo', TODOController::class)->only(['create', 'store', 'edit', 'update', 'destroy'])->middleware('auth');
 

@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class SolicitudAdicionPreventaSeeder extends Seeder
+class Petition extends Seeder
 {
     /**
      * Run the database seeds.

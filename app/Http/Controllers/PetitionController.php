@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Editorial;
 use App\Models\Presale;
-use App\Models\SolicitudAdicionPreventa;
+use App\Models\Petition;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Ramsey\Uuid\Uuid;
 
-class SolicitudAdicionPreventaController extends Controller
+class PetitionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,11 +22,11 @@ class SolicitudAdicionPreventaController extends Controller
      */
     public function index()
     {
-        $createPetitions = SolicitudAdicionPreventa::whereNull('presale_id')->get();
+        $createPetitions = Petition::whereNull('presale_id')->get();
 
-        $updatePetitions = SolicitudAdicionPreventa::whereNotNull('presale_id')->get();
+        $updatePetitions = Petition::whereNotNull('presale_id')->get();
 
-        return view('solicitudAdicionPreventa.index',
+        return view('petition.index',
             ['createPetitions' => $createPetitions, 'updatePetitions' => $updatePetitions]);
     }
 
@@ -39,7 +39,7 @@ class SolicitudAdicionPreventaController extends Controller
     {
         $editorials = Editorial::orderBy('name', 'ASC')->get();
 
-        return view('solicitudAdicionPreventa.create', ['editorials' => $editorials, 'presale' => $presale]);
+        return view('petition.create', ['editorials' => $editorials, 'presale' => $presale]);
     }
 
     /**
@@ -64,7 +64,7 @@ class SolicitudAdicionPreventaController extends Controller
             'end' => 'nullable|date',
         ]);
 
-        $sap = new SolicitudAdicionPreventa();
+        $sap = new Petition();
 
         $sap->presale_id = $request->presale_id;
         $sap->presale_name = $request->presale_name;
@@ -89,35 +89,35 @@ class SolicitudAdicionPreventaController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\SolicitudAdicionPreventa  $solicitudAdicionPreventa
+     * @param  \App\Models\Petition  $petition
      * @return \Illuminate\Http\Response
      */
-    public function show(SolicitudAdicionPreventa $peticion)
+    public function show(Petition $peticion)
     {
-        return view('solicitudAdicionPreventa.show', ['sap' => $peticion]);
+        return view('petition.show', ['sap' => $peticion]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\SolicitudAdicionPreventa  $solicitudAdicionPreventa
+     * @param  \App\Models\Petition  $petition
      * @return \Illuminate\Http\Response
      */
-    public function edit(SolicitudAdicionPreventa $peticion)
+    public function edit(Petition $peticion)
     {
         $editorials = Editorial::all();
 
-        return view('solicitudAdicionPreventa.edit', ['peticion' => $peticion, 'editorials' => $editorials]);
+        return view('petition.edit', ['peticion' => $peticion, 'editorials' => $editorials]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\SolicitudAdicionPreventa  $solicitudAdicionPreventa
+     * @param  \App\Models\Petition  $petition
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, SolicitudAdicionPreventa $peticion)
+    public function update(Request $request, Petition $peticion)
     {
         $peticion->presale_name = $request->presale_name;
         $peticion->presale_url = $request->presale_url;
@@ -140,10 +140,10 @@ class SolicitudAdicionPreventaController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\SolicitudAdicionPreventa  $solicitudAdicionPreventa
+     * @param  \App\Models\Petition  $petition
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SolicitudAdicionPreventa $peticion)
+    public function destroy(Petition $peticion)
     {
         $peticion->delete();
 
@@ -157,7 +157,7 @@ class SolicitudAdicionPreventaController extends Controller
      * The editorial will be new if the field editorial_id is null.
      * If the editorial is new, it will be created and persisted.
      */
-    public function accept(SolicitudAdicionPreventa $peticion)
+    public function accept(Petition $peticion)
     {
         // Get the editorial
         if ($peticion->editorial_id) {

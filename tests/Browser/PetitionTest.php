@@ -4,7 +4,7 @@ namespace Tests\Browser;
 
 use App\Models\Editorial;
 use App\Models\Presale;
-use App\Models\SolicitudAdicionPreventa;
+use App\Models\Petition;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
@@ -59,7 +59,7 @@ class PetitionTest extends DuskTestCase
             $browser->press('@submit');
             $browser->assertRouteIs('preventas.index');
 
-            $petition = SolicitudAdicionPreventa::all()[0];
+            $petition = Petition::all()[0];
             $this->assertEquals($presale->name, $petition->presale_name);
             $this->assertEquals($presale->url, $petition->presale_url);
             $this->assertEquals($editorial->name, $petition->editorial_name);
@@ -87,7 +87,7 @@ class PetitionTest extends DuskTestCase
             $browser->press('@submit');
             $browser->assertRouteIs('preventas.index');
 
-            $petition = SolicitudAdicionPreventa::all()[0];
+            $petition = Petition::all()[0];
             $this->assertEquals($presale->name, $petition->presale_name);
             $this->assertEquals($presale->url, $petition->presale_url);
             $this->assertEquals($editorial->id, $petition->editorial_id);
@@ -101,7 +101,7 @@ class PetitionTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $editorial = Editorial::factory()->create();
             $presale = Presale::factory()->for($editorial)->create();
-            $petitionBase = SolicitudAdicionPreventa::factory()->presale($presale)->make();
+            $petitionBase = Petition::factory()->presale($presale)->make();
 
             $browser->visitRoute('peticion.create', ['presale' => $presale]);
             $browser->select('state', $petitionBase->state);
@@ -115,7 +115,7 @@ class PetitionTest extends DuskTestCase
             $browser->press('@submit');
             $browser->assertRouteIs('preventas.index');
 
-            $petition = SolicitudAdicionPreventa::all()[0];
+            $petition = Petition::all()[0];
             $this->assertEquals($presale->id, $petition->presale_id);
             $this->assertEquals($editorial->id, $petition->editorial_id);
             $this->assertEquals($petitionBase->state, $petition->state);
@@ -128,7 +128,7 @@ class PetitionTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $user = User::factory()->create();
-            $petition = SolicitudAdicionPreventa::factory()->create();
+            $petition = Petition::factory()->create();
 
             $browser->loginAs($user);
             $browser->visitRoute('peticion.index');
@@ -144,7 +144,7 @@ class PetitionTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $user = User::factory()->create();
             $editorial = Editorial::factory()->create();
-            $petition = SolicitudAdicionPreventa::factory()->editorial($editorial)->create();
+            $petition = Petition::factory()->editorial($editorial)->create();
 
             $browser->loginAs($user);
             $browser->visitRoute('peticion.index');
@@ -161,7 +161,7 @@ class PetitionTest extends DuskTestCase
             $user = User::factory()->create();
             $editorial = Editorial::factory()->create();
             $presale = Presale::factory()->for($editorial)->create();
-            $petition = SolicitudAdicionPreventa::factory()->presale($presale)->create();
+            $petition = Petition::factory()->presale($presale)->create();
 
             $browser->loginAs($user);
             $browser->visitRoute('peticion.index');
@@ -178,7 +178,7 @@ class PetitionTest extends DuskTestCase
             $user = User::factory()->create();
             $editorial = Editorial::factory()->create();
             $presale = Presale::factory()->for($editorial)->create();
-            $petition = SolicitudAdicionPreventa::factory()->presale($presale)->create();
+            $petition = Petition::factory()->presale($presale)->create();
 
             $browser->loginAs($user);
             $browser->visitRoute('peticion.show', ['peticion' => $petition]);
@@ -197,14 +197,14 @@ class PetitionTest extends DuskTestCase
             $user = User::factory()->create();
             $editorial = Editorial::factory()->create();
             $presale = Presale::factory()->for($editorial)->create();
-            $petition = SolicitudAdicionPreventa::factory()->presale($presale)->create();
+            $petition = Petition::factory()->presale($presale)->create();
 
             $browser->loginAs($user);
             $browser->visitRoute('peticion.show', ['peticion' => $petition]);
             $browser->press('Delete');
             $browser->assertRouteIs('peticion.index');
 
-            $this->assertEmpty(SolicitudAdicionPreventa::all());
+            $this->assertEmpty(Petition::all());
         });
     }
 
@@ -216,7 +216,7 @@ class PetitionTest extends DuskTestCase
             $presale = Presale::factory()->for($editorial)->create();
             $correctedEditorial = Editorial::factory()->make();
             $correctedPresale = Presale::factory()->for($editorial)->make();
-            $petition = SolicitudAdicionPreventa::factory()->presale($presale)->create();
+            $petition = Petition::factory()->presale($presale)->create();
 
             // Travel to the editor
             $browser->loginAs($user);
@@ -274,7 +274,7 @@ class PetitionTest extends DuskTestCase
             $presale = Presale::factory()->for($editorial)->create();
             $otherEditorial = Editorial::factory()->create();
             $correctedPresale = Presale::factory()->for($editorial)->make();
-            $petition = SolicitudAdicionPreventa::factory()->editorial($editorial)->create();
+            $petition = Petition::factory()->editorial($editorial)->create();
 
             // Travel to the editor
             $browser->loginAs($user);
@@ -326,9 +326,9 @@ class PetitionTest extends DuskTestCase
 
             $editorial = Editorial::factory()->create();
             $presale = Presale::factory()->for($editorial)->create();
-            $petition = SolicitudAdicionPreventa::factory()->presale($presale)->create();
+            $petition = Petition::factory()->presale($presale)->create();
 
-            $newPetition = SolicitudAdicionPreventa::factory()->presale($presale)->make();
+            $newPetition = Petition::factory()->presale($presale)->make();
 
             // Travel to the editor
             $browser->loginAs($user);
