@@ -13,22 +13,22 @@ class TelegramUser extends Model
 
     protected $fillable = ['id'];
 
-    public function setAcceptedPetitions(Bool $var)
+    public function setAcceptedPetitions(bool $var)
     {
         $this->acceptedPetitions = $var;
     }
 
-    public function setCreatedPetitions(Bool $var)
+    public function setCreatedPetitions(bool $var)
     {
         $this->createdPetitions = $var;
     }
 
-    public function isAcceptedPetitions() : bool
+    public function isAcceptedPetitions(): bool
     {
         return $this->acceptedPetitions;
     }
 
-    public function isCreatedPetitions() : bool
+    public function isCreatedPetitions(): bool
     {
         return $this->createdPetitions;
     }

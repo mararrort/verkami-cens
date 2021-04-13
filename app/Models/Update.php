@@ -36,17 +36,17 @@ class Update extends Model
         return isset($this->message) ? $this->message->isStopRequest() : false;
     }
 
-    public function isStartPetitionsRequest() : bool
+    public function isStartPetitionsRequest(): bool
     {
-        return isset($this->message) ? $this->message->isStartPetitionsRequest() : false;  
+        return isset($this->message) ? $this->message->isStartPetitionsRequest() : false;
     }
 
-    public function isStopPetitionsRequest() : bool
+    public function isStopPetitionsRequest(): bool
     {
-        return isset($this->message) ? $this->message->isStopPetitionsRequest() : false;  
+        return isset($this->message) ? $this->message->isStopPetitionsRequest() : false;
     }
 
-    public function isBotCommand() : bool
+    public function isBotCommand(): bool
     {
         return isset($this->message) ? $this->message->isBotCommand() : false;
     }

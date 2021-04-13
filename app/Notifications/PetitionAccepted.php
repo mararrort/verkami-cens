@@ -2,22 +2,20 @@
 
 namespace App\Notifications;
 
+use App\Models\Editorial;
+use App\Models\Petition;
+use App\Models\Presale;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-
 use NotificationChannels\Telegram\TelegramChannel;
 use NotificationChannels\Telegram\TelegramMessage;
-
-use App\Models\Petition;
-use App\Models\Editorial;
-use App\Models\Presale;
 
 class PetitionAccepted extends Notification
 {
     use Queueable;
-    
+
     private $petition;
 
     private $editorial;
@@ -48,8 +46,8 @@ class PetitionAccepted extends Notification
     }
 
     /**
-    * @param TelegramUser[] $notifiable
-    */
+     * @param TelegramUser[] $notifiable
+     */
     public function toTelegram($notifiable)
     {
         return TelegramMessage::create()->to($notifiable->id)->view('telegram.accepted', ['petition' => $this->petition, 'editorial' => $this->editorial, 'presale' => $this->presale]);

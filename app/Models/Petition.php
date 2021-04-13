@@ -34,13 +34,13 @@ class Petition extends Model
     }
 
     /**
-    * Check if the petition is an update.
-    
-    * The check is based in the existene of a relation with an existent presale
-    
-    * @return bool
-    */
-    public function isUpdate() : bool
+     * Check if the petition is an update.
+     *
+     * The check is based in the existene of a relation with an existent presale
+     *
+     * @return bool
+     */
+    public function isUpdate(): bool
     {
         return isset($this->presale_id);
     }

@@ -6,18 +6,16 @@ use App\Models\Editorial;
 use App\Models\Petition;
 use App\Models\Presale;
 use App\Models\TelegramUser;
+use App\Notifications\PetitionAccepted;
+use App\Notifications\PetitionCreated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Ramsey\Uuid\Uuid;
-
-use Illuminate\Support\Facades\Notification;
-use App\Notifications\PetitionAccepted;
-use App\Notifications\PetitionCreated;
-
 
 class PetitionController extends Controller
 {
@@ -93,7 +91,7 @@ class PetitionController extends Controller
         if ($sap->sendTelegramNotification) {
             $telegramUsers = TelegramUser::where('createdPetitions', true)->get();
             Notification::send($telegramUsers, new PetitionCreated($sap));
-            
+
             Log::info('A Telegram notification has been sent');
         }
 
@@ -199,7 +197,7 @@ class PetitionController extends Controller
         if ($peticion->sendTelegramNotification) {
             $telegramUsers = TelegramUser::where('acceptedPetitions', true)->get();
             Notification::send($telegramUsers, new PetitionAccepted($peticion, $editorial, $presale));
-            
+
             Log::info('A Telegram notification has been sent');
         }
 

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Update;
 use App\Models\TelegramUser;
+use App\Models\Update;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -24,17 +24,17 @@ class TelegramController extends Controller
                 $telegramUser = TelegramUser::firstOrCreate(['id' => $chatId]);
                 $telegramUser->id = $chatId;
                 if ($update->isStartRequest()) {
-                    Log::info("Is start petition");
+                    Log::info('Is start petition');
                     $telegramUser->setAcceptedPetitions(true);
                     // Notify the user
                     $response = response()->json([
-                            'method' => 'sendMessage',
-                            'chat_id' => $chatId,
-                            'text' => 'A partir de ahora enviaré notificaciones a este chat',
-                        ]);
+                        'method' => 'sendMessage',
+                        'chat_id' => $chatId,
+                        'text' => 'A partir de ahora enviaré notificaciones a este chat',
+                    ]);
                 }
                 if ($update->isStopRequest()) {
-                    Log::info("Is stop petition");
+                    Log::info('Is stop petition');
                     $telegramUser->setAcceptedPetitions(false);
                     $response = response()->json([
                         'method' => 'sendMessage',
@@ -43,7 +43,7 @@ class TelegramController extends Controller
                     ]);
                 }
                 if ($update->isStartPetitionsRequest()) {
-                    Log::info("Is start petitions petition");
+                    Log::info('Is start petitions petition');
                     $telegramUser->setCreatedPetitions(true);
                     $response = response()->json([
                         'method' => 'sendMessage',
@@ -52,7 +52,7 @@ class TelegramController extends Controller
                     ]);
                 }
                 if ($update->isStopPetitionsRequest()) {
-                    Log::info("Is stop petitions petition");
+                    Log::info('Is stop petitions petition');
                     $telegramUser->setCreatedPetitions(false);
                     $response = response()->json([
                         'method' => 'sendMessage',
@@ -61,7 +61,7 @@ class TelegramController extends Controller
                     ]);
                 }
                 // Remove the User if they do not want any update, persist either way.
-                if (!$telegramUser->isAcceptedPetitions() && !$telegramUser->isCreatedPetitions()){
+                if (! $telegramUser->isAcceptedPetitions() && ! $telegramUser->isCreatedPetitions()) {
                     $telegramUser->delete();
                 } else {
                     $telegramUser->save();
