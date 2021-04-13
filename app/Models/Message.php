@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Models\Chat;
-Use App\Models\MessageEntity;
+use App\Models\MessageEntity;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -37,20 +37,20 @@ class Message extends Model
 
     public function isStartRequest(): bool
     {
-        return strpos($this->text, 'start') !== false && !$this->isStartPetitionsRequest();
+        return strpos($this->text, 'start') !== false && ! $this->isStartPetitionsRequest();
     }
 
     public function isStopRequest(): bool
     {
-        return strpos($this->text, 'stop') !== false && !$this->isStopPetitionsRequest();
+        return strpos($this->text, 'stop') !== false && ! $this->isStopPetitionsRequest();
     }
 
-    public function isStartPetitionsRequest() : bool
+    public function isStartPetitionsRequest(): bool
     {
         return strpos($this->text, 'startpetitions') !== false;
     }
 
-    public function isStopPetitionsRequest() : bool
+    public function isStopPetitionsRequest(): bool
     {
         return strpos($this->text, 'stoppetitions') !== false;
     }
@@ -65,7 +65,7 @@ class Message extends Model
         return $this->chat->getId();
     }
 
-    public function isBotCommand() : bool
+    public function isBotCommand(): bool
     {
         $return = false;
 
@@ -76,7 +76,7 @@ class Message extends Model
                 }
             }
         }
-        
+
         return $return;
     }
 }

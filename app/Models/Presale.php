@@ -37,9 +37,9 @@ class Presale extends Model
     }
 
     /**
-    * Returns the text formated as Markdown for Telegram
-    * @return string */
-    public function getMarkdown() : string
+     * Returns the text formated as Markdown for Telegram.
+     * @return string */
+    public function getMarkdown(): string
     {
         return '['.$this->name.']('.$this->url.')';
     }
