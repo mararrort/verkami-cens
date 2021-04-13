@@ -2,7 +2,7 @@
 
 namespace Tests\Browser;
 
-use App\Models\Empresa;
+use App\Models\Editorial;
 use App\Models\Preventa;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -16,7 +16,7 @@ class PresaleTest extends DuskTestCase
     public function testSee()
     {
         $this->browse(function (Browser $browser) {
-            $editorial = Empresa::factory()->create();
+            $editorial = Editorial::factory()->create();
             $presale = Preventa::factory()->for($editorial)->create();
 
             $browser->visitRoute('preventas.index');
@@ -28,7 +28,7 @@ class PresaleTest extends DuskTestCase
     public function testThereIsNoCodeColour()
     {
         $this->browse(function (Browser $browser) {
-            $editorial = Empresa::factory()->create();
+            $editorial = Editorial::factory()->create();
             $presale = Preventa::factory()->for($editorial)->state([
                 'tarde' => false,
             ])->create();
@@ -42,7 +42,7 @@ class PresaleTest extends DuskTestCase
     public function testThereIsDangerCodeColour()
     {
         $this->browse(function (Browser $browser) {
-            $editorial = Empresa::factory()->create();
+            $editorial = Editorial::factory()->create();
             $presale = Preventa::factory()->for($editorial)->state([
                 'tarde' => true,
             ])->create();
@@ -55,7 +55,7 @@ class PresaleTest extends DuskTestCase
     public function testThereIsSuccessCodeColour()
     {
         $this->browse(function (Browser $browser) {
-            $editorial = Empresa::factory()->create();
+            $editorial = Editorial::factory()->create();
             $presale = Preventa::factory()->for($editorial)->state([
                 'tarde' => false,
                 'state' => 'Entregado',
@@ -70,8 +70,8 @@ class PresaleTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $user = User::factory()->create();
-            $editorial = Empresa::factory()->create();
-            $otherEditorial = Empresa::factory()->create();
+            $editorial = Editorial::factory()->create();
+            $otherEditorial = Editorial::factory()->create();
             $preventa = Preventa::factory()->for($editorial)->create();
 
             $newPresaleData = Preventa::factory()->for($otherEditorial)->make();
@@ -89,7 +89,7 @@ class PresaleTest extends DuskTestCase
             $browser->clear('url');
             $browser->type('url', $newPresaleData->url);
 
-            $browser->assertSelected('editorial', $preventa->empresa->id);
+            $browser->assertSelected('editorial', $preventa->editorial->id);
             $browser->select('editorial', $otherEditorial->id);
 
             $browser->assertSelected('state', $preventa->state);

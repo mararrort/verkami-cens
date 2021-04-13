@@ -10,7 +10,6 @@
         con información numérica respecto a la situación de sus preventas.</p>
         <p>Los nombres de las preventas son enlaces a su sitio web.</p>
         <p>Tan solo se registran editoriales de las que haya preventas a registrar.</p>
-        @auth<a href="{{route('editoriales.create')}}">Añadir empresa</a>@endauth
     </div>
 </div>
 <div class="row">
@@ -35,16 +34,16 @@
                     <td>Con retraso</td>
             </thead>
             <tbody>
-                @foreach ($empresas as $empresa)
+                @foreach ($editorials as $editorial)
                 <tr>
-                    <td>@auth <a href="{{route('editoriales.edit', ['editoriale' => $empresa->id])}}"><i class="bi bi-pencil"></a></i>@endauth<a href="{{$empresa->url}}">{{$empresa->name}}</a></td>
-                    <td>{{count($empresa->preventas)}}</td>
-                    <td>{{count($empresa->getPreventas('Recaudando'))}}</td>
-                    <td>{{count($empresa->getPreventas('Pendiente de entrega'))}}</td>
-                    <td>{{count($empresa->getPreventas('Parcialmente entregado'))}}</td>
-                    <td>{{count($empresa->getPreventas('Entregado'))}}</td>
-                    <td>{{count($empresa->getPreventas('Sin definir'))}}</td>
-                    <td>{{$empresa->getTardias()}} de {{count($empresa->preventas)}}</td>
+                    <td><a href="{{$editorial->url}}">{{$editorial->name}}</a></td>
+                    <td>{{count($editorial->preventas)}}</td>
+                    <td>{{count($editorial->getPreventas('Recaudando'))}}</td>
+                    <td>{{count($editorial->getPreventas('Pendiente de entrega'))}}</td>
+                    <td>{{count($editorial->getPreventas('Parcialmente entregado'))}}</td>
+                    <td>{{count($editorial->getPreventas('Entregado'))}}</td>
+                    <td>{{count($editorial->getPreventas('Sin definir'))}}</td>
+                    <td>{{$editorial->getTardias()}} de {{count($editorial->preventas)}}</td>
                 <tr>
                 @endforeach
             </tbody>

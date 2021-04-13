@@ -18,8 +18,8 @@
             <div class="mb-3">
                 <label for="editorial" class="form-label">Editorial</label>
                 <select name="editorial" class="form-select">
-                    @foreach ($editoriales as $editorial)
-                        <option value="{{$editorial->id}}" @if($preventa->empresa->id == $editorial->id) selected @endif>{{$editorial->name}}</option>
+                    @foreach ($editorials as $editorial)
+                        <option value="{{$editorial->id}}" @if($preventa->editorial->id == $editorial->id) selected @endif>{{$editorial->name}}</option>
                     @endforeach
                 </select>
             </div>

@@ -2,7 +2,7 @@
 
 namespace Tests\Browser;
 
-use App\Models\Empresa;
+use App\Models\Editorial;
 use App\Models\Preventa;
 use App\Models\SolicitudAdicionPreventa;
 use App\Models\User;
@@ -29,7 +29,7 @@ class PetitionTest extends DuskTestCase
     public function testUsersCanAccessEditionPetitionCreation()
     {
         $this->browse(function (Browser $browser) {
-            $editorial = Empresa::factory()->create();
+            $editorial = Editorial::factory()->create();
             $presale = Preventa::factory()->for($editorial)->create();
 
             $browser->visitRoute('preventas.index');
@@ -42,7 +42,7 @@ class PetitionTest extends DuskTestCase
     public function testCreatePresaleAndEditorial()
     {
         $this->browse(function (Browser $browser) {
-            $editorial = Empresa::factory()->make();
+            $editorial = Editorial::factory()->make();
             $presale = Preventa::factory()->make();
             $browser->visitRoute('peticion.create');
             $browser->type('presale_name', $presale->name);
@@ -72,7 +72,7 @@ class PetitionTest extends DuskTestCase
     public function testCreatePresale()
     {
         $this->browse(function (Browser $browser) {
-            $editorial = Empresa::factory()->create();
+            $editorial = Editorial::factory()->create();
             $presale = Preventa::factory()->make();
             $browser->visitRoute('peticion.create');
             $browser->type('presale_name', $presale->name);
@@ -99,7 +99,7 @@ class PetitionTest extends DuskTestCase
     public function testEditPresale()
     {
         $this->browse(function (Browser $browser) {
-            $editorial = Empresa::factory()->create();
+            $editorial = Editorial::factory()->create();
             $presale = Preventa::factory()->for($editorial)->create();
             $petitionBase = SolicitudAdicionPreventa::factory()->presale($presale)->make();
 
@@ -143,7 +143,7 @@ class PetitionTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $user = User::factory()->create();
-            $editorial = Empresa::factory()->create();
+            $editorial = Editorial::factory()->create();
             $petition = SolicitudAdicionPreventa::factory()->editorial($editorial)->create();
 
             $browser->loginAs($user);
@@ -159,7 +159,7 @@ class PetitionTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $user = User::factory()->create();
-            $editorial = Empresa::factory()->create();
+            $editorial = Editorial::factory()->create();
             $presale = Preventa::factory()->for($editorial)->create();
             $petition = SolicitudAdicionPreventa::factory()->presale($presale)->create();
 
@@ -176,7 +176,7 @@ class PetitionTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $user = User::factory()->create();
-            $editorial = Empresa::factory()->create();
+            $editorial = Editorial::factory()->create();
             $presale = Preventa::factory()->for($editorial)->create();
             $petition = SolicitudAdicionPreventa::factory()->presale($presale)->create();
 
@@ -195,7 +195,7 @@ class PetitionTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $user = User::factory()->create();
-            $editorial = Empresa::factory()->create();
+            $editorial = Editorial::factory()->create();
             $presale = Preventa::factory()->for($editorial)->create();
             $petition = SolicitudAdicionPreventa::factory()->presale($presale)->create();
 
@@ -212,9 +212,9 @@ class PetitionTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $user = User::factory()->create();
-            $editorial = Empresa::factory()->create();
+            $editorial = Editorial::factory()->create();
             $presale = Preventa::factory()->for($editorial)->create();
-            $correctedEditorial = Empresa::factory()->make();
+            $correctedEditorial = Editorial::factory()->make();
             $correctedPresale = Preventa::factory()->for($editorial)->make();
             $petition = SolicitudAdicionPreventa::factory()->presale($presale)->create();
 
@@ -270,9 +270,9 @@ class PetitionTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $user = User::factory()->create();
-            $editorial = Empresa::factory()->create();
+            $editorial = Editorial::factory()->create();
             $presale = Preventa::factory()->for($editorial)->create();
-            $otherEditorial = Empresa::factory()->create();
+            $otherEditorial = Editorial::factory()->create();
             $correctedPresale = Preventa::factory()->for($editorial)->make();
             $petition = SolicitudAdicionPreventa::factory()->editorial($editorial)->create();
 
@@ -324,7 +324,7 @@ class PetitionTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $user = User::factory()->create();
 
-            $editorial = Empresa::factory()->create();
+            $editorial = Editorial::factory()->create();
             $presale = Preventa::factory()->for($editorial)->create();
             $petition = SolicitudAdicionPreventa::factory()->presale($presale)->create();
 

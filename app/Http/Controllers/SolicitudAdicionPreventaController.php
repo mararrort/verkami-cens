@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Empresa;
+use App\Models\Editorial;
 use App\Models\Preventa;
 use App\Models\SolicitudAdicionPreventa;
 use Illuminate\Http\Request;
@@ -37,7 +37,7 @@ class SolicitudAdicionPreventaController extends Controller
      */
     public function create(Request $request, Preventa $presale = null)
     {
-        $editorials = Empresa::orderBy('name', 'ASC')->get();
+        $editorials = Editorial::orderBy('name', 'ASC')->get();
 
         return view('solicitudAdicionPreventa.create', ['editorials' => $editorials, 'presale' => $presale]);
     }
@@ -54,7 +54,7 @@ class SolicitudAdicionPreventaController extends Controller
             'presale_id' => 'required_without:presale_name,presale_url|nullable|exists:preventas,id',
             'presale_name' => 'required_without:presale_id|nullable|string|max:64',
             'presale_url' => 'required_without:presale_id|nullable|string|max:128',
-            'editorial_id' => 'required_without:editorial_name,editorial_url|nullable|exists:empresas,id',
+            'editorial_id' => 'required_without:editorial_name,editorial_url|nullable|exists:editorials,id',
             'editorial_name' => 'required_without:editorial_id|nullable|string|max:64',
             'editorial_url' => 'required_without:editorial_id|nullable|string|max:128',
             'state' => ['required', Rule::in(['Recaudando', 'Pendiente de entrega', 'Parcialmente entregado', 'Entregado', 'Sin definir'])],
@@ -105,7 +105,7 @@ class SolicitudAdicionPreventaController extends Controller
      */
     public function edit(SolicitudAdicionPreventa $peticion)
     {
-        $editorials = Empresa::all();
+        $editorials = Editorial::all();
 
         return view('solicitudAdicionPreventa.edit', ['peticion' => $peticion, 'editorials' => $editorials]);
     }
@@ -161,9 +161,9 @@ class SolicitudAdicionPreventaController extends Controller
     {
         // Get the editorial
         if ($peticion->editorial_id) {
-            $editorial = Empresa::find($peticion->editorial_id);
+            $editorial = Editorial::find($peticion->editorial_id);
         } else {
-            $editorial = new Empresa();
+            $editorial = new Editorial();
             $editorial->name = $peticion->editorial_name;
             $editorial->url = $peticion->editorial_url;
             $editorial->id = UUID::uuid4();
@@ -178,7 +178,7 @@ class SolicitudAdicionPreventaController extends Controller
             $presale->id = UUID::uuid4();
             $presale->name = $peticion->presale_name;
             $presale->url = $peticion->presale_url;
-            $presale->empresa_id = $editorial->id;
+            $presale->editorial_id = $editorial->id;
         }
 
         $presale->state = $peticion->state;

@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Empresa;
+use App\Models\Editorial;
 use App\Models\Preventa;
 use Illuminate\Database\Seeder;
 
@@ -15,12 +15,12 @@ class PreventaSeeder extends Seeder
      */
     public function run()
     {
-        $empresas = Empresa::all();
+        $editorials = Editorial::all();
 
-        foreach ($empresas as $empresa) {
-            $amount = rand(0, 2);
+        foreach ($editorials as $editorials) {
+            $amount = rand(1, 9);
             if ($amount > 0) {
-                Preventa::factory()->count($amount)->for($empresa)->create();
+                Preventa::factory()->count($amount)->for($editorials)->create();
             }
         }
     }

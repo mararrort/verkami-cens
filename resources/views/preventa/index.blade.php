@@ -44,7 +44,7 @@
                 <tr>
                 @endif
                     <td><a dusk="editPresale" href="{{route('peticion.create', ['presale' => $item->id])}}"><i class="bi bi-pencil"></a></i><a href="{{$item->url}}">{{$item->name}}</a> @auth <a href="/preventas/{{$item->id}}/edit">Editar</a>@endauth</td>
-                    <td>{{$item->empresa->name}}</td>
+                    <td>{{$item->editorial->name}}</td>
                     <td>{{$item->state}}</td>
                     <td>{{$item->start ? $item->start->format('Y-m') : '-'}}</td>
                     <td>{{$item->announced_end ? $item->announced_end->format('Y-m') : '-'}}</td>

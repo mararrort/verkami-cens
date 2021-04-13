@@ -17,7 +17,7 @@
             <div class="mb-3">
                 <label for="editorial" class="form-label">Editorial</label>
                 <select name="editorial" class="form-select">
-                    @foreach ($editoriales as $editorial)
+                    @foreach ($editorials as $editorial)
                         <option value="{{$editorial->id}}">{{$editorial->name}}</option>
                     @endforeach
                 </select>

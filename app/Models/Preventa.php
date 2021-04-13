@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Empresa;
+use App\Models\Editorial;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -31,8 +31,8 @@ class Preventa extends Model
         'state' => 'Sin definir',
     ];
 
-    public function empresa()
+    public function editorial()
     {
-        return $this->belongsTo(Empresa::class);
+        return $this->belongsTo(Editorial::class);
     }
 }

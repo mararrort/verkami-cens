@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\EmpresaController;
+use App\Http\Controllers\EditorialController;
 use App\Http\Controllers\PreventaController;
 use App\Http\Controllers\SolicitudAdicionPreventaController;
 use App\Http\Controllers\TODOController;
@@ -26,8 +26,7 @@ Route::get('/dashboard', function () {
 
 require __DIR__.'/auth.php';
 
-Route::resource('editoriales', EmpresaController::class)->only(['index']);
-Route::resource('editoriales', EmpresaController::class)->only(['create', 'store', 'edit', 'update'])->middleware('auth');
+Route::resource('editorial', EditorialController::class)->only(['index']);
 
 Route::resource('preventas', PreventaController::class)->only(['index']);
 Route::resource('preventas', PreventaController::class)->only(['create', 'store', 'edit', 'update'])->middleware('auth');

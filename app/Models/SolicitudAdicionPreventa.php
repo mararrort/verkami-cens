@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Empresa;
+use App\Models\Editorial;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -24,9 +24,9 @@ class SolicitudAdicionPreventa extends Model
         'end' => 'date',
     ];
 
-    public function empresa()
+    public function editorial()
     {
-        return $this->belongsTo(Empresa::class, 'editorial_id');
+        return $this->belongsTo(Editorial::class, 'editorial_id');
     }
 
     public function preventa()

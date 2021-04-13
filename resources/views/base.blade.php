@@ -11,7 +11,7 @@
             <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('editoriales.index')}}">Editoriales</a>
+                        <a class="nav-link" href="{{route('editorial.index')}}">Editoriales</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('preventas.index')}}">Preventas</a>

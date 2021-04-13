@@ -88,7 +88,7 @@
         </div>
         @else
         <input name="presale_id" type="hidden" value="{{$presale->id}}">
-        <input name="editorial_id" type="hidden" value="{{$presale->empresa->id}}">
+        <input name="editorial_id" type="hidden" value="{{$presale->editorial->id}}">
         @endif
 
         <div class="row">

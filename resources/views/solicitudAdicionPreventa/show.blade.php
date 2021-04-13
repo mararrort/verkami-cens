@@ -7,7 +7,7 @@
     </div>
     <div class="row">
         @if ($sap->editorial_id)
-            Editorial: <a href="{{$sap->empresa->url}}">{{$sap->empresa->name}}</a>
+            Editorial: <a href="{{$sap->editorial->url}}">{{$sap->editorial->name}}</a>
         @else 
             Editorial: <a href="{{$sap->editorial_url}}">{{$sap->editorial_name}}</a>
         @endif

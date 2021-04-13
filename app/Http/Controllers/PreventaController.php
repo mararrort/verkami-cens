@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Empresa;
+use App\Models\Editorial;
 use App\Models\Preventa;
 use Illuminate\Http\Request;
 use Ramsey\Uuid\Uuid;
@@ -18,9 +18,9 @@ class PreventaController extends Controller
     {
         // The orderByRaw solution has been got here: https://stackoverflow.com/a/25954745
         $presales = Preventa::select('preventas.*')
-            ->join('empresas', 'empresa_id', '=', 'empresas.id')
+            ->join('editorials', 'editorial_id', '=', 'editorials.id')
             ->orderByRaw('FIELD(state, "Sin Definir", "Recaudando", "Pendiente de entrega", "Parcialmente entregado", "Entregado")')
-            ->orderBy('empresas.name', 'ASC')
+            ->orderBy('editorials.name', 'ASC')
             ->orderBy('preventas.name', 'ASC')
             ->get();
 
@@ -34,9 +34,9 @@ class PreventaController extends Controller
      */
     public function create()
     {
-        $empresas = Empresa::orderBy('name', 'asc')->get();
+        $editorials = Editorial::orderBy('name', 'asc')->get();
 
-        return view('preventa.create', ['editoriales' => $empresas]);
+        return view('preventa.create', ['editorials' => $editorials]);
     }
 
     /**
@@ -51,7 +51,7 @@ class PreventaController extends Controller
 
         $preventa->name = $request->name;
         $preventa->state = $request->state;
-        $preventa->empresa_id = $request->editorial;
+        $preventa->editorial_id = $request->editorial;
         $preventa->url = $request->url;
         $preventa->tarde = $request->has('tarde');
         $preventa->id = Uuid::uuid4();
@@ -62,17 +62,6 @@ class PreventaController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Preventa  $preventa
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Preventa $preventa)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Preventa  $preventa
@@ -80,9 +69,9 @@ class PreventaController extends Controller
      */
     public function edit(Preventa $preventa)
     {
-        $empresas = Empresa::orderBy('name', 'asc')->get();
+        $editorials = Editorial::orderBy('name', 'asc')->get();
 
-        return view('preventa.edit', ['preventa' => $preventa, 'editoriales' => $empresas]);
+        return view('preventa.edit', ['preventa' => $preventa, 'editorials' => $editorials]);
     }
 
     /**
@@ -96,23 +85,12 @@ class PreventaController extends Controller
     {
         $preventa->name = $request->name;
         $preventa->state = $request->state;
-        $preventa->empresa_id = $request->editorial;
+        $preventa->editorial_id = $request->editorial;
         $preventa->url = $request->url;
         $preventa->tarde = $request->has('tarde');
 
         $preventa->save();
 
         return redirect('/preventas');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Preventa  $preventa
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Preventa $preventa)
-    {
-        //
     }
 }

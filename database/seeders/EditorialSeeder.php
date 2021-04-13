@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Empresa;
+use App\Models\Editorial;
 use Illuminate\Database\Seeder;
 
-class EmpresaSeeder extends Seeder
+class EditorialSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +14,6 @@ class EmpresaSeeder extends Seeder
      */
     public function run()
     {
-        Empresa::factory()->count(50)->create();
+        Editorial::factory()->count(50)->create();
     }
 }

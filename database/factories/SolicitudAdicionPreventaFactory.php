@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Empresa;
+use App\Models\Editorial;
 use App\Models\Preventa;
 use App\Models\SolicitudAdicionPreventa;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -23,7 +23,7 @@ class SolicitudAdicionPreventaFactory extends Factory
      */
     public function definition()
     {
-        $editorial = Empresa::factory()->make();
+        $editorial = Editorial::factory()->make();
         $presale = Preventa::factory()->make();
 
         return [
@@ -47,7 +47,7 @@ class SolicitudAdicionPreventaFactory extends Factory
                 'presale_name' => null,
                 'presale_url' => null,
                 'presale_id' => $preventa->id,
-                'editorial_id' => $preventa->empresa->id,
+                'editorial_id' => $preventa->editorial->id,
                 'editorial_name' => null,
                 'editorial_url' => null,
                 'info' => $this->faker->paragraph,
@@ -55,7 +55,7 @@ class SolicitudAdicionPreventaFactory extends Factory
         });
     }
 
-    public function editorial(Empresa $editorial)
+    public function editorial(Editorial $editorial)
     {
         return $this->state(function (array $attributes) use ($editorial) {
             return [

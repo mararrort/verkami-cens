@@ -20,13 +20,13 @@ class DatabaseSeeder extends Seeder
         $user->password = password_hash('password', PASSWORD_BCRYPT);
         $user->save();
 
-        $empresas = \App\Models\Empresa::factory(4)->create();
+        $editorials = \App\Models\Editorial::factory(4)->create();
 
-        foreach ($empresas as $empresa) {
+        foreach ($editorials as $editorial) {
             $amount = rand(1, 8);
             if ($amount > 0) {
                 for ($i = 0; $i < $amount; $i++) {
-                    $presale = \App\Models\Preventa::factory()->for($empresa)->create();
+                    $presale = \App\Models\Preventa::factory()->for($editorial)->create();
                     if (rand(0, 1)) {
                         \App\Models\SolicitudAdicionPreventa::factory()->presale($presale)->create();
                     }
