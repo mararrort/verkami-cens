@@ -3,8 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\Editorial;
-use App\Models\Presale;
 use App\Models\Petition;
+use App\Models\Presale;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PetitionFactory extends Factory
