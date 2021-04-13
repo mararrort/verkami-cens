@@ -3,8 +3,8 @@
 namespace Tests\Browser;
 
 use App\Models\Editorial;
-use App\Models\Presale;
 use App\Models\Petition;
+use App\Models\Presale;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
