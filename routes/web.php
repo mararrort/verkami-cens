@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\EditorialController;
-use App\Http\Controllers\PreventaController;
+use App\Http\Controllers\PresaleController;
 use App\Http\Controllers\SolicitudAdicionPreventaController;
 use App\Http\Controllers\TODOController;
 use App\Models\TODO;
@@ -28,8 +28,7 @@ require __DIR__.'/auth.php';
 
 Route::resource('editorial', EditorialController::class)->only(['index']);
 
-Route::resource('preventas', PreventaController::class)->only(['index']);
-Route::resource('preventas', PreventaController::class)->only(['create', 'store', 'edit', 'update'])->middleware('auth');
+Route::resource('preventas',PresaleController::class)->only(['index']);
 
 Route::resource('peticion', SolicitudAdicionPreventaController::class)->only(['store']);
 Route::get('/peticion/create/{presale?}', [SolicitudAdicionPreventaController::class, 'create'])->name('peticion.create');

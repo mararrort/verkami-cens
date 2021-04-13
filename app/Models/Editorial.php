@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Preventa;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Ramsey\Uuid\Uuid;
@@ -17,24 +16,24 @@ class Editorial extends Model
     public $incrementing = false;
     protected $keyType = 'string';
 
-    public function preventas()
+    public function presales()
     {
-        return $this->hasMany(Preventa::class);
+        return $this->hasMany(Presale::class);
     }
 
-    public function getPreventas($status = null)
+    public function getPresales($status = null)
     {
-        $preventas = $this->hasMany(Preventa::class);
+        $presales = $this->hasMany(Presale::class);
 
         if (isset($status)) {
-            $preventas->where('state', $status);
+            $presales->where('state', $status);
         }
 
-        return $preventas->get();
+        return $presales->get();
     }
 
     public function getTardias()
     {
-        return $this->hasMany(Preventa::class)->where('tarde', true)->count();
+        return $this->hasMany(Presale::class)->where('late', true)->count();
     }
 }

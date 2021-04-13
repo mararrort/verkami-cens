@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Editorial;
-use App\Models\Preventa;
+use App\Models\Presale;
 use App\Models\SolicitudAdicionPreventa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -35,7 +35,7 @@ class SolicitudAdicionPreventaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request, Preventa $presale = null)
+    public function create(Request $request, Presale $presale = null)
     {
         $editorials = Editorial::orderBy('name', 'ASC')->get();
 
@@ -51,7 +51,7 @@ class SolicitudAdicionPreventaController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'presale_id' => 'required_without:presale_name,presale_url|nullable|exists:preventas,id',
+            'presale_id' => 'required_without:presale_name,presale_url|nullable|exists:presales,id',
             'presale_name' => 'required_without:presale_id|nullable|string|max:64',
             'presale_url' => 'required_without:presale_id|nullable|string|max:128',
             'editorial_id' => 'required_without:editorial_name,editorial_url|nullable|exists:editorials,id',
@@ -172,9 +172,9 @@ class SolicitudAdicionPreventaController extends Controller
 
         // Get the presale
         if ($peticion->presale_id) {
-            $presale = Preventa::find($peticion->presale_id);
+            $presale = Presale::find($peticion->presale_id);
         } else {
-            $presale = new Preventa();
+            $presale = new Presale();
             $presale->id = UUID::uuid4();
             $presale->name = $peticion->presale_name;
             $presale->url = $peticion->presale_url;
@@ -182,7 +182,7 @@ class SolicitudAdicionPreventaController extends Controller
         }
 
         $presale->state = $peticion->state;
-        $presale->tarde = $peticion->late;
+        $presale->late = $peticion->late;
 
         $presale->start = $peticion->start;
         $presale->announced_end = $peticion->announced_end;
@@ -196,7 +196,7 @@ class SolicitudAdicionPreventaController extends Controller
             $text = 'La preventa ['.str_replace('.', '\\.', $presale->name).']('.$presale->url.') de  ['.str_replace('.', '\\.', $editorial->name).']('.$editorial->url.')'
                 .' ha sido '.($peticion->presale_id ? 'actualizada' : 'creada').'\\. ';
             $text = $text.'Se encuentra en estado '.$presale->state.'\\. ';
-            if ($presale->tarde) {
+            if ($presale->late) {
                 $text = $text.'Es impuntual\\.';
             }
 

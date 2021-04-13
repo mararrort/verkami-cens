@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
             $amount = rand(1, 8);
             if ($amount > 0) {
                 for ($i = 0; $i < $amount; $i++) {
-                    $presale = \App\Models\Preventa::factory()->for($editorial)->create();
+                    $presale = \App\Models\Presale::factory()->for($editorial)->create();
                     if (rand(0, 1)) {
                         \App\Models\SolicitudAdicionPreventa::factory()->presale($presale)->create();
                     }

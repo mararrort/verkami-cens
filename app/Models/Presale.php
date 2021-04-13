@@ -6,7 +6,7 @@ use App\Models\Editorial;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Preventa extends Model
+class Presale extends Model
 {
     use HasFactory;
 

@@ -37,13 +37,13 @@
                 @foreach ($editorials as $editorial)
                 <tr>
                     <td><a href="{{$editorial->url}}">{{$editorial->name}}</a></td>
-                    <td>{{count($editorial->preventas)}}</td>
-                    <td>{{count($editorial->getPreventas('Recaudando'))}}</td>
-                    <td>{{count($editorial->getPreventas('Pendiente de entrega'))}}</td>
-                    <td>{{count($editorial->getPreventas('Parcialmente entregado'))}}</td>
-                    <td>{{count($editorial->getPreventas('Entregado'))}}</td>
-                    <td>{{count($editorial->getPreventas('Sin definir'))}}</td>
-                    <td>{{$editorial->getTardias()}} de {{count($editorial->preventas)}}</td>
+                    <td>{{count($editorial->presales)}}</td>
+                    <td>{{count($editorial->getPresales('Recaudando'))}}</td>
+                    <td>{{count($editorial->getPresales('Pendiente de entrega'))}}</td>
+                    <td>{{count($editorial->getPresales('Parcialmente entregado'))}}</td>
+                    <td>{{count($editorial->getPresales('Entregado'))}}</td>
+                    <td>{{count($editorial->getPresales('Sin definir'))}}</td>
+                    <td>{{$editorial->getTardias()}} de {{count($editorial->presales)}}</td>
                 <tr>
                 @endforeach
             </tbody>

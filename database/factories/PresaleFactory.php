@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Preventa;
+use App\Models\Presale;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class PreventaFactory extends Factory
+class PresaleFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Preventa::class;
+    protected $model = Presale::class;
 
     /**
      * Define the model's default state.
@@ -41,7 +41,7 @@ class PreventaFactory extends Factory
             'name' => $this->faker->words(3, true),
             'url' => $this->faker->url,
             'state' => $state,
-            'tarde' => $tarde,
+            'late' => $tarde,
             'start' => $start ?? null,
             'announced_end' => $announcedEnd ?? null,
             'end' => $end ?? null,

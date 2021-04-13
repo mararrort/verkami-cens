@@ -13,7 +13,6 @@
         <p>Se considera que una preventa es puntual si ninguno de sus productos
         ha quedado pendiente de entregar después de la fecha de entrega anunciada durante la campaña de recolecta</p>
         <p><a href="{{route('peticion.create')}}">Puedes solicitar añadir una preventa a través de este enlace</a></p>
-        @auth<a href="{{route('preventas.create')}}">Añadir preventa</a>@endauth
     </div>
 </div>
 
@@ -36,21 +35,21 @@
             </thead>
             <tbody>
                 @foreach ($presales as $item)
-                @if ($item->tarde)
+                @if ($item->late)
                 <tr class="table-danger" dusk="danger">
-                @elseif (!$item->tarde && $item->state == "Entregado")
+                @elseif (!$item->late && $item->state == "Entregado")
                 <tr class="table-success" dusk="success">
                 @else
                 <tr>
                 @endif
-                    <td><a dusk="editPresale" href="{{route('peticion.create', ['presale' => $item->id])}}"><i class="bi bi-pencil"></a></i><a href="{{$item->url}}">{{$item->name}}</a> @auth <a href="/preventas/{{$item->id}}/edit">Editar</a>@endauth</td>
+                    <td><a dusk="editPresale" href="{{route('peticion.create', ['presale' => $item->id])}}"><i class="bi bi-pencil"></a></i><a href="{{$item->url}}">{{$item->name}}</a></td>
                     <td>{{$item->editorial->name}}</td>
                     <td>{{$item->state}}</td>
                     <td>{{$item->start ? $item->start->format('Y-m') : '-'}}</td>
                     <td>{{$item->announced_end ? $item->announced_end->format('Y-m') : '-'}}</td>
                     <td>{{$item->end ? $item->end->format('Y-m') : '-'}}</td>
                     <td>{{ ($item->state == "Sin definir" || $item->state == "Recaudando") ?
-                        "-" : ($item->tarde ? "No" : "Si") }}</td>
+                        "-" : ($item->late ? "No" : "Si") }}</td>
                 <tr>
                 @endforeach
             </tbody>

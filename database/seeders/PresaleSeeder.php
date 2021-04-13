@@ -3,10 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\Editorial;
-use App\Models\Preventa;
+use App\Models\Presale;
 use Illuminate\Database\Seeder;
 
-class PreventaSeeder extends Seeder
+class PresaleSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -20,7 +20,7 @@ class PreventaSeeder extends Seeder
         foreach ($editorials as $editorials) {
             $amount = rand(1, 9);
             if ($amount > 0) {
-                Preventa::factory()->count($amount)->for($editorials)->create();
+                Presale::factory()->count($amount)->for($editorials)->create();
             }
         }
     }

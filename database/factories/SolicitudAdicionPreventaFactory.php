@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Editorial;
-use App\Models\Preventa;
+use App\Models\Presale;
 use App\Models\SolicitudAdicionPreventa;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -24,7 +24,7 @@ class SolicitudAdicionPreventaFactory extends Factory
     public function definition()
     {
         $editorial = Editorial::factory()->make();
-        $presale = Preventa::factory()->make();
+        $presale = Presale::factory()->make();
 
         return [
             'id' => $this->faker->uuid,
@@ -33,21 +33,21 @@ class SolicitudAdicionPreventaFactory extends Factory
             'editorial_name' => $editorial->name,
             'editorial_url' => $editorial->url,
             'state' => $presale->state,
-            'late' => $presale->tarde,
+            'late' => $presale->late,
             'start' => $presale->start,
             'announced_end' => $presale->announced_end,
             'end' => $presale->end,
         ];
     }
 
-    public function presale(Preventa $preventa)
+    public function presale(Presale $presale)
     {
-        return $this->state(function (array $attributes) use ($preventa) {
+        return $this->state(function (array $attributes) use ($presale) {
             return [
                 'presale_name' => null,
                 'presale_url' => null,
-                'presale_id' => $preventa->id,
-                'editorial_id' => $preventa->editorial->id,
+                'presale_id' => $presale->id,
+                'editorial_id' => $presale->editorial->id,
                 'editorial_name' => null,
                 'editorial_url' => null,
                 'info' => $this->faker->paragraph,

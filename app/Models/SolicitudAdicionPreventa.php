@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Editorial;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -29,8 +28,8 @@ class SolicitudAdicionPreventa extends Model
         return $this->belongsTo(Editorial::class, 'editorial_id');
     }
 
-    public function preventa()
+    public function presale()
     {
-        return $this->belongsTo(Preventa::class, 'presale_id');
+        return $this->belongsTo(Presale::class, 'presale_id');
     }
 }

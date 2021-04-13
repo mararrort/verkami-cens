@@ -15,8 +15,8 @@ class EditorialController extends Controller
      */
     public function index()
     {
-        $editorials = Editorial::withCount('preventas')
-            ->orderBy('preventas_count', 'DESC')
+        $editorials = Editorial::withCount('presales')
+            ->orderBy('presales_count', 'DESC')
             ->orderBy('name', 'ASC')
             ->get();
 
