@@ -28,7 +28,7 @@ require __DIR__.'/auth.php';
 
 Route::resource('editorial', EditorialController::class)->only(['index']);
 
-Route::resource('preventas',PresaleController::class)->only(['index']);
+Route::resource('preventas', PresaleController::class)->only(['index']);
 
 Route::resource('peticion', SolicitudAdicionPreventaController::class)->only(['store']);
 Route::get('/peticion/create/{presale?}', [SolicitudAdicionPreventaController::class, 'create'])->name('peticion.create');
