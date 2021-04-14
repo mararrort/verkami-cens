@@ -4,8 +4,8 @@ use App\Http\Controllers\EditorialController;
 use App\Http\Controllers\PetitionController;
 use App\Http\Controllers\PresaleController;
 use App\Http\Controllers\TODOController;
-use App\Models\TODO;
 use App\Models\Presale;
+use App\Models\TODO;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -53,8 +53,8 @@ Route::get('info', function () {
 
     return view('about', [
         'privateTodo' => $privateTodo,
-        'publicTodo' => $publicTodo, 
+        'publicTodo' => $publicTodo,
         'undefinedTodo' => $undefinedTodo,
         'presales' => $presales,
-        'datedPresales' => $datedPresales]);
+        'datedPresales' => $datedPresales, ]);
 })->name('info');
