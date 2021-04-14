@@ -81,7 +81,7 @@ class PetitionAccepted extends Notification
             .'.';
         }
 
-        $tweet = $tweet.' Tienen '.(string) ($this->petition->isNewNotFinished() ? count($editorial->getNotFinishedPresales()) + 1 : count($this->editorial->getNotFinishedPresales()))
+        $tweet = $tweet.' Tienen '.(string) ($this->petition->isNewNotFinished() ? count($this->editorial->getNotFinishedPresales()) + 1 : count($this->editorial->getNotFinishedPresales()))
             .' juegos pendientes de entregar, y '.(string) (($this->petition->isNewNotFinished() && $this->petition->isNewLate()) ? count($this->editorial->getNotFinishedLatePresales()) + 1 : count($this->editorial->getNotFinishedLatePresales()))
             .' pendientes y con retraso.';
 
