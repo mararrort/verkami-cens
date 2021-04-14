@@ -95,11 +95,11 @@
             <div class="col-md-12">
                 <label for="state" class="form-label">Estado</label>
                 <select name="state" class="form-select">
-                    <option @if(isset($presale) && $presale->status == "Recaudando") checked @endif>Recaudando</option>
-                    <option @if(isset($presale) && $presale->status == "Pendiente de entrega") checked @endif>Pendiente de entrega</option>
-                    <option @if(isset($presale) && $presale->status == "Parcialmente entregado") checked @endif>Parcialmente entregado</option>
-                    <option @if(isset($presale) && $presale->status == "Entregado") checked @endif>Entregado</option>
-                    <option @if(isset($presale) && $presale->status == "Sin definir") checked @endif>Sin definir</option>
+                    <option @if(isset($presale) && $presale->state == "Recaudando") selected @endif>Recaudando</option>
+                    <option @if(isset($presale) && $presale->state == "Pendiente de entrega") selected @endif>Pendiente de entrega</option>
+                    <option @if(isset($presale) && $presale->state == "Parcialmente entregado") selected @endif>Parcialmente entregado</option>
+                    <option @if(isset($presale) && $presale->state == "Entregado") selected @endif>Entregado</option>
+                    <option @if(isset($presale) && $presale->state == "Sin definir") selected @endif>Sin definir</option>
                 </select>
                 @error('state')
                     <div class="alert alert-danger">{{ $message }}</div>
