@@ -18,6 +18,7 @@ class Petition extends Model
     protected $keyType = 'string';
 
     protected $casts = [
+        'late' => 'bool',
         'start' => 'date',
         'announced_end' => 'date',
         'end' => 'date',

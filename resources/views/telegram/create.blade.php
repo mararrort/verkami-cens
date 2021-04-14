@@ -7,8 +7,8 @@ Se ha creado una petición de {{$petition->isUpdate() ? 'actualización' : 'crea
    \* Actual: {{$petition->presale->state}}
    \* Propuesto: {{$petition->state}}
  \* Tarde:
-   \* Actual: {{$petition->presale->late}}
-   \* Propuesto: {{$petition->late}}
+   \* Actual: {{$petition->presale->late ? "Si" : "No"}}
+   \* Propuesto: {{$petition->late ? "Si" : "No"}}
  \* Fecha de financiación:
    \* Actual: {{$petition->presale->start ? $petition->presale->start->format('Y-m') : 'Ninguna'}}
    \* Propuesta: {{$petition->start ? $petition->start->format('Y-m') : 'Ninguna'}}
@@ -26,7 +26,7 @@ Se ha creado una petición de {{$petition->isUpdate() ? 'actualización' : 'crea
  \* Editorial: [{{$petition->editorial_name}}]({{$petition->editorial_url}})
 @endif
  \* Estado: {{$petition->state}}
- \* Tarde: {{$petition->late}}
+ \* Tarde: {{$petition->late ? "Si" : "No"}}
  \* Fecha de financiación: {{$petition->start ? $petition->start->format('Y-m') : 'Ninguna'}}
  \* Fecha de entrega anunciada: {{$petition->announced_end ? $petition->announced_end->format('Y-m') : 'Ninguna'}}
  \* Fecha de entrega: {{$petition->end ? $petition->end->format('Y-m') : 'Ninguna'}}
