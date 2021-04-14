@@ -61,13 +61,23 @@ class Petition extends Model
     /**
      * Check if the petition makes the company has another presale to finish.
      *
-     * If the petition is an update, it compare the previous with the actual state.
-     * If it is a creation, it just check the new state.
+     * Conditions where this returns true:
+     * * The petition creates a new presale which is not finished.
+     * * The petition updates a presale and old state was "Entregado" and new
+     *   it is not
      *
      * @return bool
      **/
     public function isNewNotFinished(): bool
     {
-        return $this->isUpdate() ? ((! $this->presale->isFinished() && $this->state == 'Entregado') ? false : true) : $this->state == 'Entregado';
+        $return = false;
+
+        if (!$this->isUpdate() && $this->state != "Entregado") {
+            $return = true;
+        } elseif ($this->isUpdate() && $this->presale->isFinished() && $this->state != "Entregado") {
+            $return = true;
+        }
+
+        return $return;
     }
 }
