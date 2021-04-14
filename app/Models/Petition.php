@@ -54,7 +54,7 @@ class Petition extends Model
      **/
     public function isNewLate(): bool
     {
-        return $this->isUpdate() ? ((!$this->preventa->late && $this->late) ? true : false) : false;
+        return $this->isUpdate() ? ((! $this->preventa->late && $this->late) ? true : false) : false;
     }
 
     /**
@@ -65,8 +65,8 @@ class Petition extends Model
      *
      * @return bool
      **/
-    public function isNewNotFinished() : bool
+    public function isNewNotFinished(): bool
     {
-        return $this->isUpdate() ? ((!$this->preventa->isFinished() && $this->state == "Entregado") ? true : false) : $this->state == "Entregado";
+        return $this->isUpdate() ? ((! $this->preventa->isFinished() && $this->state == 'Entregado') ? true : false) : $this->state == 'Entregado';
     }
 }
