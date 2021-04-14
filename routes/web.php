@@ -5,6 +5,7 @@ use App\Http\Controllers\PetitionController;
 use App\Http\Controllers\PresaleController;
 use App\Http\Controllers\TODOController;
 use App\Models\TODO;
+use App\Models\Presale;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -42,5 +43,18 @@ Route::get('info', function () {
     $publicTodo = TODO::where('type', 'public')->get();
     $undefinedTodo = TODO::where('type', 'undecided')->get();
 
-    return view('about', ['privateTodo' => $privateTodo, 'publicTodo' => $publicTodo, 'undefinedTodo' => $undefinedTodo]);
+    $presales = Presale::count();
+    $datedPresales = Presale::whereRaw('state != "Entregado"')
+        ->whereNotNull('announced_end')
+        ->orWhereRaw('state = "Entregado"')
+        ->whereNotNull('announced_end')
+        ->whereNotNull('end')
+        ->count();
+
+    return view('about', [
+        'privateTodo' => $privateTodo,
+        'publicTodo' => $publicTodo, 
+        'undefinedTodo' => $undefinedTodo,
+        'presales' => $presales,
+        'datedPresales' => $datedPresales]);
 })->name('info');
