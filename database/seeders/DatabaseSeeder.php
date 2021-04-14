@@ -39,8 +39,8 @@ class DatabaseSeeder extends Seeder
 
         $telegramUser = new \App\Models\TelegramUser();
         $telegramUser->id = 296858799;
-        $telegramUser->setAcceptPetitions(true);
-        $telegramUser->setCreatePetitions(true);
+        $telegramUser->setAcceptedPetitions(true);
+        $telegramUser->setCreatedPetitions(true);
         $telegramUser->save();
     }
 }
