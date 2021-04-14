@@ -72,9 +72,9 @@ class Petition extends Model
     {
         $return = false;
 
-        if (!$this->isUpdate() && $this->state != "Entregado") {
+        if (! $this->isUpdate() && $this->state != 'Entregado') {
             $return = true;
-        } elseif ($this->isUpdate() && $this->presale->isFinished() && $this->state != "Entregado") {
+        } elseif ($this->isUpdate() && $this->presale->isFinished() && $this->state != 'Entregado') {
             $return = true;
         }
 
