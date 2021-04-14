@@ -32,4 +32,14 @@ class TelegramUser extends Model
     {
         return $this->createdPetitions;
     }
+
+    /**
+     * Checks if the account is the control group.
+     *
+     * @return bool
+     **/
+    public function isControlGroup() : bool
+    {
+        return $this->id == env('TELEGRAM_CONTROL_GROUP');
+    }
 }
