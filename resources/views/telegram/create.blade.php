@@ -20,11 +20,11 @@ Se ha creado una petición de {{$petition->isUpdate() ? 'actualización' : 'crea
    \* Propuesta: {{$petition->end ? $petition->end->format('Y-m') : 'Ninguna'}}
 @else
  \* Preventa: [{{$petition->presale_name}}]({{$petition->presale_url}})
- @if ($petition->editorial)
+@if ($petition->editorial)
  \* Editorial: {{$petition->editorial->getMarkdown()}}
- @else
+@else
  \* Editorial: [{{$petition->editorial_name}}]({{$petition->editorial_url}})
- @endif
+@endif
  \* Estado: {{$petition->state}}
  \* Tarde: {{$petition->late}}
  \* Fecha de financiación: {{$petition->start ? $petition->start->format('Y-m') : 'Ninguna'}}
