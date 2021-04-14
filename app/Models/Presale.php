@@ -51,8 +51,8 @@ class Presale extends Model
      *
      * @return bool
      **/
-    public function isFinished() : bool
+    public function isFinished(): bool
     {
-        return $this->state == "Entregado";
+        return $this->state == 'Entregado';
     }
 }
