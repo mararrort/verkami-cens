@@ -38,7 +38,7 @@ class TelegramUser extends Model
      *
      * @return bool
      **/
-    public function isControlGroup() : bool
+    public function isControlGroup(): bool
     {
         return $this->id == env('TELEGRAM_CONTROL_GROUP');
     }
