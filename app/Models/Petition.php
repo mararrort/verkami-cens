@@ -44,4 +44,29 @@ class Petition extends Model
     {
         return isset($this->presale_id);
     }
+
+    /**
+     * Check if the petition makes another presale goes late.
+     *
+     * It first check if it is an update and then the presale previous state.
+     *
+     * @return bool
+     **/
+    public function isNewLate(): bool
+    {
+        return $this->isUpdate() ? ((!$this->preventa->late && $this->late) ? true : false) : false;
+    }
+
+    /**
+     * Check if the petition makes the company has another presale to finish.
+     *
+     * If the petition is an update, it compare the previous with the actual state.
+     * If it is a creation, it just check the new state.
+     *
+     * @return bool
+     **/
+    public function isNewNotFinished() : bool
+    {
+        return $this->isUpdate() ? ((!$this->preventa->isFinished() && $this->state == "Entregado") ? true : false) : $this->state == "Entregado";
+    }
 }
