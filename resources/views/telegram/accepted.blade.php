@@ -8,13 +8,13 @@ El registro de la preventa {{$presale->getMarkdown()}} de la editorial {{ $edito
 @if($petition->late != $presale->late)
 \* Se ha marcado como {{$petition->late ? 'impuntual' : 'puntual'}}
 @endif
-@if($petition->start != $presale->start)
+@if($petition->start != $presale->start && $petition->start)
 \* Se ha indicado como fecha de inicio {{$petition->start->format('Y-m')}}
 @endif
-@if($petition->announced_end != $presale->announced_end)
+@if($petition->announced_end != $presale->announced_end && $petition->announced_end)
 \* Se ha indicado como fecha final anunciada {{$petition->announced_end->format('Y-m')}}
 @endif
-@if($petition->end != $presale->end)
+@if($petition->end != $presale->end && $petition->end)
 \* Se ha indicado como fecha final {{$petition->end->format('Y-m')}}
 @endif
 @else

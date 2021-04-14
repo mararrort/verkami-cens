@@ -11,6 +11,9 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\Telegram\TelegramChannel;
 use NotificationChannels\Telegram\TelegramMessage;
+use NotificationChannels\Twitter\TwitterChannel;
+use NotificationChannels\Twitter\TwitterStatusUpdate;
+use Illuminate\Support\Facades\Log;
 
 class PetitionAccepted extends Notification
 {
@@ -42,7 +45,7 @@ class PetitionAccepted extends Notification
      */
     public function via($notifiable)
     {
-        return [TelegramChannel::class];
+        return [TelegramChannel::class, TwitterChannel::class];
     }
 
     /**
@@ -51,5 +54,35 @@ class PetitionAccepted extends Notification
     public function toTelegram($notifiable)
     {
         return TelegramMessage::create()->to($notifiable->id)->view('telegram.accepted', ['petition' => $this->petition, 'editorial' => $this->editorial, 'presale' => $this->presale]);
+    }
+
+    /**
+     * Send a tweet with the petition information.
+     *
+     * Undocumented function long description
+     *
+     * @param $notifiable Irrelevant
+     * @return TwitterStatusUpdate
+     **/
+    public function toTwitter($notifiable)
+    {
+        $tweet = "";
+        if ($this->petition->isUpdate()) {
+            $tweet = "Se ha actualizado la información sobre el mecenazgo "
+                . $this->presale->name . " de la editorial " . $this->editorial->name
+                . ".";
+        } else {
+            $tweet = "Se ha añadido la información sobre el mecenazgo "
+            . $this->petition->presale_name . " de la editorial " . $this->petition->editorial_name
+            . ".";
+        }
+
+        $tweet = $tweet . " Tienen " . (string)($this->petition->isNewNotFinished() ? count($editorial->getNotFinishedPresales()) + 1 : count($this->editorial->getNotFinishedPresales()))
+            . " juegos pendientes de entregar, y " . (string)(($this->petition->isNewNotFinished() && $this->petition->isNewLate()) ? count($this->editorial->getNotFinishedLatePresales()) + 1 : count($this->editorial->getNotFinishedLatePresales()))
+            . " pendientes y con retraso.";
+
+        Log::info("This is the tweet that will be send", ['tweet', $tweet]);
+        
+        return new TwitterStatusUpdate($tweet);
     }
 }
