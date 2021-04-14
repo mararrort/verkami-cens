@@ -68,6 +68,6 @@ class Petition extends Model
      **/
     public function isNewNotFinished(): bool
     {
-        return $this->isUpdate() ? ((! $this->presale->isFinished() && $this->state == 'Entregado') ? true : false) : $this->state == 'Entregado';
+        return $this->isUpdate() ? ((! $this->presale->isFinished() && $this->state == 'Entregado') ? false : true) : $this->state == 'Entregado';
     }
 }
