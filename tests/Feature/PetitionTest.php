@@ -9,7 +9,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class PresaleTest extends TestCase
+class PetitionTest extends TestCase
 {
     /**
      * Ensure that isNewNotFinished method works correctly.
