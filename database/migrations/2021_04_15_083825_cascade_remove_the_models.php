@@ -13,27 +13,27 @@ class CascadeRemoveTheModels extends Migration
      */
     public function up()
     {
-        Schema::table("presales", function (Blueprint $table) {
+        Schema::table('presales', function (Blueprint $table) {
             $table
-                ->foreign("editorial_id")
-                ->references("id")
-                ->on("editorials")
-                ->onDelete("cascade")
+                ->foreign('editorial_id')
+                ->references('id')
+                ->on('editorials')
+                ->onDelete('cascade')
                 ->change();
         });
-        Schema::table("petitions", function (Blueprint $table) {
+        Schema::table('petitions', function (Blueprint $table) {
             $table
-                ->foreign("editorial_id")
-                ->references("id")
-                ->on("editorials")
-                ->onDelete("cascade")
+                ->foreign('editorial_id')
+                ->references('id')
+                ->on('editorials')
+                ->onDelete('cascade')
                 ->change();
 
             $table
-                ->foreign("presale_id")
-                ->references("id")
-                ->on("presales")
-                ->onDelete("cascade")
+                ->foreign('presale_id')
+                ->references('id')
+                ->on('presales')
+                ->onDelete('cascade')
                 ->change();
         });
     }
@@ -45,12 +45,12 @@ class CascadeRemoveTheModels extends Migration
      */
     public function down()
     {
-        Schema::table("presales", function (Blueprint $table) {
-            $table->dropForeign(["editorial_id"]);
+        Schema::table('presales', function (Blueprint $table) {
+            $table->dropForeign(['editorial_id']);
         });
-        Schema::table("petitions", function (Blueprint $table) {
-            $table->dropForeign(["editorial_id"]);
-            $table->dropForeign(["presale_id"]);
+        Schema::table('petitions', function (Blueprint $table) {
+            $table->dropForeign(['editorial_id']);
+            $table->dropForeign(['presale_id']);
         });
     }
 }

@@ -15,8 +15,8 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use Ramsey\Uuid\Uuid;
 use NotificationChannels\Twitter\Exceptions\CouldNotSendNotification;
+use Ramsey\Uuid\Uuid;
 
 class PetitionController extends Controller
 {
@@ -27,13 +27,13 @@ class PetitionController extends Controller
      */
     public function index()
     {
-        $createPetitions = Petition::whereNull("presale_id")->get();
+        $createPetitions = Petition::whereNull('presale_id')->get();
 
-        $updatePetitions = Petition::whereNotNull("presale_id")->get();
+        $updatePetitions = Petition::whereNotNull('presale_id')->get();
 
-        return view("petition.index", [
-            "createPetitions" => $createPetitions,
-            "updatePetitions" => $updatePetitions,
+        return view('petition.index', [
+            'createPetitions' => $createPetitions,
+            'updatePetitions' => $updatePetitions,
         ]);
     }
 
@@ -44,11 +44,11 @@ class PetitionController extends Controller
      */
     public function create(Request $request, Presale $presale = null)
     {
-        $editorials = Editorial::orderBy("name", "ASC")->get();
+        $editorials = Editorial::orderBy('name', 'ASC')->get();
 
-        return view("petition.create", [
-            "editorials" => $editorials,
-            "presale" => $presale,
+        return view('petition.create', [
+            'editorials' => $editorials,
+            'presale' => $presale,
         ]);
     }
 
@@ -60,36 +60,30 @@ class PetitionController extends Controller
      */
     public function store(Request $request)
     {
-        Log::info("A petition request has been get", [
-            "request" => $request->all,
+        Log::info('A petition request has been get', [
+            'request' => $request->all,
         ]);
         $validated = $request->validate([
-            "presale_id" =>
-                "required_without:presale_name,presale_url|nullable|exists:presales,id",
-            "presale_name" =>
-                "required_without:presale_id|nullable|string|max:64",
-            "presale_url" =>
-                "required_without:presale_id|nullable|string|max:128",
-            "editorial_id" =>
-                "required_without:editorial_name,editorial_url|nullable|exists:editorials,id",
-            "editorial_name" =>
-                "required_without:editorial_id|nullable|string|max:64",
-            "editorial_url" =>
-                "required_without:editorial_id|nullable|string|max:128",
-            "state" => [
-                "required",
+            'presale_id' => 'required_without:presale_name,presale_url|nullable|exists:presales,id',
+            'presale_name' => 'required_without:presale_id|nullable|string|max:64',
+            'presale_url' => 'required_without:presale_id|nullable|string|max:128',
+            'editorial_id' => 'required_without:editorial_name,editorial_url|nullable|exists:editorials,id',
+            'editorial_name' => 'required_without:editorial_id|nullable|string|max:64',
+            'editorial_url' => 'required_without:editorial_id|nullable|string|max:128',
+            'state' => [
+                'required',
                 Rule::in([
-                    "Recaudando",
-                    "Pendiente de entrega",
-                    "Parcialmente entregado",
-                    "Entregado",
-                    "Sin definir",
+                    'Recaudando',
+                    'Pendiente de entrega',
+                    'Parcialmente entregado',
+                    'Entregado',
+                    'Sin definir',
                 ]),
             ],
-            "info" => "nullable|string",
-            "start" => "nullable|date",
-            "announced_end" => "nullable|date",
-            "end" => "nullable|date",
+            'info' => 'nullable|string',
+            'start' => 'nullable|date',
+            'announced_end' => 'nullable|date',
+            'end' => 'nullable|date',
         ]);
 
         $petition = new Petition();
@@ -101,7 +95,7 @@ class PetitionController extends Controller
         $petition->editorial_name = $request->editorial_name;
         $petition->editorial_url = $request->editorial_url;
         $petition->state = $request->state;
-        $petition->late = $request->has("late");
+        $petition->late = $request->has('late');
         $petition->info = $request->info;
         $petition->id = Uuid::uuid4();
         $petition->sendTelegramNotification = true;
@@ -110,12 +104,12 @@ class PetitionController extends Controller
         $petition->end = $request->end;
 
         $petition->save();
-        Log::info("A petition has been created", ["petition" => $petition]);
+        Log::info('A petition has been created', ['petition' => $petition]);
 
         // Notify
         if ($petition->sendTelegramNotification) {
             $telegramUsers = TelegramUser::where(
-                "createdPetitions",
+                'createdPetitions',
                 true,
             )->get();
             try {
@@ -123,15 +117,15 @@ class PetitionController extends Controller
                     $telegramUsers,
                     new PetitionCreated($petition),
                 );
-                Log::info("Notifications have been sent");
+                Log::info('Notifications have been sent');
             } catch (CouldNotSendNotification $exception) {
-                Log::error("The tweet has not been send", [
-                    "exception" => $exception,
+                Log::error('The tweet has not been send', [
+                    'exception' => $exception,
                 ]);
             }
         }
 
-        return redirect()->route("preventas.index");
+        return redirect()->route('preventas.index');
     }
 
     /**
@@ -142,7 +136,7 @@ class PetitionController extends Controller
      */
     public function show(Petition $peticion)
     {
-        return view("petition.show", ["sap" => $peticion]);
+        return view('petition.show', ['sap' => $peticion]);
     }
 
     /**
@@ -155,9 +149,9 @@ class PetitionController extends Controller
     {
         $editorials = Editorial::all();
 
-        return view("petition.edit", [
-            "peticion" => $peticion,
-            "editorials" => $editorials,
+        return view('petition.edit', [
+            'peticion' => $peticion,
+            'editorials' => $editorials,
         ]);
     }
 
@@ -176,10 +170,10 @@ class PetitionController extends Controller
         $peticion->editorial_name = $request->editorial_name;
         $peticion->editorial_url = $request->editorial_url;
         $peticion->state = $request->state;
-        $peticion->late = $request->has("late");
+        $peticion->late = $request->has('late');
         $peticion->info = $request->info;
         $peticion->sendTelegramNotification = $request->has(
-            "sendTelegramNotification",
+            'sendTelegramNotification',
         );
         $peticion->start = $request->start;
         $peticion->announced_end = $request->announced_end;
@@ -187,7 +181,7 @@ class PetitionController extends Controller
 
         $peticion->save();
 
-        return redirect()->route("peticion.show", ["peticion" => $peticion]);
+        return redirect()->route('peticion.show', ['peticion' => $peticion]);
     }
 
     /**
@@ -200,7 +194,7 @@ class PetitionController extends Controller
     {
         $peticion->delete();
 
-        return redirect()->route("peticion.index");
+        return redirect()->route('peticion.index');
     }
 
     /**
@@ -237,7 +231,7 @@ class PetitionController extends Controller
         // Notify by Telegram
         if ($peticion->sendTelegramNotification) {
             $telegramUsers = TelegramUser::where(
-                "acceptedPetitions",
+                'acceptedPetitions',
                 true,
             )->get();
             Notification::send(
@@ -245,7 +239,7 @@ class PetitionController extends Controller
                 new PetitionAccepted($peticion, $editorial, $presale),
             );
 
-            Log::info("A Telegram notification has been sent");
+            Log::info('A Telegram notification has been sent');
         }
 
         $presale->state = $peticion->state;
@@ -260,6 +254,6 @@ class PetitionController extends Controller
 
         $peticion->delete();
 
-        return redirect()->route("peticion.index");
+        return redirect()->route('peticion.index');
     }
 }
