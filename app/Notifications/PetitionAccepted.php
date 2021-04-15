@@ -82,7 +82,7 @@ class PetitionAccepted extends Notification
         }
 
         $tweet = $tweet.' Tienen '.(string) ($this->petition->isNewNotFinished() ? count($this->editorial->getNotFinishedPresales()) + 1 : count($this->editorial->getNotFinishedPresales()))
-            .' juegos pendientes de entregar, y '.(string) ((!$this->petition->isFinished() && $this->petition->isNewLate()) ? count($this->editorial->getNotFinishedLatePresales()) + 1 : count($this->editorial->getNotFinishedLatePresales()))
+            .' juegos pendientes de entregar, y '.(string) ((! $this->petition->isFinished() && $this->petition->isNewLate()) ? count($this->editorial->getNotFinishedLatePresales()) + 1 : count($this->editorial->getNotFinishedLatePresales()))
             .' pendientes y con retraso.';
 
         Log::info('This is the tweet that will be send', ['tweet', $tweet]);

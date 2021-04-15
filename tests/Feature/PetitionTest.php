@@ -46,7 +46,7 @@ class PresaleTest extends TestCase
     }
 
     /**
-     * Test the method isNewLate
+     * Test the method isNewLate.
      *
      * @return void
      **/
