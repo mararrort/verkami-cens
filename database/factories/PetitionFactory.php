@@ -66,4 +66,32 @@ class PetitionFactory extends Factory
             ];
         });
     }
+
+    /**
+     * The presale will be late.
+     *
+     * @return array
+     **/
+    public function late()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'late' => true
+            ];
+        });
+    }
+
+    /**
+     * The presale will not be late.
+     *
+     * @return array
+     **/
+    public function notLate()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'late' => false
+            ];
+        });
+    }
 }

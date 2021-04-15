@@ -36,4 +36,4 @@ Se ha registrado la preventa {{$presale->getMarkdown()}} de la editorial {{ $edi
 
 Con esta información, el registro de la editorial {{$editorial->getMarkdown()}} ha pasado a ser el siguiente:
 \* Juegos pendientes de entregar: {{ $petition->isNewNotFinished() ? count($editorial->getNotFinishedPresales()) + 1 : count($editorial->getNotFinishedPresales()) }}
-\* Juegos pendientes de entregar y con retraso: {{ ($petition->isNewNotFinished() && $petition->isNewLate()) ? count($editorial->getNotFinishedLatePresales()) + 1 : count($editorial->getNotFinishedLatePresales()) }}
+\* Juegos pendientes de entregar y con retraso: {{ (!$this->petition->isFinished() && $this->petition->isNewLate()) ? count($this->editorial->getNotFinishedLatePresales()) + 1 : count($this->editorial->getNotFinishedLatePresales()) }}

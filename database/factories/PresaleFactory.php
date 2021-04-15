@@ -47,4 +47,60 @@ class PresaleFactory extends Factory
             'end' => $end ?? null,
         ];
     }
+
+    /**
+     * The presale will be finished.
+     *
+     * @return array
+     **/
+    public function finished()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'state' => 'Entregado',
+            ];
+        });
+    }
+
+    /**
+     * The presale will be unfinished.
+     *
+     * @return array
+     **/
+    public function unfinished()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'state' => $this->faker->randomElement(['Recaudando', 'Pendiente de entrega', 'Parcialmente entregado', 'Sin definir']),
+            ];
+        });
+    }
+
+    /**
+     * The presale will be late.
+     *
+     * @return array
+     **/
+    public function late()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'late' => true
+            ];
+        });
+    }
+
+    /**
+     * The presale will not be late.
+     *
+     * @return array
+     **/
+    public function notLate()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'late' => false
+            ];
+        });
+    }
 }

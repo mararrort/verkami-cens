@@ -80,4 +80,16 @@ class Petition extends Model
 
         return $return;
     }
+
+    /**
+     * Returns if the presale will not be finished.
+     *
+     * Just checks the state
+     *
+     * @return bool
+     **/
+    public function isFinished(): bool
+    {
+        return $this->state == 'Entregado';
+    }
 }

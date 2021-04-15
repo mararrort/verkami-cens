@@ -44,4 +44,31 @@ class PresaleTest extends TestCase
         $petition->save();
         $this->assertFalse($petition->isNewNotFinished());
     }
+
+    /**
+     * Test the method isNewLate
+     *
+     * @return void
+     **/
+    public function test_isNewLate_method_works_as_expected()
+    {
+        $editorial = Editorial::factory()->create();
+        $presale = Presale::factory()->notLate()->for($editorial)->create();
+        $petition = Petition::factory()->presale($presale)->notLate()->create();
+
+        $this->assertFalse($petition->isNewLate());
+
+        $petition->late = true;
+
+        $this->assertTrue($petition->isNewLate());
+
+        $presale = Presale::factory()->late()->for($editorial)->create();
+        $petition = Petition::factory()->presale($presale)->notLate()->create();
+
+        $this->assertFalse($petition->isNewLate());
+
+        $petition->late = true;
+
+        $this->assertFalse($petition->isNewLate());
+    }
 }
