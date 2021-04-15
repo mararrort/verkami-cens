@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Ramsey\Uuid\Uuid;
+use NotificationChannels\Twitter\Exceptions\CouldNotSendNotification;
 
 class PetitionController extends Controller
 {
@@ -54,6 +55,7 @@ class PetitionController extends Controller
      */
     public function store(Request $request)
     {
+        Log::info("A petition request has been get", ['request', $request->all()]);
         $validated = $request->validate([
             'presale_id' => 'required_without:presale_name,presale_url|nullable|exists:presales,id',
             'presale_name' => 'required_without:presale_id|nullable|string|max:64',
@@ -68,31 +70,35 @@ class PetitionController extends Controller
             'end' => 'nullable|date',
         ]);
 
-        $sap = new Petition();
+        $petition = new Petition();
 
-        $sap->presale_id = $request->presale_id;
-        $sap->presale_name = $request->presale_name;
-        $sap->presale_url = $request->presale_url;
-        $sap->editorial_id = $request->editorial_id;
-        $sap->editorial_name = $request->editorial_name;
-        $sap->editorial_url = $request->editorial_url;
-        $sap->state = $request->state;
-        $sap->late = $request->has('late');
-        $sap->info = $request->info;
-        $sap->id = Uuid::uuid4();
-        $sap->sendTelegramNotification = true;
-        $sap->start = $request->start;
-        $sap->announced_end = $request->announced_end;
-        $sap->end = $request->end;
+        $petition->presale_id = $request->presale_id;
+        $petition->presale_name = $request->presale_name;
+        $petition->presale_url = $request->presale_url;
+        $petition->editorial_id = $request->editorial_id;
+        $petition->editorial_name = $request->editorial_name;
+        $petition->editorial_url = $request->editorial_url;
+        $petition->state = $request->state;
+        $petition->late = $request->has('late');
+        $petition->info = $request->info;
+        $petition->id = Uuid::uuid4();
+        $petition->sendTelegramNotification = true;
+        $petition->start = $request->start;
+        $petition->announced_end = $request->announced_end;
+        $petition->end = $request->end;
 
-        $sap->save();
+        $petition->save();
+        Log::info("A petition has been created", ['petition' => $petition]);
 
-        // Notify by Telegram
-        if ($sap->sendTelegramNotification) {
+        // Notify
+        if ($petition->sendTelegramNotification) {
             $telegramUsers = TelegramUser::where('createdPetitions', true)->get();
-            Notification::send($telegramUsers, new PetitionCreated($sap));
-
-            Log::info('A Telegram notification has been sent');
+            try {
+                Notification::send($telegramUsers, new PetitionCreated($petition));
+                Log::info('Notifications have been sent');
+            } catch(CouldNotSendNotification $exception) {
+                Log::error("The tweet has not been send", ['exception' => $exception]);
+            }
         }
 
         return redirect()->route('preventas.index');
