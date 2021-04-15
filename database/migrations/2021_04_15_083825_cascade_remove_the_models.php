@@ -26,7 +26,7 @@ class CascadeRemoveTheModels extends Migration
                 ->on('editorials')
                 ->onDelete('cascade')
                 ->change();
-            
+
             $table->foreign('presale_id')
                 ->references('id')
                 ->on('presales')
@@ -53,7 +53,7 @@ class CascadeRemoveTheModels extends Migration
                 ->references('id')
                 ->on('editorials')
                 ->change();
-            
+
             $table->foreign('presale_id')
                 ->references('id')
                 ->on('presales')
