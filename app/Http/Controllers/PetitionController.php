@@ -60,8 +60,8 @@ class PetitionController extends Controller
      */
     public function store(Request $request)
     {
-        Log::info("A petition request has been get", [
-            "request" => $request->all(),
+        Log::info('A petition request has been get', [
+            'request' => $request->all(),
         ]);
         $validated = $request->validate([
             'presale_id' => 'required_without:presale_name,presale_url|nullable|exists:presales,id',
