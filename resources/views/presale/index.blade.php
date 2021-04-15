@@ -42,7 +42,7 @@
                 @else
                 <tr>
                 @endif
-                    <td><a dusk="editPresale" href="{{route('peticion.create', ['presale' => $item->id])}}" rel="external" target="_blank"><i class="bi bi-pencil"></a></i><a href="{{$item->url}}">{{$item->name}}</a></td>
+                    <td><a dusk="editPresale" href="{{route('peticion.create', ['presale' => $item->id])}}"><i class="bi bi-pencil"></a></i><a href="{{$item->url}}" rel="external" target="_blank">{{$item->name}}</a></td>
                     <td>{{$item->editorial->name}}</td>
                     <td>{{$item->state}}</td>
                     <td>{{$item->start ? $item->start->format('Y-m') : '-'}}</td>

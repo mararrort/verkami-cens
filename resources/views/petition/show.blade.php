@@ -1,95 +1,168 @@
 @extends('base')
 
 @section('body')
-<h2 dusk="header">{{ $sap->presale_id ? 'Actualización' : 'Creación' }}</h2>
-    <div class="row">
-        Preventa: <a href="{{$sap->presale_id ? $sap->presale->url : $sap->presale_url}}">{{$sap->presale_id ? $sap->presale->name : $sap->presale_name}}</a>
+
+@if($error)
+<div class="alert alert-warning" role="alert">
+    Ha habido un error. No debe repetirse la actualización hasta que se resuelva
+</div>
+@endif
+@if($presaleUrlError)
+<div class="alert alert-warning" role="alert" dusk="presaleUrlError">
+    Se intenta crear una preventa con una URL ya usada.
+</div>
+@endif
+@if($editorialUrlError)
+<div class="alert alert-warning" role="alert" dusk="editorialUrlError">
+Se intenta crear una editorial con una URL ya usada.
+</div>
+@endif
+<div class="row">
+    <div class="col-auto">
+        <h2 dusk="header">{{ $petition->presale_id ? 'Actualización' : 'Creación' }}</h2>
     </div>
-    <div class="row">
-        @if ($sap->editorial_id)
-            Editorial: <a href="{{$sap->editorial->url}}">{{$sap->editorial->name}}</a>
-        @else 
-            Editorial: <a href="{{$sap->editorial_url}}">{{$sap->editorial_name}}</a>
-        @endif
+</div>
+
+<div class="row">
+    <div class="col">
+        <label for="presale_name" class="form-label">Preventa</label>
+        <input name="presale_name" type="text" value="{{$petition->presale_id ? $petition->presale->name : $petition->presale_name}}" class="form-control" disabled>
     </div>
-    <div class="row">
-        @if ($sap->presale_id)
-            Estado actual: {{$sap->presale->state}} | Estado propuesto: {{ $sap->state }}
-        @else
-            Estado: {{ $sap->state }}
-        @endif
+    <div class="col">
+        <label for="presale_url" class="form-label">URL</label>
+        <input name="presale_url" type="text" value="{{$petition->presale_id ? $petition->presale->url : $petition->presale_url}}" class="form-control" disabled>
     </div>
-    <div class="row">
-        @if ($sap->presale_id)
-            Retraso: {{ $sap->presale->late ? "Si" : "No" }} | Retraso propuesto: {{ $sap->late ? "Si" : "No" }}
-        @else
-            Retraso: {{ $sap->late ? "Si" : "No" }}
-        @endif
+</div>
+
+<div class="row">
+    <div class="col">
+        <label for="editorial_name" class="form-label">Editorial</label>
+        <input name="editorial_name" type="text" value="{{$petition->editorial_id ? $petition->editorial->name : $petition->editorial_name}}" class="form-control" disabled>
     </div>
-    @if($sap->presale_id)
-    <div class="row">
-        Información: <p>{{ $sap->info }}</p>
+    <div class="col">
+        <label for="editorial_url" class="form-label">URL</label>
+        <input name="editorial_url" type="text" value="{{$petition->editorial_id ? $petition->editorial->url : $petition->editorial_url}}" class="form-control" disabled>
+    </div>
+</div>
+
+<div class="row">
+    @if($petition->presale_id)
+    <div class="col">
+        <label for="presale_state" class="form-label">Estado</label>
+        <select name="presale_state" class="form-select" disabled>
+            <option @if($petition->presale->state == "Recaudando") selected @endif>Recaudando</option>
+            <option @if($petition->presale->state == "Pendiente de entrega") selected @endif>Pendiente de entrega</option>
+            <option @if($petition->presale->state == "Parcialmente entregado") selected @endif>Parcialmente entregado</option>
+            <option @if($petition->presale->state == "Entregado") selected @endif>Entregado</option>
+            <option @if($petition->presale->state == "Sin definir") selected @endif>Sin definir</option>
+        </select>
     </div>
     @endif
-    <div class="row">
+    <div class="col">
+        <label for="petition_state" class="form-label">Estado propuesto</label>
+        <select name="petition_state" class="form-select" disabled>
+            <option @if($petition->state == "Recaudando") selected @endif>Recaudando</option>
+            <option @if($petition->state == "Pendiente de entrega") selected @endif>Pendiente de entrega</option>
+            <option @if($petition->state == "Parcialmente entregado") selected @endif>Parcialmente entregado</option>
+            <option @if($petition->state == "Entregado") selected @endif>Entregado</option>
+            <option @if($petition->state == "Sin definir") selected @endif>Sin definir</option>
+        </select>
+    </div>
+</div>
+
+<div class="row">
+    @if($petition->presale_id)
+    <div class="col">
         <div class="form-check">
-        <input class="form-check-input" type="checkbox" name="sendTelegramNotification" @if($sap->sendTelegramNotification) checked @endif disabled>
-        <label class="form-check-label" for="sendTelegramNotification">
-            Enviar notificación por Telegram
-        </label>
-    </div>
-    <div class="row">
-        @if($sap->presale_id)
-        <div class="mb-3">
-            <label for="start" class="form-label">Inicio de la preventa</label>
-            <input type="date" name="start" class="form-control" value="{{$sap->presale->start ? $sap->presale->start->format('Y-m-d') : ''}}" disabled>
-        </div>
-        @endif
-        <div class="mb-3">
-            <label for="start_p" class="form-label">Inicio de la preventa propuesto</label>
-            <input type="date" name="start_p" class="form-control" value="{{$sap->start ? $sap->start->format('Y-m-d') : ''}}" disabled>
+            <input class="form-check-input" type="checkbox" @if($petition->presale->late) checked @endif name="presale_tarde" disabled>
+            <label class="form-check-label" for="presale_tarde">
+                La preventa va con retraso
+            </label>
         </div>
     </div>
+    @endif
+    <div class="col">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" @if($petition->late) checked @endif name="petition_tarde" disabled>
+            <label class="form-check-label" for="petition_tarde">
+                Se propone que se indique que la preventa va con retraso
+            </label>
+        </div>
+    </div>
+</div>
 
-    <div class="row">
-        @if($sap->presale_id)
-        <div class="mb-3">
-            <label for="announced_end" class="form-label">Fecha de entrega anunciada</label>
-            <input type="date" name="announced_end" class="form-control" value="{{$sap->presale->announced_end ? $sap->presale->announced_end->format('Y-m-d') : ''}}" disabled>
-        </div>
-        @endif
-        <div class="mb-3">
-            <label for="announced_end_p" class="form-label">Fecha de entrega anunciada propuesta</label>
-            <input type="date" name="announced_end_p" class="form-control" value="{{$sap->announced_end ? $sap->announced_end->format('Y-m-d') : ''}}" disabled>
+@if($petition->presale_id)
+<div class="row">
+    <div class="col">
+        <label for="info" class="form-label">Información</label>
+        <textarea name="info" class="form-control" id="exampleFormControlTextarea1" rows="3" disabled>{{ $petition->info }}</textarea>
+    </div>
+</div>
+@endif
+
+<div class="row">
+    <div class="col">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="sendTelegramNotification" @if($petition->sendTelegramNotification) checked @endif disabled>
+            <label class="form-check-label" for="sendTelegramNotification">
+                Enviar notificación por Telegram
+            </label>
         </div>
     </div>
+</div>
+    
+    
+<div class="row">
+    @if($petition->presale_id)
+    <div class="col">
+        <label for="start" class="form-label">Inicio de la preventa</label>
+        <input type="date" name="start" class="form-control" value="{{$petition->presale->start ? $petition->presale->start->format('Y-m-d') : ''}}" disabled>
+    </div>
+    @endif
+    <div class="col">
+        <label for="start_p" class="form-label">Inicio de la preventa propuesto</label>
+        <input type="date" name="start_p" class="form-control" value="{{$petition->start ? $petition->start->format('Y-m-d') : ''}}" disabled>
+    </div>
+</div>
 
-    <div class="row">
-        @if($sap->presale_id)
-        <div class="mb-3">
-            <label for="end_p" class="form-label">Fecha de entrega</label>
-            <input type="date" name="end_p" class="form-control" value="{{$sap->presale->end ? $sap->presale->end->format('Y-m-d') : ''}}" disabled>
-        </div>
-        @endif
-        <div class="mb-3">
-            <label for="end_p" class="form-label">Fecha de entrega propuesta</label>
-            <input type="date" name="end_p" class="form-control" value="{{$sap->end ? $sap->end->format('Y-m-d') : ''}}" disabled>
-        </div>
+<div class="row">
+    @if($petition->presale_id)
+    <div class="col">
+        <label for="announced_end" class="form-label">Fecha de entrega anunciada</label>
+        <input type="date" name="announced_end" class="form-control" value="{{$petition->presale->announced_end ? $petition->presale->announced_end->format('Y-m-d') : ''}}" disabled>
+    </div>
+    @endif
+    <div class="col">
+        <label for="announced_end_p" class="form-label">Fecha de entrega anunciada propuesta</label>
+        <input type="date" name="announced_end_p" class="form-control" value="{{$petition->announced_end ? $petition->announced_end->format('Y-m-d') : ''}}" disabled>
+    </div>
+</div>
+
+<div class="row">
+    @if($petition->presale_id)
+    <div class="col">
+        <label for="end_p" class="form-label">Fecha de entrega</label>
+        <input type="date" name="end_p" class="form-control" value="{{$petition->presale->end ? $petition->presale->end->format('Y-m-d') : ''}}" disabled>
+    </div>
+    @endif
+    <div class="col">
+        <label for="end_p" class="form-label">Fecha de entrega propuesta</label>
+        <input type="date" name="end_p" class="form-control" value="{{$petition->end ? $petition->end->format('Y-m-d') : ''}}" disabled>
     </div>
 </div>
 
 <div class="row">
     <div class="col-auto">
-        <form action="{{route('peticion.accept', ['peticion' => $sap])}}" method="post">
+        <form action="{{route('peticion.accept', ['peticion' => $petition])}}" method="post">
             @csrf
             <button type="submit" class="btn btn-primary">Accept</button>
         </form>
     </div>
     <div class="col-auto">
-        <a href="{{route('peticion.edit', ['peticion' => $sap])}}"><button type="submit" class="btn btn-primary">Editar</button></a>
+        <a href="{{route('peticion.edit', ['peticion' => $petition])}}"><button type="submit" class="btn btn-primary">Editar</button></a>
     </div>
     <div class="col-auto">
-        <form action="{{route('peticion.destroy', ['peticion' => $sap])}}" method="post">
+        <form action="{{route('peticion.destroy', ['peticion' => $petition])}}" method="post">
             @csrf
             @method('delete')
             <button type="submit" class="btn btn-danger">Delete</button>
