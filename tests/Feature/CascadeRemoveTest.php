@@ -2,13 +2,12 @@
 
 namespace Tests\Feature;
 
+use App\Models\Editorial;
+use App\Models\Petition;
+use App\Models\Presale;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-
-use App\Models\Editorial;
-use App\Models\Presale;
-use App\Models\Petition;
 
 class CascadeRemoveTest extends TestCase
 {
