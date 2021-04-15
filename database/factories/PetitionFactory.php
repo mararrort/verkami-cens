@@ -76,7 +76,7 @@ class PetitionFactory extends Factory
     {
         return $this->state(function (array $attributes) {
             return [
-                'late' => true
+                'late' => true,
             ];
         });
     }
@@ -90,7 +90,7 @@ class PetitionFactory extends Factory
     {
         return $this->state(function (array $attributes) {
             return [
-                'late' => false
+                'late' => false,
             ];
         });
     }
