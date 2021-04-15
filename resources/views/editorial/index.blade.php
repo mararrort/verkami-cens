@@ -36,7 +36,7 @@
             <tbody>
                 @foreach ($editorials as $editorial)
                 <tr>
-                    <td><a href="{{$editorial->url}}">{{$editorial->name}}</a></td>
+                    <td><a href="{{$editorial->url}}" rel="external" target="_blank">{{$editorial->name}}</a></td>
                     <td>{{count($editorial->presales)}}</td>
                     <td>{{count($editorial->getPresales('Recaudando'))}}</td>
                     <td>{{count($editorial->getPresales('Pendiente de entrega'))}}</td>
