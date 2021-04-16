@@ -62,10 +62,10 @@ class PetitionAccepted extends Notification
     {
         return TelegramMessage::create()
             ->to($notifiable->id)
-            ->view('telegram.accepted', [
-                'petition' => $this->petition,
-                'editorial' => $this->editorial,
-                'presale' => $this->presale,
+            ->view("telegram.accepted", [
+                "petition" => $this->petition,
+                "editorial" => $this->editorial,
+                "presale" => $this->presale,
             ]);
     }
 
@@ -80,30 +80,30 @@ class PetitionAccepted extends Notification
     public function toTwitter($notifiable)
     {
         $tweet =
-            'Se ha '.
-            ($this->petition->isUpdate() ? 'actualizado' : 'añadido').
-            ' la información sobre el mecenazgo '.
+            "Se ha " .
+            ($this->petition->isUpdate() ? "actualizado" : "añadido") .
+            " la información sobre el mecenazgo " .
             ($this->petition->isUpdate()
                 ? $this->presale->name
-                : $this->petition->presale_name).
-            ' de la editorial '.
-            ($petition->isNewEditorial()
+                : $this->petition->presale_name) .
+            " de la editorial " .
+            ($this->petition->isNewEditorial()
                 ? $this->petition->editorial_name
-                : $this->editorial->name).
+                : $this->editorial->name) .
             '.
             
-            Tienen '.
+            Tienen ' .
             (string) ($this->petition->isNewNotFinished()
                 ? count($this->editorial->getNotFinishedPresales()) + 1
-                : count($this->editorial->getNotFinishedPresales())).
-            ' juegos pendientes de entregar, y '.
-            (string) (! $this->petition->isFinished() &&
+                : count($this->editorial->getNotFinishedPresales())) .
+            " juegos pendientes de entregar, y " .
+            (string) (!$this->petition->isFinished() &&
             $this->petition->isNewLate()
                 ? count($this->editorial->getNotFinishedLatePresales()) + 1
-                : count($this->editorial->getNotFinishedLatePresales())).
-            ' pendientes y con retraso.';
+                : count($this->editorial->getNotFinishedLatePresales())) .
+            " pendientes y con retraso.";
 
-        Log::info('This is the tweet that will be send', ['tweet', $tweet]);
+        Log::info("This is the tweet that will be send", ["tweet", $tweet]);
 
         return new TwitterStatusUpdate($tweet);
     }
