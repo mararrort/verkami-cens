@@ -85,7 +85,7 @@ class PetitionAccepted extends Notification
             " la información sobre el mecenazgo " .
             ($this->petition->isUpdate()
                 ? $this->presale->name
-                : $this->presale_name) .
+                : $this->petition->presale_name) .
             " de la editorial " .
             ($petition->isNewEditorial()
                 ? $this->petition->editorial_name
