@@ -90,7 +90,7 @@ class PetitionAccepted extends Notification
             ($this->petition->isNewEditorial()
                 ? $this->petition->editorial_name
                 : $this->editorial->name) .
-            '. Tienen ' .
+            ". Tienen " .
             (string) ($this->petition->isNewNotFinished()
                 ? count($this->editorial->getNotFinishedPresales()) + 1
                 : count($this->editorial->getNotFinishedPresales())) .
