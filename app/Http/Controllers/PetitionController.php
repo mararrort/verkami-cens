@@ -271,7 +271,7 @@ class PetitionController extends Controller
             try {
                 Notification::send(
                     $telegramUsers,
-                    new PetitionAccepted($peticion),
+                    new PetitionAccepted($peticion, $editorial, $presale),
                 );
                 Log::info("Notifications have been sent");
             } catch (TwitterException $exception) {
