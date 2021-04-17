@@ -27,17 +27,16 @@ class PetitionFactory extends Factory
         $presale = Presale::factory()->make();
 
         return [
-            'id' => $this->faker->uuid,
-            'presale_name' => $presale->name,
-            'presale_url' => $presale->url,
-            'editorial_name' => $editorial->name,
-            'editorial_url' => $editorial->url,
-            'state' => $presale->state,
-            'late' => $presale->late,
-            'start' => $presale->start,
-            'announced_end' => $presale->announced_end,
-            'end' => $presale->end,
-            'sendTelegramNotification' => true,
+            "id" => $this->faker->uuid,
+            "presale_name" => $presale->name,
+            "presale_url" => $presale->url,
+            "editorial_name" => $editorial->name,
+            "editorial_url" => $editorial->url,
+            "state" => $presale->state,
+            "start" => $presale->start,
+            "announced_end" => $presale->announced_end,
+            "end" => $presale->end,
+            "sendTelegramNotification" => true,
         ];
     }
 
@@ -45,13 +44,13 @@ class PetitionFactory extends Factory
     {
         return $this->state(function (array $attributes) use ($presale) {
             return [
-                'presale_name' => null,
-                'presale_url' => null,
-                'presale_id' => $presale->id,
-                'editorial_id' => $presale->editorial->id,
-                'editorial_name' => null,
-                'editorial_url' => null,
-                'info' => $this->faker->paragraph,
+                "presale_name" => null,
+                "presale_url" => null,
+                "presale_id" => $presale->id,
+                "editorial_id" => $presale->editorial->id,
+                "editorial_name" => null,
+                "editorial_url" => null,
+                "info" => $this->faker->paragraph,
             ];
         });
     }
@@ -60,9 +59,9 @@ class PetitionFactory extends Factory
     {
         return $this->state(function (array $attributes) use ($editorial) {
             return [
-                'editorial_id' => $editorial->id,
-                'editorial_name' => null,
-                'editorial_url' => null,
+                "editorial_id" => $editorial->id,
+                "editorial_name" => null,
+                "editorial_url" => null,
             ];
         });
     }
@@ -76,7 +75,10 @@ class PetitionFactory extends Factory
     {
         return $this->state(function (array $attributes) {
             return [
-                'late' => true,
+                "end" => $this->faker->dateTimeBetween(
+                    $attributes["announced_end"],
+                    "+5 years",
+                ),
             ];
         });
     }
@@ -90,7 +92,10 @@ class PetitionFactory extends Factory
     {
         return $this->state(function (array $attributes) {
             return [
-                'late' => false,
+                "end" => $this->faker->dateTimeBetween(
+                    "-5 years",
+                    $attributes["announced_end"],
+                ),
             ];
         });
     }

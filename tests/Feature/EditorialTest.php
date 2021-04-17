@@ -21,15 +21,26 @@ class EditorialTest extends TestCase
 
         $this->assertEquals(0, count($editorial->getNotFinishedLatePresales()));
 
-        $presale = Presale::factory()->for($editorial)->finished()->create();
+        $presale = Presale::factory()
+            ->for($editorial)
+            ->finished()
+            ->create();
 
         $this->assertEquals(0, count($editorial->getNotFinishedLatePresales()));
 
-        $presale = Presale::factory()->for($editorial)->unfinished()->notLate()->create();
+        $presale = Presale::factory()
+            ->for($editorial)
+            ->unfinished()
+            ->notLate()
+            ->create();
 
         $this->assertEquals(0, count($editorial->getNotFinishedLatePresales()));
 
-        $presale = Presale::factory()->for($editorial)->unfinished()->late()->create();
+        $presale = Presale::factory()
+            ->for($editorial)
+            ->unfinished()
+            ->late()
+            ->create();
 
         $this->assertEquals(1, count($editorial->getNotFinishedLatePresales()));
     }

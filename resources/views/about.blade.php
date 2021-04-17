@@ -8,18 +8,6 @@ de rol en españa, de forma que ayude a les consumidores a valorar si confían e
 <p>Puedes mantenerte al día de los cambios a través de <a href="t.me/roltrasos_bot">nuestro bot</a>.</p>
 <p>El software de la web es código abierto bajo la licencia GPLv3 al que puedes acceder en <a href="https://github.com/mararrort/verkami-cens">GitHub</a></p>
 
-<h2>Actualización sobre el estado "Tardío"</h2>
-<p>El día 2021/04/12 se añadió la opción de configurar fechas de las preventas, 
-incluyendo fecha de entrega anunciada y fecha de entrega (real). Dada esta 
-actualización, indicar manualmente si una entrega ha sido tardía o no es 
-redundante, pero a día de escribir esto (2021/04/14) no hay suficientes
-preventas con esa información como para eliminarla completamente.</p>
-<p>Cuando al menos dos tercios de las preventas dispongan de esa información,
-se hará una actualización para eliminar el campo sobre si la preventa es o no
-tardía. <b>Actualmente disponemos de esa información en {{$datedPresales}}
-de {{$presales}} preventas. Faltan {{intval(($presales/3*2)-$datedPresales)}}
-preventas con la información de fechas para hacer la actualización</b></p>
-
 @auth
     @if(count($privateTodo) > 0)
     <h2 dusk="privateTodo">Características privadas de implementar</h2>

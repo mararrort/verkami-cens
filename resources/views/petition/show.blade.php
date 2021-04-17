@@ -70,27 +70,6 @@ Se intenta crear una editorial con una URL ya usada.
     </div>
 </div>
 
-<div class="row">
-    @if($petition->presale_id)
-    <div class="col">
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" @if($petition->presale->late) checked @endif name="presale_tarde" disabled>
-            <label class="form-check-label" for="presale_tarde">
-                La preventa va con retraso
-            </label>
-        </div>
-    </div>
-    @endif
-    <div class="col">
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" @if($petition->late) checked @endif name="petition_tarde" disabled>
-            <label class="form-check-label" for="petition_tarde">
-                Se propone que se indique que la preventa va con retraso
-            </label>
-        </div>
-    </div>
-</div>
-
 @if($petition->presale_id)
 <div class="row">
     <div class="col">

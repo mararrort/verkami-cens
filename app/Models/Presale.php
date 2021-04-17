@@ -14,13 +14,12 @@ class Presale extends Model
      * Will use UUID as id.
      */
     public $incrementing = false;
-    protected $keyType = 'string';
+    protected $keyType = "string";
 
     protected $casts = [
-        'late' => 'bool',
-        'start' => 'date',
-        'announced_end' => 'date',
-        'end' => 'date',
+        "start" => "date",
+        "announced_end" => "date",
+        "end" => "date",
     ];
 
     /**
@@ -29,8 +28,30 @@ class Presale extends Model
      * @var array
      */
     protected $attributes = [
-        'state' => 'Sin definir',
+        "state" => "Sin definir",
     ];
+
+    /**
+     * Checks if the presale is late.
+     *
+     * It is late if the end date is higher than the announced one, or if it
+     * does not have end date and the current date is higher than the announced one.
+     *
+     * @return bool
+     **/
+    public function isLate() : bool
+    {
+        $late = false;
+
+        if (isset($this->announced_end)) {
+            if (isset($this->end)) {
+                $late = $this->end > $this->announced_end;
+            } else {
+                $late = now() > $this->announced_end;
+            }
+        }
+        return $late;
+    }
 
     public function editorial()
     {
@@ -42,7 +63,7 @@ class Presale extends Model
      * @return string */
     public function getMarkdown(): string
     {
-        return '['.$this->name.']('.$this->url.')';
+        return "[" . $this->name . "](" . $this->url . ")";
     }
 
     /**
@@ -54,6 +75,6 @@ class Presale extends Model
      **/
     public function isFinished(): bool
     {
-        return $this->state == 'Entregado';
+        return $this->state == "Entregado";
     }
 }

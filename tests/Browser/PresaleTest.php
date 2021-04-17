@@ -17,10 +17,12 @@ class PresaleTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $editorial = Editorial::factory()->create();
-            $presale = Presale::factory()->for($editorial)->create();
+            $presale = Presale::factory()
+                ->for($editorial)
+                ->create();
 
-            $browser->visitRoute('preventas.index');
-            $browser->assertRouteIs('preventas.index');
+            $browser->visitRoute("preventas.index");
+            $browser->assertRouteIs("preventas.index");
             $browser->assertSeeLink($presale->name);
         });
     }
@@ -29,14 +31,17 @@ class PresaleTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $editorial = Editorial::factory()->create();
-            $presale = Presale::factory()->for($editorial)->state([
-                'state' => 'Sin definir',
-                'late' => false,
-            ])->create();
+            $presale = Presale::factory()
+                ->for($editorial)
+                ->state([
+                    "state" => "Sin definir",
+                    "announced_end" => null,
+                ])
+                ->create();
 
-            $browser->visitRoute('preventas.index');
-            $browser->assertNotPresent('@danger');
-            $browser->assertNotPresent('@success');
+            $browser->visitRoute("preventas.index");
+            $browser->assertNotPresent("@danger");
+            $browser->assertNotPresent("@success");
         });
     }
 
@@ -44,12 +49,16 @@ class PresaleTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $editorial = Editorial::factory()->create();
-            $presale = Presale::factory()->for($editorial)->state([
-                'late' => true,
-            ])->create();
+            $presale = Presale::factory()
+                ->for($editorial)
+                ->state([
+                    "announced_end" => "2020-01-01",
+                    "end" => "2021-01-01",
+                ])
+                ->create();
 
-            $browser->visitRoute('preventas.index');
-            $browser->assertPresent('@danger');
+            $browser->visitRoute("preventas.index");
+            $browser->assertPresent("@danger");
         });
     }
 
@@ -57,13 +66,17 @@ class PresaleTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $editorial = Editorial::factory()->create();
-            $presale = Presale::factory()->for($editorial)->state([
-                'late' => false,
-                'state' => 'Entregado',
-            ])->create();
+            $presale = Presale::factory()
+                ->for($editorial)
+                ->state([
+                    "announced_end" => "2021-01-01",
+                    "end" => "2020-01-01",
+                    "state" => "Entregado",
+                ])
+                ->create();
 
-            $browser->visitRoute('preventas.index');
-            $browser->assertPresent('@success');
+            $browser->visitRoute("preventas.index");
+            $browser->assertPresent("@success");
         });
     }
 }

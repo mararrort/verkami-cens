@@ -5,8 +5,8 @@ El registro de la preventa {{$presale->getMarkdown()}} de la editorial {{ $edito
 @if($petition->state != $presale->state)
 \* El estado ha pasado de {{$presale->state}} a {{$petition->state}}
 @endif
-@if($petition->late != $presale->late)
-\* Se ha marcado como {{$petition->late ? 'impuntual' : 'puntual'}}
+@if($petition->isLate() != $presale->isLate())
+\* Se ha marcado como {{$petition->isLate() ? 'impuntual' : 'puntual'}}
 @endif
 @if($petition->start != $presale->start && $petition->start)
 \* Se ha indicado como fecha de inicio {{$petition->start->format('Y-m')}}
@@ -20,7 +20,7 @@ El registro de la preventa {{$presale->getMarkdown()}} de la editorial {{ $edito
 @else
 Se ha registrado la preventa {{$presale->getMarkdown()}} de la editorial {{ $editorial->getMarkdown()}} con esta información:
 \* Estado: {{$petition->state}}
-@if($petition->late)
+@if($petition->isLate())
 \* Impuntual
 @endif
 @if($petition->start)

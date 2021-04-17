@@ -133,15 +133,6 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-auto">
-                <div class="form-check">
-                    <label for="late" class="form-check-label">La entrega de la preventa está fuera de plazo</label>    
-                    <input class="form-check-input" type="checkbox" name="late" @if(isset($presale) && $presale->late) checked @endif>
-                </div>
-            </div>
-        </div>
-
         @if($presale)
         <div class="row">
             <div class="mb-3">

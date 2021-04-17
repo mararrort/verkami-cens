@@ -21,30 +21,29 @@ class PresaleFactory extends Factory
      */
     public function definition()
     {
-        $state = $this->faker->randomElement(['Recaudando', 'Pendiente de entrega', 'Parcialmente entregado', 'Entregado', 'Sin definir']);
+        $state = $this->faker->randomElement([
+            "Recaudando",
+            "Pendiente de entrega",
+            "Parcialmente entregado",
+            "Entregado",
+            "Sin definir",
+        ]);
 
-        $hasDates = $this->faker->boolean;
+        $start = $this->faker->dateTimeBetween("-5 years");
+        $announcedEnd = $this->faker->dateTimeBetween($start, "+5 years");
 
-        if ($hasDates) {
-            $start = $this->faker->dateTimeBetween('-5 years');
-            $announcedEnd = $this->faker->dateTimeBetween($start, '+5 years');
+        if ($state == "Entregado") {
+            $end = $this->faker->dateTimeBetween($start, "+5 years");
         }
-
-        if ($hasDates && $state == 'Entregado') {
-            $end = $this->faker->dateTimeBetween($start, '+5 years');
-        }
-
-        $tarde = (isset($end) && isset($announcedEnd) && ($end > $announcedEnd)) ? true : false;
 
         return [
-            'id' => $this->faker->uuid,
-            'name' => $this->faker->words(3, true),
-            'url' => $this->faker->url,
-            'state' => $state,
-            'late' => $tarde,
-            'start' => $start ?? null,
-            'announced_end' => $announcedEnd ?? null,
-            'end' => $end ?? null,
+            "id" => $this->faker->uuid,
+            "name" => $this->faker->words(3, true),
+            "url" => $this->faker->url,
+            "state" => $state,
+            "start" => $start,
+            "announced_end" => $announcedEnd,
+            "end" => $end ?? null,
         ];
     }
 
@@ -57,7 +56,7 @@ class PresaleFactory extends Factory
     {
         return $this->state(function (array $attributes) {
             return [
-                'state' => 'Entregado',
+                "state" => "Entregado",
             ];
         });
     }
@@ -71,7 +70,11 @@ class PresaleFactory extends Factory
     {
         return $this->state(function (array $attributes) {
             return [
-                'state' => $this->faker->randomElement(['Recaudando', 'Pendiente de entrega', 'Parcialmente entregado', 'Sin definir']),
+                "state" => $this->faker->randomElement([
+                    "Pendiente de entrega",
+                    "Parcialmente entregado",
+                    "Sin definir",
+                ]),
             ];
         });
     }
@@ -85,7 +88,10 @@ class PresaleFactory extends Factory
     {
         return $this->state(function (array $attributes) {
             return [
-                'late' => true,
+                "end" => $this->faker->dateTimeBetween(
+                    $attributes["announced_end"],
+                    "+5 years",
+                ),
             ];
         });
     }
@@ -99,7 +105,10 @@ class PresaleFactory extends Factory
     {
         return $this->state(function (array $attributes) {
             return [
-                'late' => false,
+                "end" => $this->faker->dateTimeBetween(
+                    "-5 years",
+                    $attributes["announced_end"],
+                ),
             ];
         });
     }

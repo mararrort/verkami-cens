@@ -35,9 +35,9 @@
             </thead>
             <tbody>
                 @foreach ($presales as $item)
-                @if ($item->late)
+                @if ($item->isLate())
                 <tr class="table-danger" dusk="danger">
-                @elseif (!$item->late && $item->state == "Entregado")
+                @elseif (!$item->isLate() && $item->state == "Entregado")
                 <tr class="table-success" dusk="success">
                 @else
                 <tr>
@@ -49,7 +49,7 @@
                     <td>{{$item->announced_end ? $item->announced_end->format('Y-m') : '-'}}</td>
                     <td>{{$item->end ? $item->end->format('Y-m') : '-'}}</td>
                     <td>{{ ($item->state == "Sin definir" || $item->state == "Recaudando") ?
-                        "-" : ($item->late ? "No" : "Si") }}</td>
+                        "-" : ($item->isLate() ? "No" : "Si") }}</td>
                 <tr>
                 @endforeach
             </tbody>

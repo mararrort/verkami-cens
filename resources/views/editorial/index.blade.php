@@ -43,7 +43,7 @@
                     <td>{{count($editorial->getPresales('Parcialmente entregado'))}}</td>
                     <td>{{count($editorial->getPresales('Entregado'))}}</td>
                     <td>{{count($editorial->getPresales('Sin definir'))}}</td>
-                    <td>{{$editorial->getTardias()}} de {{count($editorial->presales)}}</td>
+                    <td>{{$editorial->getLates()}} de {{count($editorial->presales)}}</td>
                 <tr>
                 @endforeach
             </tbody>

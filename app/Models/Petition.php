@@ -15,23 +15,44 @@ class Petition extends Model
      * Will use UUID as id.
      */
     public $incrementing = false;
-    protected $keyType = 'string';
+    protected $keyType = "string";
 
     protected $casts = [
-        'late' => 'bool',
-        'start' => 'date',
-        'announced_end' => 'date',
-        'end' => 'date',
+        "start" => "date",
+        "announced_end" => "date",
+        "end" => "date",
     ];
+
+    /**
+     * Checks if the presale would be late.
+     *
+     * It would be late if the end date is higher than the announced one, or if it
+     * does not have end date and the current date is higher than the announced one.
+     *
+     * @return bool
+     **/
+    public function isLate(): bool
+    {
+        $late = false;
+
+        if (isset($this->announced_end)) {
+            if (isset($this->end)) {
+                $late = $this->end > $this->announced_end;
+            } else {
+                $late = now() > $this->announced_end;
+            }
+        }
+        return $late;
+    }
 
     public function editorial()
     {
-        return $this->belongsTo(Editorial::class, 'editorial_id');
+        return $this->belongsTo(Editorial::class, "editorial_id");
     }
 
     public function presale()
     {
-        return $this->belongsTo(Presale::class, 'presale_id');
+        return $this->belongsTo(Presale::class, "presale_id");
     }
 
     /**
@@ -56,7 +77,7 @@ class Petition extends Model
     public function isNewLate(): bool
     {
         return $this->isUpdate()
-            ? (! $this->presale->late && $this->late
+            ? (!$this->presale->isLate() && $this->isLate()
                 ? true
                 : false)
             : false;
@@ -76,12 +97,12 @@ class Petition extends Model
     {
         $return = false;
 
-        if (! $this->isUpdate() && $this->state != 'Entregado') {
+        if (!$this->isUpdate() && $this->state != "Entregado") {
             $return = true;
         } elseif (
             $this->isUpdate() &&
             $this->presale->isFinished() &&
-            $this->state != 'Entregado'
+            $this->state != "Entregado"
         ) {
             $return = true;
         }
@@ -98,7 +119,7 @@ class Petition extends Model
      **/
     public function isFinished(): bool
     {
-        return $this->state == 'Entregado';
+        return $this->state == "Entregado";
     }
 
     /**

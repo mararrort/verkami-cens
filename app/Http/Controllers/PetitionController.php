@@ -97,7 +97,6 @@ class PetitionController extends Controller
         $petition->editorial_name = $request->editorial_name;
         $petition->editorial_url = $request->editorial_url;
         $petition->state = $request->state;
-        $petition->late = $request->has('late');
         $petition->info = $request->info;
         $petition->id = Uuid::uuid4();
         $petition->sendTelegramNotification = true;
@@ -198,7 +197,6 @@ class PetitionController extends Controller
         $peticion->editorial_name = $request->editorial_name;
         $peticion->editorial_url = $request->editorial_url;
         $peticion->state = $request->state;
-        $peticion->late = $request->has('late');
         $peticion->info = $request->info;
         $peticion->sendTelegramNotification = $request->has(
             'sendTelegramNotification',
@@ -271,7 +269,6 @@ class PetitionController extends Controller
         }
 
         $presale->state = $peticion->state;
-        $presale->late = $peticion->late;
 
         $presale->start = $peticion->start;
         $presale->announced_end = $peticion->announced_end;
