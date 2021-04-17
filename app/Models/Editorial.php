@@ -14,7 +14,7 @@ class Editorial extends Model
      * Will use UUID as id.
      */
     public $incrementing = false;
-    protected $keyType = "string";
+    protected $keyType = 'string';
 
     public function presales()
     {
@@ -26,7 +26,7 @@ class Editorial extends Model
         $presales = $this->hasMany(Presale::class);
 
         if (isset($status)) {
-            $presales->where("state", $status);
+            $presales->where('state', $status);
         }
 
         return $presales->get();
@@ -34,7 +34,6 @@ class Editorial extends Model
 
     /**
      * Returns the amount of related late presales.
-     *
      */
     public function getLates()
     {
@@ -55,7 +54,7 @@ class Editorial extends Model
     public function getNotFinishedPresales()
     {
         return $this->hasMany(Presale::class)
-            ->where("state", "!=", "Entregado")
+            ->where('state', '!=', 'Entregado')
             ->get();
     }
 
@@ -68,7 +67,7 @@ class Editorial extends Model
     public function getNotFinishedLatePresales()
     {
         $presales = $this->hasMany(Presale::class)
-            ->whereNotIn("state", ["Entregado", "Recaudando"])
+            ->whereNotIn('state', ['Entregado', 'Recaudando'])
             ->get();
 
         $filtered = $presales->filter(function ($value) {
@@ -83,6 +82,6 @@ class Editorial extends Model
      * @return string */
     public function getMarkdown(): string
     {
-        return "[" . $this->name . "](" . $this->url . ")";
+        return '['.$this->name.']('.$this->url.')';
     }
 }

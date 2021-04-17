@@ -15,12 +15,12 @@ class Petition extends Model
      * Will use UUID as id.
      */
     public $incrementing = false;
-    protected $keyType = "string";
+    protected $keyType = 'string';
 
     protected $casts = [
-        "start" => "date",
-        "announced_end" => "date",
-        "end" => "date",
+        'start' => 'date',
+        'announced_end' => 'date',
+        'end' => 'date',
     ];
 
     /**
@@ -42,17 +42,18 @@ class Petition extends Model
                 $late = now() > $this->announced_end;
             }
         }
+
         return $late;
     }
 
     public function editorial()
     {
-        return $this->belongsTo(Editorial::class, "editorial_id");
+        return $this->belongsTo(Editorial::class, 'editorial_id');
     }
 
     public function presale()
     {
-        return $this->belongsTo(Presale::class, "presale_id");
+        return $this->belongsTo(Presale::class, 'presale_id');
     }
 
     /**
@@ -77,7 +78,7 @@ class Petition extends Model
     public function isNewLate(): bool
     {
         return $this->isUpdate()
-            ? (!$this->presale->isLate() && $this->isLate()
+            ? (! $this->presale->isLate() && $this->isLate()
                 ? true
                 : false)
             : false;
@@ -97,12 +98,12 @@ class Petition extends Model
     {
         $return = false;
 
-        if (!$this->isUpdate() && $this->state != "Entregado") {
+        if (! $this->isUpdate() && $this->state != 'Entregado') {
             $return = true;
         } elseif (
             $this->isUpdate() &&
             $this->presale->isFinished() &&
-            $this->state != "Entregado"
+            $this->state != 'Entregado'
         ) {
             $return = true;
         }
@@ -119,7 +120,7 @@ class Petition extends Model
      **/
     public function isFinished(): bool
     {
-        return $this->state == "Entregado";
+        return $this->state == 'Entregado';
     }
 
     /**

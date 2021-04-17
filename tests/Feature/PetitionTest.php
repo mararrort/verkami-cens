@@ -21,32 +21,32 @@ class PetitionTest extends TestCase
         // Create tests editorial and presale
         $editorial = Editorial::factory()->create();
         $presales = Presale::factory(10)
-            ->state(["state" => "Entregado"])
+            ->state(['state' => 'Entregado'])
             ->for($editorial)
             ->create();
 
         // Makes the first presale not finished
         $petition = Petition::factory()
             ->presale($presales[0])
-            ->state(["state" => "Sin definir"])
+            ->state(['state' => 'Sin definir'])
             ->create();
         $this->assertTrue($petition->isNewNotFinished());
 
         // Makes it finished
-        $petition->state = "Entregado";
+        $petition->state = 'Entregado';
         $petition->save();
         $this->assertFalse($petition->isNewNotFinished());
 
         // Creates a new unfinished presale
         $petition = Petition::factory()
             ->editorial($editorial)
-            ->state(["state" => "Sin definir"])
+            ->state(['state' => 'Sin definir'])
             ->create();
         $petition->save();
         $this->assertTrue($petition->isNewNotFinished());
 
         // The new presale is finished
-        $petition->state = "Entregado";
+        $petition->state = 'Entregado';
         $petition->save();
         $this->assertFalse($petition->isNewNotFinished());
     }
@@ -70,8 +70,8 @@ class PetitionTest extends TestCase
 
         $this->assertFalse($petition->isNewLate());
 
-        $petition->announced_end = "2020-01-01";
-        $petition->end = "2021-01-01";
+        $petition->announced_end = '2020-01-01';
+        $petition->end = '2021-01-01';
 
         $this->assertTrue($petition->isNewLate());
 
@@ -86,8 +86,8 @@ class PetitionTest extends TestCase
 
         $this->assertFalse($petition->isNewLate());
 
-        $petition->announced_end = "2020-01-01";
-        $petition->end = "2021-01-01";
+        $petition->announced_end = '2020-01-01';
+        $petition->end = '2021-01-01';
 
         $this->assertFalse($petition->isNewLate());
     }
