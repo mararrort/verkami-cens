@@ -77,19 +77,7 @@ Se intenta crear una editorial con una URL ya usada.
         <textarea name="info" class="form-control" id="exampleFormControlTextarea1" rows="3" disabled>{{ $petition->info }}</textarea>
     </div>
 </div>
-@endif
-
-<div class="row">
-    <div class="col">
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" name="sendTelegramNotification" @if($petition->sendTelegramNotification) checked @endif disabled>
-            <label class="form-check-label" for="sendTelegramNotification">
-                Enviar notificación por Telegram
-            </label>
-        </div>
-    </div>
-</div>
-    
+@endif    
     
 <div class="row">
     @if($petition->presale_id)

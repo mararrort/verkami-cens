@@ -36,7 +36,6 @@ class PetitionFactory extends Factory
             'start' => $presale->start,
             'announced_end' => $presale->announced_end,
             'end' => $presale->end,
-            'sendTelegramNotification' => true,
         ];
     }
 
@@ -44,13 +43,13 @@ class PetitionFactory extends Factory
     {
         return $this->state(function (array $attributes) use ($presale) {
             return [
-                'presale_name' => null,
-                'presale_url' => null,
-                'presale_id' => $presale->id,
-                'editorial_id' => $presale->editorial->id,
-                'editorial_name' => null,
-                'editorial_url' => null,
-                'info' => $this->faker->paragraph,
+                "presale_name" => null,
+                "presale_url" => null,
+                "presale_id" => $presale->id,
+                "editorial_id" => $presale->editorial->id,
+                "editorial_name" => null,
+                "editorial_url" => null,
+                "info" => $this->faker->paragraph,
             ];
         });
     }
@@ -59,9 +58,9 @@ class PetitionFactory extends Factory
     {
         return $this->state(function (array $attributes) use ($editorial) {
             return [
-                'editorial_id' => $editorial->id,
-                'editorial_name' => null,
-                'editorial_url' => null,
+                "editorial_id" => $editorial->id,
+                "editorial_name" => null,
+                "editorial_url" => null,
             ];
         });
     }

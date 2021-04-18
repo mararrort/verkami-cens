@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @property-read Presale $presale;
+ */
 class Petition extends Model
 {
     use HasFactory;
@@ -15,7 +18,7 @@ class Petition extends Model
      * Will use UUID as id.
      */
     public $incrementing = false;
-    protected $keyType = 'string';
+    protected $keyType = "string";
 
     protected $casts = [
         'start' => 'date',
@@ -48,12 +51,12 @@ class Petition extends Model
 
     public function editorial()
     {
-        return $this->belongsTo(Editorial::class, 'editorial_id');
+        return $this->belongsTo(Editorial::class, "editorial_id");
     }
 
     public function presale()
     {
-        return $this->belongsTo(Presale::class, 'presale_id');
+        return $this->belongsTo(Presale::class, "presale_id");
     }
 
     /**
@@ -98,12 +101,12 @@ class Petition extends Model
     {
         $return = false;
 
-        if (! $this->isUpdate() && $this->state != 'Entregado') {
+        if (!$this->isUpdate() && $this->state != "Entregado") {
             $return = true;
         } elseif (
             $this->isUpdate() &&
             $this->presale->isFinished() &&
-            $this->state != 'Entregado'
+            $this->state != "Entregado"
         ) {
             $return = true;
         }
@@ -120,7 +123,7 @@ class Petition extends Model
      **/
     public function isFinished(): bool
     {
-        return $this->state == 'Entregado';
+        return $this->state == "Entregado";
     }
 
     /**
@@ -131,5 +134,54 @@ class Petition extends Model
     public function isNewEditorial(): bool
     {
         return is_null($this->editorial_id);
+    }
+
+    /**
+     * Check if a notification should be send.
+     *
+     * A notification should be send when either the amount of presales to
+     * finish or the amount of late presales to finish change.
+     *
+     * @return bool
+     **/
+    public function isNotificable(): bool
+    {
+        $notificable = false;
+
+        if (
+            !$this->isUpdate() &&
+            in_array($this->state, [
+                "Pendiente de entrega",
+                "Parcialmente entregado",
+            ])
+        ) {
+            $notificable = true;
+        } elseif (
+            $this->isUpdate() &&
+            !in_array($this->presale->state, [
+                "Pendiente de entrega",
+                "Parcialmente entregado",
+            ]) &&
+            in_array($this->state, [
+                "Pendiente de entrega",
+                "Parcialmente entregado",
+            ])
+        ) {
+            $notificable = true;
+        } elseif (
+            $this->isUpdate() &&
+            in_array($this->presale->state, [
+                "Pendiente de entrega",
+                "Parcialmente entregado",
+            ]) &&
+            !in_array($this->state, [
+                "Pendiente de entrega",
+                "Parcialmente entregado",
+            ])
+        ) {
+            $notificable = true;
+        }
+
+        return $notificable;
     }
 }
