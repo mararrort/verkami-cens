@@ -17,7 +17,7 @@ class Presale extends Model
      * Will use UUID as id.
      */
     public $incrementing = false;
-    protected $keyType = "string";
+    protected $keyType = 'string';
 
     protected $casts = [
         'start' => 'date',
@@ -31,7 +31,7 @@ class Presale extends Model
      * @var array
      */
     protected $attributes = [
-        "state" => "Sin definir",
+        'state' => 'Sin definir',
     ];
 
     /**
@@ -67,7 +67,7 @@ class Presale extends Model
      * @return string */
     public function getMarkdown(): string
     {
-        return "[" . $this->name . "](" . $this->url . ")";
+        return '['.$this->name.']('.$this->url.')';
     }
 
     /**
@@ -79,6 +79,6 @@ class Presale extends Model
      **/
     public function isFinished(): bool
     {
-        return $this->state == "Entregado";
+        return $this->state == 'Entregado';
     }
 }
