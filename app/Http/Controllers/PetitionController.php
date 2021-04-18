@@ -29,13 +29,13 @@ class PetitionController extends Controller
      */
     public function index()
     {
-        $createPetitions = Petition::whereNull("presale_id")->get();
+        $createPetitions = Petition::whereNull('presale_id')->get();
 
-        $updatePetitions = Petition::whereNotNull("presale_id")->get();
+        $updatePetitions = Petition::whereNotNull('presale_id')->get();
 
-        return view("petition.index", [
-            "createPetitions" => $createPetitions,
-            "updatePetitions" => $updatePetitions,
+        return view('petition.index', [
+            'createPetitions' => $createPetitions,
+            'updatePetitions' => $updatePetitions,
         ]);
     }
 
@@ -46,11 +46,11 @@ class PetitionController extends Controller
      */
     public function create(Request $request, Presale $presale = null)
     {
-        $editorials = Editorial::orderBy("name", "ASC")->get();
+        $editorials = Editorial::orderBy('name', 'ASC')->get();
 
-        return view("petition.create", [
-            "editorials" => $editorials,
-            "presale" => $presale,
+        return view('petition.create', [
+            'editorials' => $editorials,
+            'presale' => $presale,
         ]);
     }
 
@@ -62,36 +62,30 @@ class PetitionController extends Controller
      */
     public function store(Request $request)
     {
-        Log::info("A petition request has been get", [
-            "request" => $request->all(),
+        Log::info('A petition request has been get', [
+            'request' => $request->all(),
         ]);
         $validated = $request->validate([
-            "presale_id" =>
-                "required_without:presale_name,presale_url|nullable|exists:presales,id",
-            "presale_name" =>
-                "required_without:presale_id|nullable|string|max:64",
-            "presale_url" =>
-                "required_without:presale_id|nullable|string|max:128",
-            "editorial_id" =>
-                "required_without:editorial_name,editorial_url|nullable|exists:editorials,id",
-            "editorial_name" =>
-                "required_without:editorial_id|nullable|string|max:64",
-            "editorial_url" =>
-                "required_without:editorial_id|nullable|string|max:128",
-            "state" => [
-                "required",
+            'presale_id' => 'required_without:presale_name,presale_url|nullable|exists:presales,id',
+            'presale_name' => 'required_without:presale_id|nullable|string|max:64',
+            'presale_url' => 'required_without:presale_id|nullable|string|max:128',
+            'editorial_id' => 'required_without:editorial_name,editorial_url|nullable|exists:editorials,id',
+            'editorial_name' => 'required_without:editorial_id|nullable|string|max:64',
+            'editorial_url' => 'required_without:editorial_id|nullable|string|max:128',
+            'state' => [
+                'required',
                 Rule::in([
-                    "Recaudando",
-                    "Pendiente de entrega",
-                    "Parcialmente entregado",
-                    "Entregado",
-                    "Sin definir",
+                    'Recaudando',
+                    'Pendiente de entrega',
+                    'Parcialmente entregado',
+                    'Entregado',
+                    'Sin definir',
                 ]),
             ],
-            "info" => "nullable|string",
-            "start" => "nullable|date",
-            "announced_end" => "nullable|date",
-            "end" => "nullable|date",
+            'info' => 'nullable|string',
+            'start' => 'nullable|date',
+            'announced_end' => 'nullable|date',
+            'end' => 'nullable|date',
         ]);
 
         $petition = new Petition();
@@ -110,12 +104,12 @@ class PetitionController extends Controller
         $petition->end = $request->end;
 
         $petition->save();
-        Log::info("A petition has been created", ["petition" => $petition]);
+        Log::info('A petition has been created', ['petition' => $petition]);
 
         // Notify
         if ($petition->isNotificable()) {
             $telegramUsers = TelegramUser::where(
-                "createdPetitions",
+                'createdPetitions',
                 true,
             )->get();
             try {
@@ -123,19 +117,19 @@ class PetitionController extends Controller
                     $telegramUsers,
                     new PetitionCreated($petition),
                 );
-                Log::info("Notifications have been sent");
+                Log::info('Notifications have been sent');
             } catch (TwitterException $exception) {
-                Log::error("The tweet has not been send", [
-                    "exception" => $exception,
+                Log::error('The tweet has not been send', [
+                    'exception' => $exception,
                 ]);
             } catch (TelegramException $exception) {
-                Log::error("The telegram message has not been send", [
-                    "exception" => $exception,
+                Log::error('The telegram message has not been send', [
+                    'exception' => $exception,
                 ]);
             }
         }
 
-        return redirect()->route("preventas.index");
+        return redirect()->route('preventas.index');
     }
 
     /**
@@ -149,25 +143,25 @@ class PetitionController extends Controller
     {
         $presaleUrlError = false;
         $editorialUrlError = false;
-        if (!$petition->isUpdate()) {
+        if (! $petition->isUpdate()) {
             $presaleUrlError = Presale::where(
-                "url",
+                'url',
                 $petition->presale_url,
             )->exists();
         }
         if ($petition->isNewEditorial()) {
             $editorialUrlError = Editorial::where(
-                "url",
+                'url',
                 $petition->editorial_url,
             )->exists();
         }
         //dd([$presaleUrlError, $editorialUrlError]);
 
-        return view("petition.show", [
-            "petition" => $petition,
-            "error" => $error,
-            "presaleUrlError" => $presaleUrlError,
-            "editorialUrlError" => $editorialUrlError,
+        return view('petition.show', [
+            'petition' => $petition,
+            'error' => $error,
+            'presaleUrlError' => $presaleUrlError,
+            'editorialUrlError' => $editorialUrlError,
         ]);
     }
 
@@ -181,9 +175,9 @@ class PetitionController extends Controller
     {
         $editorials = Editorial::all();
 
-        return view("petition.edit", [
-            "peticion" => $peticion,
-            "editorials" => $editorials,
+        return view('petition.edit', [
+            'peticion' => $peticion,
+            'editorials' => $editorials,
         ]);
     }
 
@@ -209,7 +203,7 @@ class PetitionController extends Controller
 
         $peticion->save();
 
-        return redirect()->route("petition.show", ["petition" => $peticion]);
+        return redirect()->route('petition.show', ['petition' => $peticion]);
     }
 
     /**
@@ -222,7 +216,7 @@ class PetitionController extends Controller
     {
         $peticion->delete();
 
-        return redirect()->route("peticion.index");
+        return redirect()->route('peticion.index');
     }
 
     /**
@@ -259,7 +253,7 @@ class PetitionController extends Controller
         // Notify
         if ($peticion->isNotificable()) {
             $telegramUsers = TelegramUser::where(
-                "createdPetitions",
+                'createdPetitions',
                 true,
             )->get();
             try {
@@ -267,14 +261,14 @@ class PetitionController extends Controller
                     $telegramUsers,
                     new PetitionAccepted($peticion, $editorial, $presale),
                 );
-                Log::info("Notifications have been sent");
+                Log::info('Notifications have been sent');
             } catch (TwitterException $exception) {
-                Log::error("The tweet has not been send", [
-                    "exception" => $exception,
+                Log::error('The tweet has not been send', [
+                    'exception' => $exception,
                 ]);
             } catch (TelegramException $exception) {
-                Log::error("The telegram message has not been send", [
-                    "exception" => $exception,
+                Log::error('The telegram message has not been send', [
+                    'exception' => $exception,
                 ]);
             }
         }
@@ -289,14 +283,14 @@ class PetitionController extends Controller
         try {
             $presale->save();
         } catch (QueryException $exception) {
-            return redirect()->route("petition.show", [
-                "petition" => $peticion,
-                "error" => true,
+            return redirect()->route('petition.show', [
+                'petition' => $peticion,
+                'error' => true,
             ]);
         }
 
         $peticion->delete();
 
-        return redirect()->route("peticion.index");
+        return redirect()->route('peticion.index');
     }
 }
