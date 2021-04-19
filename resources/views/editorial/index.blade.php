@@ -23,29 +23,23 @@
             <thead>
                 <tr>
                     <th>Editorial</th>
-                    <th colspan="5">Preventas</th>
+                    <th colspan="4">Preventas</th>
                 </tr>
                 <tr>
                     <td></td>
                     <td>Total</td>
-                    <td>Recaudando</td>
+                    <td>Entregados con retraso</td>
                     <td>Pendiente de entregar</td>
-                    <td>Parcialmente entregado</td>
-                    <td>Entregado</td>
-                    <td>Sin definir</td>
-                    <td>Con retraso</td>
+                    <td>Pendiente de entregar y con retraso</td>
             </thead>
             <tbody>
                 @foreach ($editorials as $editorial)
                 <tr>
                     <td><a href="{{$editorial->url}}" rel="external" target="_blank">{{$editorial->name}}</a></td>
                     <td><a href="{{route('presales.index', [$editorial])}}">{{count($editorial->presales)}}</a></td>
-                    <td>{{count($editorial->getPresales('Recaudando'))}}</td>
-                    <td>{{count($editorial->getPresales('Pendiente de entrega'))}}</td>
-                    <td>{{count($editorial->getPresales('Parcialmente entregado'))}}</td>
-                    <td>{{count($editorial->getPresales('Entregado'))}}</td>
-                    <td>{{count($editorial->getPresales('Sin definir'))}}</td>
-                    <td>{{$editorial->getLates()}} de {{count($editorial->presales)}}</td>
+                    <td>{{count($editorial->getFinishedLatePresales())}}</td>
+                    <td>{{count($editorial->getNotFinishedPresales())}}</td>
+                    <td>{{count($editorial->getNotFinishedLatePresales())}}</td>
                 <tr>
                 @endforeach
             </tbody>
