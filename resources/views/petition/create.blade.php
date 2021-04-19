@@ -19,7 +19,7 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        <form method="POST" action="{{route('peticion.store')}}">
+        <form method="POST" autocomplete="off" action="{{route('peticion.store')}}">
         @csrf
         @if (!$presale)
         <div class="row">

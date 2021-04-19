@@ -129,7 +129,7 @@ class PetitionController extends Controller
             }
         }
 
-        return redirect()->route('preventas.index');
+        return redirect()->route('presales.index');
     }
 
     /**

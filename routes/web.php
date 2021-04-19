@@ -32,7 +32,7 @@ require __DIR__.'/auth.php';
 Route::resource('editorial', EditorialController::class)->only(['index']);
 
 Route::get('preventas/{editorial?}', [PresaleController::class, 'index'])->name(
-    'preventas.index',
+    'presales.index',
 );
 
 Route::resource('peticion', PetitionController::class)->only(['store']);

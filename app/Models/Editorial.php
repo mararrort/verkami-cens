@@ -8,6 +8,7 @@ use Ramsey\Uuid\Uuid;
 
 /**
  * @property-read Uuid id
+ * @property-read Presales[] presales
  */
 class Editorial extends Model
 {
@@ -24,31 +25,6 @@ class Editorial extends Model
         return $this->hasMany(Presale::class);
     }
 
-    public function getPresales($status = null)
-    {
-        $presales = $this->hasMany(Presale::class);
-
-        if (isset($status)) {
-            $presales->where('state', $status);
-        }
-
-        return $presales->get();
-    }
-
-    /**
-     * Returns the amount of related late presales.
-     */
-    public function getLates()
-    {
-        $presales = $this->hasMany(Presale::class)->get();
-
-        $filtered = $presales->filter(function ($value) {
-            return $value->isLate();
-        });
-
-        return $filtered->count();
-    }
-
     /**
      * Returns the presales which are not finished.
      *
@@ -57,8 +33,25 @@ class Editorial extends Model
     public function getNotFinishedPresales()
     {
         return $this->hasMany(Presale::class)
-            ->where('state', '!=', 'Entregado')
+            ->whereNotIn('state', ['Entregado', 'Recaudando'])
             ->get();
+    }
+
+    /**
+     * Returns the presales which have finished late.
+     *
+     * @return Presale[] */
+    public function getFinishedLatePresales()
+    {
+        $presales = $this->hasMany(Presale::class)
+            ->where('state', 'Entregado')
+            ->get();
+
+        $filtered = $presales->filter(function ($value) {
+            return $value->isLate();
+        });
+
+        return $filtered;
     }
 
     /**
@@ -69,10 +62,7 @@ class Editorial extends Model
      * @return Presale[] */
     public function getNotFinishedLatePresales()
     {
-        $presales = $this->hasMany(Presale::class)
-            ->whereNotIn('state', ['Entregado', 'Recaudando'])
-            ->get();
-
+        $presales = $this->getNotFinishedPresales();
         $filtered = $presales->filter(function ($value) {
             return $value->isLate();
         });

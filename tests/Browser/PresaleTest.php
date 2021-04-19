@@ -21,8 +21,8 @@ class PresaleTest extends DuskTestCase
                 ->for($editorial)
                 ->create();
 
-            $browser->visitRoute('preventas.index');
-            $browser->assertRouteIs('preventas.index');
+            $browser->visitRoute('presales.index');
+            $browser->assertRouteIs('presales.index');
             $browser->assertSeeLink($presale->name);
         });
     }
@@ -39,7 +39,7 @@ class PresaleTest extends DuskTestCase
                 ])
                 ->create();
 
-            $browser->visitRoute('preventas.index');
+            $browser->visitRoute('presales.index');
             $browser->assertNotPresent('@danger');
             $browser->assertNotPresent('@success');
         });
@@ -57,7 +57,7 @@ class PresaleTest extends DuskTestCase
                 ])
                 ->create();
 
-            $browser->visitRoute('preventas.index');
+            $browser->visitRoute('presales.index');
             $browser->assertPresent('@danger');
         });
     }
@@ -75,7 +75,7 @@ class PresaleTest extends DuskTestCase
                 ])
                 ->create();
 
-            $browser->visitRoute('preventas.index');
+            $browser->visitRoute('presales.index');
             $browser->assertPresent('@success');
         });
     }

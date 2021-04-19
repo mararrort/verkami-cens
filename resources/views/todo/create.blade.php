@@ -2,7 +2,7 @@
 @section('title', "Crear TODO")
 
 @section('body')
-<form method="POST" action="{{route('todo.store')}}">
+<form autocomplete="off" method="POST" action="{{route('todo.store')}}">
     @csrf
     <div>
         <label for="text" class="form-label">
