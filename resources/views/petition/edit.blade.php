@@ -3,7 +3,7 @@
 @section('body')
 <div class="row">
     <div class="col-md-auto">
-        <form method="POST" action="{{route('peticion.update', ['peticion' => $peticion])}}">
+        <form method="POST" autocomplete="off" action="{{route('peticion.update', ['peticion' => $peticion])}}">
             @csrf
             @method('PATCH')
             <div class="row">

@@ -2,7 +2,7 @@
 @section('title', "Crear TODO")
 
 @section('body')
-<form method="POST" action="{{route('todo.update', ['todo' => $todo ])}}">
+<form autocomplete="off" method="POST" action="{{route('todo.update', ['todo' => $todo ])}}">
     @csrf
     @method('PUT')
     <div>
