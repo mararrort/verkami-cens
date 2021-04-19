@@ -18,7 +18,7 @@ class PetitionTest extends DuskTestCase
     public function testUsersCanAccessAdditionPetitionCreation()
     {
         $this->browse(function (Browser $browser) {
-            $browser->visitRoute('preventas.index');
+            $browser->visitRoute('presales.index');
             $linkText =
                 'Puedes solicitar añadir una preventa a través de este enlace';
             $browser->assertSeeLink($linkText);
@@ -35,7 +35,7 @@ class PetitionTest extends DuskTestCase
                 ->for($editorial)
                 ->create();
 
-            $browser->visitRoute('preventas.index');
+            $browser->visitRoute('presales.index');
             $browser->assertPresent('@editPresale');
             $browser->click('@editPresale');
             $browser->assertRouteIs('peticion.create', ['presale' => $presale]);
@@ -55,7 +55,7 @@ class PetitionTest extends DuskTestCase
             $browser->select('state', $presale->state);
 
             $browser->press('@submit');
-            $browser->assertRouteIs('preventas.index');
+            $browser->assertRouteIs('presales.index');
 
             $petition = Petition::all()[0];
             $this->assertEquals($presale->name, $petition->presale_name);
@@ -77,7 +77,7 @@ class PetitionTest extends DuskTestCase
             $browser->select('editorial_id', $editorial->id);
             $browser->select('state', $presale->state);
             $browser->press('@submit');
-            $browser->assertRouteIs('preventas.index');
+            $browser->assertRouteIs('presales.index');
 
             $petition = Petition::all()[0];
             $this->assertEquals($presale->name, $petition->presale_name);
@@ -103,7 +103,7 @@ class PetitionTest extends DuskTestCase
             $browser->type('info', $petitionBase->info);
 
             $browser->press('@submit');
-            $browser->assertRouteIs('preventas.index');
+            $browser->assertRouteIs('presales.index');
 
             $petition = Petition::all()[0];
             $this->assertEquals($presale->id, $petition->presale_id);
@@ -422,6 +422,24 @@ class PetitionTest extends DuskTestCase
 
             $browser->assertVisible('@presaleUrlError');
             $browser->assertVisible('@editorialUrlError');
+        });
+    }
+
+    public function testUserCanGoToEditorialFilteredPresaleIndex()
+    {
+        $this->browse(function (Browser $browser) {
+            $editorials = Editorial::factory(2)->create();
+            $firstPresales = Presale::factory(4)->for($editorials[0])->create();
+            $secondPresales = Presale::factory(8)->for($editorials[1])->create();
+            
+            $browser->visitRoute('editorial.index');
+            $browser->assertRouteIs('editorial.index');
+            $browser->seeLink('4');
+            $browser->seeLink('8');
+            $browser->clickLink('4');
+            $browser->assertRouteIs('presales.index', [$editorials[0]]);
+            $browser->assertSee($firstPresales[0]->name);
+            $browser->assertDontSee($secondPresales[0]->name);
         });
     }
 }

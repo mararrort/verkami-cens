@@ -9,6 +9,8 @@
         <p>A continuación se muestra un listado de las editoriales registradas, 
         con información numérica respecto a la situación de sus preventas.</p>
         <p>Los nombres de las preventas son enlaces a su sitio web.</p>
+        <p>Al pulsar en la cifra de preventas de una editorial, te dirigirás
+        al índice de preventas viendo tan solo las correspondientes a esa editorial</p>
         <p>Tan solo se registran editoriales de las que haya preventas a registrar.</p>
     </div>
 </div>
@@ -37,7 +39,7 @@
                 @foreach ($editorials as $editorial)
                 <tr>
                     <td><a href="{{$editorial->url}}" rel="external" target="_blank">{{$editorial->name}}</a></td>
-                    <td><a href="{{route('preventas.index', [$editorial])}}">{{count($editorial->presales)}}</a></td>
+                    <td><a href="{{route('presales.index', [$editorial])}}">{{count($editorial->presales)}}</a></td>
                     <td>{{count($editorial->getPresales('Recaudando'))}}</td>
                     <td>{{count($editorial->getPresales('Pendiente de entrega'))}}</td>
                     <td>{{count($editorial->getPresales('Parcialmente entregado'))}}</td>
