@@ -431,7 +431,7 @@ class PetitionTest extends DuskTestCase
             $editorials = Editorial::factory(2)->create();
             $firstPresales = Presale::factory(4)->for($editorials[0])->create();
             $secondPresales = Presale::factory(8)->for($editorials[1])->create();
-            
+
             $browser->visitRoute('editorial.index');
             $browser->assertRouteIs('editorial.index');
             $browser->seeLink('4');
