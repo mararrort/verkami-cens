@@ -19,13 +19,13 @@ class PetitionAccepted extends Notification
 {
     use Queueable;
 
-    /** @var Petition $petition */
+    /** @var Petition */
     private $petition;
 
-    /** @var Editorial $editorial */
+    /** @var Editorial */
     private $editorial;
 
-    /** @var Presale $presale */
+    /** @var Presale */
     private $presale;
 
     /**
@@ -66,15 +66,16 @@ class PetitionAccepted extends Notification
      */
     public function toTelegram($notifiable)
     {
-        Log::info("A Telegram message will be send", [
-            "chat_id" => $notifiable->id,
+        Log::info('A Telegram message will be send', [
+            'chat_id' => $notifiable->id,
         ]);
+
         return TelegramMessage::create()
             ->to($notifiable->id)
-            ->view("telegram.accepted", [
-                "petition" => $this->petition,
-                "editorial" => $this->editorial,
-                "presale" => $this->presale,
+            ->view('telegram.accepted', [
+                'petition' => $this->petition,
+                'editorial' => $this->editorial,
+                'presale' => $this->presale,
             ]);
     }
 
@@ -95,26 +96,26 @@ class PetitionAccepted extends Notification
             : count($this->editorial->getNotFinishedPresales()));
 
         $unfinishedLatePresales =
-            (string) (!$this->petition->isFinished() &&
+            (string) (! $this->petition->isFinished() &&
             $this->petition->isNewLate()
                 ? count($this->editorial->getNotFinishedLatePresales()) + 1
                 : count($this->editorial->getNotFinishedLatePresales()));
 
         $tweet =
-            "Se ha actualizado información respecto a la editorial " .
-            $editorialName .
-            ". Juegos pendientes de entregar: " .
+            'Se ha actualizado información respecto a la editorial '.
+            $editorialName.
+            '. Juegos pendientes de entregar: '.
             $unfinishedPresales;
 
-        if ($unfinishedLatePresales != "0") {
+        if ($unfinishedLatePresales != '0') {
             $tweet =
-                $tweet .
-                "(De los cuales " .
-                $unfinishedLatePresales .
-                " con retraso)";
+                $tweet.
+                '(De los cuales '.
+                $unfinishedLatePresales.
+                ' con retraso)';
         }
 
-        Log::info("A tweet will be send", ["tweet" => $tweet]);
+        Log::info('A tweet will be send', ['tweet' => $tweet]);
 
         return new TwitterStatusUpdate($tweet);
     }
