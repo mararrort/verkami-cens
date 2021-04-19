@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Ramsey\Uuid\Uuid;
 
+/**
+ * @property-read Uuid id
+ */
 class Editorial extends Model
 {
     use HasFactory;
