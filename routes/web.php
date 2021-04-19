@@ -19,53 +19,55 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::redirect('/', '/preventas');
+Route::redirect("/", "/preventas");
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
+Route::get("/dashboard", function () {
+    return view("dashboard");
 })
-    ->middleware(['auth'])
-    ->name('dashboard');
+    ->middleware(["auth"])
+    ->name("dashboard");
 
-require __DIR__.'/auth.php';
+require __DIR__ . "/auth.php";
 
-Route::resource('editorial', EditorialController::class)->only(['index']);
+Route::resource("editorial", EditorialController::class)->only(["index"]);
 
-Route::resource('preventas', PresaleController::class)->only(['index']);
+Route::get("preventas/{editorial?}", [PresaleController::class, "index"])->name(
+    "preventas.index",
+);
 
-Route::resource('peticion', PetitionController::class)->only(['store']);
-Route::get('/peticion/create/{presale?}', [
+Route::resource("peticion", PetitionController::class)->only(["store"]);
+Route::get("/peticion/create/{presale?}", [
     PetitionController::class,
-    'create',
-])->name('peticion.create');
-Route::resource('peticion', PetitionController::class)
-    ->only(['index', 'edit', 'update', 'destroy'])
-    ->middleware('auth');
-Route::get('/peticion/show/{petition}/{error?}', [
+    "create",
+])->name("peticion.create");
+Route::resource("peticion", PetitionController::class)
+    ->only(["index", "edit", "update", "destroy"])
+    ->middleware("auth");
+Route::get("/peticion/show/{petition}/{error?}", [
     PetitionController::class,
-    'show',
+    "show",
 ])
-    ->middleware('auth')
-    ->name('petition.show');
-Route::post('/peticion/{peticion}/accept', [
+    ->middleware("auth")
+    ->name("petition.show");
+Route::post("/peticion/{peticion}/accept", [
     PetitionController::class,
-    'accept',
+    "accept",
 ])
-    ->name('peticion.accept')
-    ->middleware('auth');
+    ->name("peticion.accept")
+    ->middleware("auth");
 
-Route::resource('todo', TODOController::class)
-    ->only(['create', 'store', 'edit', 'update', 'destroy'])
-    ->middleware('auth');
+Route::resource("todo", TODOController::class)
+    ->only(["create", "store", "edit", "update", "destroy"])
+    ->middleware("auth");
 
-Route::get('info', function () {
-    $privateTodo = TODO::where('type', 'private')->get();
-    $publicTodo = TODO::where('type', 'public')->get();
-    $undefinedTodo = TODO::where('type', 'undecided')->get();
+Route::get("info", function () {
+    $privateTodo = TODO::where("type", "private")->get();
+    $publicTodo = TODO::where("type", "public")->get();
+    $undefinedTodo = TODO::where("type", "undecided")->get();
 
-    return view('about', [
-        'privateTodo' => $privateTodo,
-        'publicTodo' => $publicTodo,
-        'undefinedTodo' => $undefinedTodo,
+    return view("about", [
+        "privateTodo" => $privateTodo,
+        "publicTodo" => $publicTodo,
+        "undefinedTodo" => $undefinedTodo,
     ]);
-})->name('info');
+})->name("info");
