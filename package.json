@@ -16,7 +16,7 @@
         "alpinejs": "^2.7.3",
         "autoprefixer": "^10.1.0",
         "axios": "^0.21",
-        "laravel-mix": "^6.0.6",
+        "laravel-mix": "^6.0.17",
         "lodash": "^4.17.19",
         "postcss": "^8.2.10",
         "postcss-import": "^14.0.1",
