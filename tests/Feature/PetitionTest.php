@@ -49,6 +49,17 @@ class PetitionTest extends TestCase
         $petition->state = 'Entregado';
         $petition->save();
         $this->assertFalse($petition->isNewNotFinished());
+
+        // A collecting presale is financed
+        $presales[0]->state = "Recaudando";
+        $presales[0]->save();
+
+        $petition = Petition::factory()
+            ->presale($presales[0])
+            ->state(['state' => "Pendiente de entrega"])
+            ->create();
+
+        $this->assertTrue($petition->isNewNotFinished());        
     }
 
     /**
