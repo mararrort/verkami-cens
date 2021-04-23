@@ -92,7 +92,7 @@ class Petition extends Model
      *
      * Conditions where this returns true:
      * * The petition creates a new presale which is not finished.
-     * * The petition updates a presale and old state was "Entregado" 
+     * * The petition updates a presale and old state was "Entregado"
      *   or "Recaudando" and new it is not
      *
      * @return bool
@@ -106,7 +106,7 @@ class Petition extends Model
         } elseif (
             $this->isUpdate() &&
             in_array($this->presale->state, ['Recaudando', 'Entregado']) &&
-            !in_array($this->state, ['Recaudando', 'Entregado'])
+            ! in_array($this->state, ['Recaudando', 'Entregado'])
         ) {
             $return = true;
         }
