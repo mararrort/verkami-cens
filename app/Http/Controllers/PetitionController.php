@@ -107,26 +107,20 @@ class PetitionController extends Controller
         Log::info('A petition has been created', ['petition' => $petition]);
 
         // Notify
-        if ($petition->isNotificable()) {
-            $telegramUsers = TelegramUser::where(
-                'createdPetitions',
-                true,
-            )->get();
-            try {
-                Notification::send(
-                    $telegramUsers,
-                    new PetitionCreated($petition),
-                );
-                Log::info('Notifications have been sent');
-            } catch (TwitterException $exception) {
-                Log::error('The tweet has not been send', [
-                    'exception' => $exception,
-                ]);
-            } catch (TelegramException $exception) {
-                Log::error('The telegram message has not been send', [
-                    'exception' => $exception,
-                ]);
-            }
+        $telegramUsers = TelegramUser::where(
+            'createdPetitions',
+            true,
+        )->get();
+        try {
+            Notification::send(
+                $telegramUsers,
+                new PetitionCreated($petition),
+            );
+            Log::info('Notifications have been sent');
+        } catch (TelegramException $exception) {
+            Log::error('The telegram message has not been send', [
+                'exception' => $exception,
+            ]);
         }
 
         return redirect()->route('presales.index');
