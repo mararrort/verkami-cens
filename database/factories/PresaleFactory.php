@@ -25,8 +25,7 @@ class PresaleFactory extends Factory
             'Recaudando',
             'Pendiente de entrega',
             'Parcialmente entregado',
-            'Entregado',
-            'Sin definir',
+            'Entregado'
         ]);
 
         $start = $this->faker->dateTimeBetween('-5 years');
@@ -73,7 +72,6 @@ class PresaleFactory extends Factory
                 'state' => $this->faker->randomElement([
                     'Pendiente de entrega',
                     'Parcialmente entregado',
-                    'Sin definir',
                 ]),
             ];
         });

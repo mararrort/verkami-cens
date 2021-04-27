@@ -28,7 +28,7 @@ class PetitionTest extends TestCase
         // Makes the first presale not finished
         $petition = Petition::factory()
             ->presale($presales[0])
-            ->state(['state' => 'Sin definir'])
+            ->state(['state' => 'Pendiente de entrega'])
             ->create();
         $this->assertTrue($petition->isNewNotFinished());
 
@@ -40,7 +40,7 @@ class PetitionTest extends TestCase
         // Creates a new unfinished presale
         $petition = Petition::factory()
             ->editorial($editorial)
-            ->state(['state' => 'Sin definir'])
+            ->state(['state' => 'Pendiente de entrega'])
             ->create();
         $petition->save();
         $this->assertTrue($petition->isNewNotFinished());

@@ -6,7 +6,7 @@
         <h1>Listado de preventas</h1>
         <p>A continuación se muestra un listado de las preventas registradas, 
         separadas en cinco tablas en función de su estado (Recaudando, Pendiente de entrega,
-        Parcialmente entregado, Entregado, Sin definir).</p>
+        Parcialmente entregado, Entregado).</p>
         <p>Los nombres de las preventas son enlaces al sitio web donde se gestionaron
         (Comunmente Verkami).</p>
         <p>La clasificación de su estado se basa en la última información accedida.</p>
@@ -48,7 +48,7 @@
                     <td>{{$item->start ? $item->start->format('Y-m') : '-'}}</td>
                     <td>{{$item->announced_end ? $item->announced_end->format('Y-m') : '-'}}</td>
                     <td>{{$item->end ? $item->end->format('Y-m') : '-'}}</td>
-                    <td>{{ ($item->state == "Sin definir" || $item->state == "Recaudando") ?
+                    <td>{{ $item->state == "Recaudando" ?
                         "-" : ($item->isLate() ? "No" : "Si") }}</td>
                 <tr>
                 @endforeach

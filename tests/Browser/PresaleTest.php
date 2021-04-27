@@ -34,7 +34,7 @@ class PresaleTest extends DuskTestCase
             $presale = Presale::factory()
                 ->for($editorial)
                 ->state([
-                    'state' => 'Sin definir',
+                    'state' => 'Recaudando',
                     'announced_end' => null,
                 ])
                 ->create();
