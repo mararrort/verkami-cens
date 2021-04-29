@@ -5,16 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\Editorial;
 use App\Models\Presale;
 use Illuminate\Http\Request;
-use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Facades\Log;
+use Ramsey\Uuid\Uuid;
 
-define("ColumnNames", [
-    "Nombre" => "presales.name",
-    "Editorial" => "editorials.name",
-    "Estado" => "presales.state",
-    "Financiacion" => "presales.start",
-    "EntregaA" => "presales.announced_end",
-    "EntregaR" => "presales.end"
+define('ColumnNames', [
+    'Nombre' => 'presales.name',
+    'Editorial' => 'editorials.name',
+    'Estado' => 'presales.state',
+    'Financiacion' => 'presales.start',
+    'EntregaA' => 'presales.announced_end',
+    'EntregaR' => 'presales.end',
 ]);
 
 class PresaleController extends Controller
@@ -42,20 +42,20 @@ class PresaleController extends Controller
         string $column = null,
         string $order = null
     ) {
-        $presales = Presale::select("presales.*")->join(
-            "editorials",
-            "editorial_id",
-            "=",
-            "editorials.id"
+        $presales = Presale::select('presales.*')->join(
+            'editorials',
+            'editorial_id',
+            '=',
+            'editorials.id'
         );
 
         if (isset($editorial)) {
-            $presales->where("editorials.id", $editorial->id);
+            $presales->where('editorials.id', $editorial->id);
         }
 
         // Puntuality is excluded because is not an stored but a calculated value
         // If $column == "Puntualidad", it must be sorted later (Once it is get)
-        if ($column != "Puntualidad") {
+        if ($column != 'Puntualidad') {
             if (isset($column, $order)) {
                 $presales->orderBy(ColumnNames[$column], $order);
                 if ($column != "Editorial") {
@@ -71,8 +71,8 @@ class PresaleController extends Controller
                     ->orderByRaw(
                         'FIELD(state, "Sin Definir", "Recaudando", "Pendiente de entrega", "Parcialmente entregado", "Entregado")'
                     )
-                    ->orderBy("editorials.name", "ASC")
-                    ->orderBy("presales.name", "ASC");
+                    ->orderBy('editorials.name', 'ASC')
+                    ->orderBy('presales.name', 'ASC');
             }
         }
 
@@ -113,17 +113,18 @@ class PresaleController extends Controller
                         $return = strcmp($b->name, $a->name);
                     }
                 }
+
                 return $return;
             });
 
-            if ($order == "ASC") {
+            if ($order == 'ASC') {
                 $presales = $presales->reverse();
             }
         }
 
-        return view("presale.index", [
-            "presales" => $presales,
-            "editorial" => $editorial
+        return view('presale.index', [
+            'presales' => $presales,
+            'editorial' => $editorial,
         ]);
     }
 }
