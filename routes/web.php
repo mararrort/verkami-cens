@@ -20,82 +20,82 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Main
-Route::redirect("/", "/preventas");
+Route::redirect('/', '/preventas');
 
 // Auth
-Route::get("/dashboard", function () {
-    return view("dashboard");
+Route::get('/dashboard', function () {
+    return view('dashboard');
 })
-    ->middleware(["auth"])
-    ->name("dashboard");
+    ->middleware(['auth'])
+    ->name('dashboard');
 
-require __DIR__ . "/auth.php";
+require __DIR__.'/auth.php';
 
 // Editorial
-Route::resource("editorial", EditorialController::class)->only(["index"]);
+Route::resource('editorial', EditorialController::class)->only(['index']);
 
 // Presales
-Route::name("presales")->group(function () {
-    Route::get("/preventas", [PresaleController::class, "index"])->name(
-        ".index"
+Route::name('presales')->group(function () {
+    Route::get('/preventas', [PresaleController::class, 'index'])->name(
+        '.index'
     );
 
-    Route::get("preventas/{editorial}", [
+    Route::get('preventas/{editorial}', [
         PresaleController::class,
-        "index"
-    ])->name(".filteredIndex");
+        'index',
+    ])->name('.filteredIndex');
 
-    Route::get("/preventas/{column}/{order}", [
+    Route::get('/preventas/{column}/{order}', [
         PresaleController::class,
-        "index"
+        'index',
     ])
-        ->where(["column" => "(Nombre|Editorial|Estado|Financiacion|EntregaA|EntregaR|Puntualidad)", "order" => "(ASC|DESC)"])
-        ->name(".orderedIndex");
+        ->where(['column' => '(Nombre|Editorial|Estado|Financiacion|EntregaA|EntregaR|Puntualidad)', 'order' => '(ASC|DESC)'])
+        ->name('.orderedIndex');
 
-    Route::get("/preventas/{editorial}/{column}/{order}", [
+    Route::get('/preventas/{editorial}/{column}/{order}', [
         PresaleController::class,
-        "index"
+        'index',
     ])
-        ->where(["column" => "(Nombre|Editorial|Estado|Financiacion|EntregaA|EntregaR|Puntualidad)", "order" => "(ASC|DESC)"])
-        ->name(".filteredOrderedIndex");
+        ->where(['column' => '(Nombre|Editorial|Estado|Financiacion|EntregaA|EntregaR|Puntualidad)', 'order' => '(ASC|DESC)'])
+        ->name('.filteredOrderedIndex');
 });
 
 // Petition
-Route::resource("petition", PetitionController::class)->only(["store"]);
-Route::get("/peticion/create/{presale?}", [
+Route::resource('petition', PetitionController::class)->only(['store']);
+Route::get('/peticion/create/{presale?}', [
     PetitionController::class,
-    "create"
-])->name("petition.create");
-Route::resource("petition", PetitionController::class)
-    ->only(["index", "edit", "update", "destroy"])
-    ->middleware("auth");
-Route::get("/peticion/show/{petition}/{error?}", [
+    'create',
+])->name('petition.create');
+Route::resource('petition', PetitionController::class)
+    ->only(['index', 'edit', 'update', 'destroy'])
+    ->middleware('auth');
+Route::get('/peticion/show/{petition}/{error?}', [
     PetitionController::class,
-    "show"
+    'show',
 ])
-    ->middleware("auth")
-    ->name("petition.show");
-Route::post("/peticion/{petition}/accept", [
+    ->middleware('auth')
+    ->name('petition.show');
+Route::post('/peticion/{petition}/accept', [
     PetitionController::class,
-    "accept"
+    'accept',
 ])
-    ->name("petition.accept")
-    ->middleware("auth");
+    ->name('petition.accept')
+    ->middleware('auth');
 
 // TODO
-Route::resource("todo", TODOController::class)
-    ->only(["create", "store", "edit", "update", "destroy"])
-    ->middleware("auth");
+Route::resource('todo', TODOController::class)
+    ->only(['create', 'store', 'edit', 'update', 'destroy'])
+    ->middleware('auth');
 
 // Info
-Route::get("info", function () {
-    $privateTodo = TODO::where("type", "private")->get();
-    $publicTodo = TODO::where("type", "public")->get();
-    $undefinedTodo = TODO::where("type", "undecided")->get();
+Route::get('info', function () {
+    $privateTodo = TODO::where('type', 'private')->get();
+    $publicTodo = TODO::where('type', 'public')->get();
+    $undefinedTodo = TODO::where('type', 'undecided')->get();
 
-    return view("about", [
-        "privateTodo" => $privateTodo,
-        "publicTodo" => $publicTodo,
-        "undefinedTodo" => $undefinedTodo
+    return view('about', [
+        'privateTodo' => $privateTodo,
+        'publicTodo' => $publicTodo,
+        'undefinedTodo' => $undefinedTodo,
     ]);
-})->name("info");
+})->name('info');
