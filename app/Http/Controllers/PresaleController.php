@@ -58,6 +58,12 @@ class PresaleController extends Controller
         if ($column != "Puntualidad") {
             if (isset($column, $order)) {
                 $presales->orderBy(ColumnNames[$column], $order);
+                if ($column != "Editorial") {
+                    $presales->orderBy("editorials.name", "DESC");
+                }
+                if ($column != "Nombre") {
+                    $presales->orderBy("presales.name", "DESC");
+                }
             } else {
                 // Default sorting
                 // The orderByRaw solution has been got here: https://stackoverflow.com/a/25954745
@@ -73,19 +79,38 @@ class PresaleController extends Controller
         $presales = $presales->get();
 
         // Puntuality sorting
-        // The DESC order is Recaudando, Not Late and Late
+        // The DESC order is Recaudando ("Collecting"), Not Late and Late
         if ($column == "Puntualidad") {
             $presales = $presales->sort(function(Presale $a, Presale $b) {
                 $return = 0;
+                // Collecting always precedes a non collecting
                 if ($a->state == "Recaudando" && $b->state != "Recaudando") {
                     $return = -1;
+                // Non collecting always follows collecting
                 } else if($a->state != "Recaudando" && $b->state == "Recaudando") {
                     $return = 1;
+                // Between not collecting, the lateness is the first check
                 } else if($a->state != "Recaudando" && $b->state != "Recaudando") {
+                    // Lates always follows not lates
                     if ($a->isLate() && !$b->isLate()) {
                         $return = 1;
+                    // Not lates always precedes lates
                     } else if (!$a->isLate() && $b->isLate()) {
                         $return = -1;
+                    // If theye are both lates or not late, check editorial name
+                    } else if ($a->editorial != $b->editorial) {
+                        $return = strcmp($b->editorial->name, $a->editorial->name);
+                    // If they also share editorial, checks name
+                    } else {
+                        $return = strcmp($b->name, $a->name);
+                    }
+                } 
+                // If theye are both collecting, check editorial and later name
+                else {
+                    if ($a->editorial != $b->editorial) {
+                        $return = strcmp($b->editorial->name, $a->editorial->name);
+                    } else {
+                        $return = strcmp($b->name, $a->name);
                     }
                 }
                 return $return;
