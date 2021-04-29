@@ -19,7 +19,7 @@ class PresaleController extends Controller
         // The orderByRaw solution has been got here: https://stackoverflow.com/a/25954745
         $presales = Presale::select('presales.*')
             ->join('editorials', 'editorial_id', '=', 'editorials.id')
-            ->orderByRaw('FIELD(state, "Sin Definir", "Recaudando", "Pendiente de entrega", "Parcialmente entregado", "Entregado")')
+            ->orderByRaw('FIELD(state, "Recaudando", "Pendiente de entrega", "Parcialmente entregado", "Entregado")')
             ->orderBy('editorials.name', 'ASC')
             ->orderBy('presales.name', 'ASC');
 

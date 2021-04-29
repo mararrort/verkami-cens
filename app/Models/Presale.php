@@ -27,15 +27,6 @@ class Presale extends Model
     ];
 
     /**
-     * The model's default values for attributes.
-     *
-     * @var array
-     */
-    protected $attributes = [
-        'state' => 'Sin definir',
-    ];
-
-    /**
      * Checks if the presale is late.
      *
      * It is late if the end date is higher than the announced one, or if it
