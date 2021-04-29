@@ -54,7 +54,6 @@ Se intenta crear una editorial con una URL ya usada.
             <option @if($petition->presale->state == "Pendiente de entrega") selected @endif>Pendiente de entrega</option>
             <option @if($petition->presale->state == "Parcialmente entregado") selected @endif>Parcialmente entregado</option>
             <option @if($petition->presale->state == "Entregado") selected @endif>Entregado</option>
-            <option @if($petition->presale->state == "Sin definir") selected @endif>Sin definir</option>
         </select>
     </div>
     @endif
@@ -65,7 +64,6 @@ Se intenta crear una editorial con una URL ya usada.
             <option @if($petition->state == "Pendiente de entrega") selected @endif>Pendiente de entrega</option>
             <option @if($petition->state == "Parcialmente entregado") selected @endif>Parcialmente entregado</option>
             <option @if($petition->state == "Entregado") selected @endif>Entregado</option>
-            <option @if($petition->state == "Sin definir") selected @endif>Sin definir</option>
         </select>
     </div>
 </div>
@@ -120,16 +118,16 @@ Se intenta crear una editorial con una URL ya usada.
 
 <div class="row">
     <div class="col-auto">
-        <form action="{{route('peticion.accept', ['peticion' => $petition])}}" method="post">
+        <form action="{{route('petition.accept', ['petition' => $petition])}}" method="post">
             @csrf
             <button type="submit" class="btn btn-primary">Accept</button>
         </form>
     </div>
     <div class="col-auto">
-        <a href="{{route('peticion.edit', ['peticion' => $petition])}}"><button type="submit" class="btn btn-primary">Editar</button></a>
+        <a href="{{route('petition.edit', ['petition' => $petition])}}"><button type="submit" class="btn btn-primary">Editar</button></a>
     </div>
     <div class="col-auto">
-        <form action="{{route('peticion.destroy', ['peticion' => $petition])}}" method="post">
+        <form action="{{route('petition.destroy', ['petition' => $petition])}}" method="post">
             @csrf
             @method('delete')
             <button type="submit" class="btn btn-danger">Delete</button>

@@ -2,5 +2,6 @@
   "printWidth": 80,
   "tabWidth": 4,
   "useTabs": false,
-  "phpVersion": "7.3"
+  "phpVersion": "7.3",
+  "trailingCommaPHP": false
 }

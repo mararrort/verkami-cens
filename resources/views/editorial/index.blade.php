@@ -36,7 +36,7 @@
                 @foreach ($editorials as $editorial)
                 <tr>
                     <td><a href="{{$editorial->url}}" rel="external" target="_blank">{{$editorial->name}}</a></td>
-                    <td><a href="{{route('presales.index', [$editorial])}}">{{count($editorial->presales)}}</a></td>
+                    <td><a href="{{route('presales.filteredIndex', [$editorial])}}">{{count($editorial->presales)}}</a></td>
                     <td>{{count($editorial->getFinishedLatePresales())}}</td>
                     <td>{{count($editorial->getNotFinishedPresales())}}</td>
                     <td>{{count($editorial->getNotFinishedLatePresales())}}</td>

@@ -19,7 +19,7 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        <form method="POST" autocomplete="off" action="{{route('peticion.store')}}">
+        <form method="POST" autocomplete="off" action="{{route('petition.store')}}">
         @csrf
         @if (!$presale)
         <div class="row">
@@ -99,7 +99,6 @@
                     <option @if(isset($presale) && $presale->state == "Pendiente de entrega") selected @endif>Pendiente de entrega</option>
                     <option @if(isset($presale) && $presale->state == "Parcialmente entregado") selected @endif>Parcialmente entregado</option>
                     <option @if(isset($presale) && $presale->state == "Entregado") selected @endif>Entregado</option>
-                    <option @if(isset($presale) && $presale->state == "Sin definir") selected @endif>Sin definir</option>
                 </select>
                 @error('state')
                     <div class="alert alert-danger">{{ $message }}</div>

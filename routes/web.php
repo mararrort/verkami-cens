@@ -19,8 +19,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Main
 Route::redirect('/', '/preventas');
 
+// Auth
 Route::get('/dashboard', function () {
     return view('dashboard');
 })
@@ -29,18 +31,42 @@ Route::get('/dashboard', function () {
 
 require __DIR__.'/auth.php';
 
+// Editorial
 Route::resource('editorial', EditorialController::class)->only(['index']);
 
-Route::get('preventas/{editorial?}', [PresaleController::class, 'index'])->name(
-    'presales.index',
-);
+// Presales
+Route::name('presales')->group(function () {
+    Route::get('/preventas', [PresaleController::class, 'index'])->name(
+        '.index'
+    );
 
-Route::resource('peticion', PetitionController::class)->only(['store']);
+    Route::get('preventas/{editorial}', [
+        PresaleController::class,
+        'index',
+    ])->name('.filteredIndex');
+
+    Route::get('/preventas/{column}/{order}', [
+        PresaleController::class,
+        'index',
+    ])
+        ->where(['column' => '(Nombre|Editorial|Estado|Financiacion|EntregaA|EntregaR|Puntualidad)', 'order' => '(ASC|DESC)'])
+        ->name('.orderedIndex');
+
+    Route::get('/preventas/{editorial}/{column}/{order}', [
+        PresaleController::class,
+        'index',
+    ])
+        ->where(['column' => '(Nombre|Editorial|Estado|Financiacion|EntregaA|EntregaR|Puntualidad)', 'order' => '(ASC|DESC)'])
+        ->name('.filteredOrderedIndex');
+});
+
+// Petition
+Route::resource('petition', PetitionController::class)->only(['store']);
 Route::get('/peticion/create/{presale?}', [
     PetitionController::class,
     'create',
-])->name('peticion.create');
-Route::resource('peticion', PetitionController::class)
+])->name('petition.create');
+Route::resource('petition', PetitionController::class)
     ->only(['index', 'edit', 'update', 'destroy'])
     ->middleware('auth');
 Route::get('/peticion/show/{petition}/{error?}', [
@@ -49,17 +75,19 @@ Route::get('/peticion/show/{petition}/{error?}', [
 ])
     ->middleware('auth')
     ->name('petition.show');
-Route::post('/peticion/{peticion}/accept', [
+Route::post('/peticion/{petition}/accept', [
     PetitionController::class,
     'accept',
 ])
-    ->name('peticion.accept')
+    ->name('petition.accept')
     ->middleware('auth');
 
+// TODO
 Route::resource('todo', TODOController::class)
     ->only(['create', 'store', 'edit', 'update', 'destroy'])
     ->middleware('auth');
 
+// Info
 Route::get('info', function () {
     $privateTodo = TODO::where('type', 'private')->get();
     $publicTodo = TODO::where('type', 'public')->get();

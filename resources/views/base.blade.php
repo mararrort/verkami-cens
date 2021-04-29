@@ -18,7 +18,7 @@
                     </li>
                     @auth
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('peticion.index')}}">Peticiones</a>
+                        <a class="nav-link" href="{{route('petition.index')}}">Peticiones</a>
                     </li>
                     @endauth
                     <li class="nav-item">

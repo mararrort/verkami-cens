@@ -110,7 +110,7 @@ class PetitionAccepted extends Notification
         if ($unfinishedLatePresales != '0') {
             $tweet =
                 $tweet.
-                '(De los cuales '.
+                ' (De los cuales '.
                 $unfinishedLatePresales.
                 ' con retraso)';
         }
