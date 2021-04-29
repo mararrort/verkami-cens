@@ -23,7 +23,7 @@ class PetitionTest extends DuskTestCase
                 'Puedes solicitar añadir una preventa a través de este enlace';
             $browser->assertSeeLink($linkText);
             $browser->clickLink($linkText);
-            $browser->assertRouteIs('peticion.create');
+            $browser->assertRouteIs('petition.create');
         });
     }
 
@@ -38,7 +38,7 @@ class PetitionTest extends DuskTestCase
             $browser->visitRoute('presales.index');
             $browser->assertPresent('@editPresale');
             $browser->click('@editPresale');
-            $browser->assertRouteIs('peticion.create', ['presale' => $presale]);
+            $browser->assertRouteIs('petition.create', ['presale' => $presale]);
         });
     }
 
@@ -47,7 +47,7 @@ class PetitionTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $editorial = Editorial::factory()->make();
             $presale = Presale::factory()->make();
-            $browser->visitRoute('peticion.create');
+            $browser->visitRoute('petition.create');
             $browser->type('presale_name', $presale->name);
             $browser->type('presale_url', $presale->url);
             $browser->type('editorial_name', $editorial->name);
@@ -71,7 +71,7 @@ class PetitionTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $editorial = Editorial::factory()->create();
             $presale = Presale::factory()->make();
-            $browser->visitRoute('peticion.create');
+            $browser->visitRoute('petition.create');
             $browser->type('presale_name', $presale->name);
             $browser->type('presale_url', $presale->url);
             $browser->select('editorial_id', $editorial->id);
@@ -98,7 +98,7 @@ class PetitionTest extends DuskTestCase
                 ->presale($presale)
                 ->make();
 
-            $browser->visitRoute('peticion.create', ['presale' => $presale]);
+            $browser->visitRoute('petition.create', ['presale' => $presale]);
             $browser->select('state', $petitionBase->state);
             $browser->type('info', $petitionBase->info);
 
@@ -120,8 +120,8 @@ class PetitionTest extends DuskTestCase
             $petition = Petition::factory()->create();
 
             $browser->loginAs($user);
-            $browser->visitRoute('peticion.index');
-            $browser->assertRouteIs('peticion.index');
+            $browser->visitRoute('petition.index');
+            $browser->assertRouteIs('petition.index');
             $browser->clickLink($petition->presale_name);
             $browser->assertRouteIs('petition.show', ['petition' => $petition]);
             $browser->assertPresent('@header');
@@ -138,8 +138,8 @@ class PetitionTest extends DuskTestCase
                 ->create();
 
             $browser->loginAs($user);
-            $browser->visitRoute('peticion.index');
-            $browser->assertRouteIs('peticion.index');
+            $browser->visitRoute('petition.index');
+            $browser->assertRouteIs('petition.index');
             $browser->clickLink($petition->presale_name);
             $browser->assertRouteIs('petition.show', ['petition' => $petition]);
             $browser->assertPresent('@header');
@@ -159,8 +159,8 @@ class PetitionTest extends DuskTestCase
                 ->create();
 
             $browser->loginAs($user);
-            $browser->visitRoute('peticion.index');
-            $browser->assertRouteIs('peticion.index');
+            $browser->visitRoute('petition.index');
+            $browser->assertRouteIs('petition.index');
             $browser->clickLink($presale->name);
             $browser->assertRouteIs('petition.show', ['petition' => $petition]);
             $browser->assertPresent('@header');
@@ -182,7 +182,7 @@ class PetitionTest extends DuskTestCase
             $browser->loginAs($user);
             $browser->visitRoute('petition.show', ['petition' => $petition]);
             $browser->press('Accept');
-            $browser->assertRouteIs('peticion.index');
+            $browser->assertRouteIs('petition.index');
         });
     }
 
@@ -201,7 +201,7 @@ class PetitionTest extends DuskTestCase
             $browser->loginAs($user);
             $browser->visitRoute('petition.show', ['petition' => $petition]);
             $browser->press('Delete');
-            $browser->assertRouteIs('peticion.index');
+            $browser->assertRouteIs('petition.index');
 
             $this->assertEmpty(Petition::all());
         });
@@ -225,18 +225,18 @@ class PetitionTest extends DuskTestCase
 
             // Travel to the editor
             $browser->loginAs($user);
-            $browser->visitRoute('peticion.edit', ['peticion' => $petition]);
+            $browser->visitRoute('petition.edit', ['petition' => $petition]);
 
             // Assert information
             $browser->assertInputValue('presale_name', $petition->presale_name);
             $browser->assertInputValue('presale_url', $petition->presale_url);
             $browser->assertInputValue(
                 'editorial_name',
-                $petition->editorial_name,
+                $petition->editorial_name
             );
             $browser->assertInputValue(
                 'editorial_url',
-                $petition->editorial_url,
+                $petition->editorial_url
             );
             $browser->assertSelected('state', $petition->state);
 
@@ -259,16 +259,16 @@ class PetitionTest extends DuskTestCase
 
             $this->assertEquals(
                 $correctedPresale->name,
-                $petition->presale_name,
+                $petition->presale_name
             );
             $this->assertEquals($correctedPresale->url, $petition->presale_url);
             $this->assertEquals(
                 $correctedEditorial->name,
-                $petition->editorial_name,
+                $petition->editorial_name
             );
             $this->assertEquals(
                 $correctedEditorial->url,
-                $petition->editorial_url,
+                $petition->editorial_url
             );
             $this->assertEquals($correctedPresale->state, $petition->state);
         });
@@ -292,7 +292,7 @@ class PetitionTest extends DuskTestCase
 
             // Travel to the editor
             $browser->loginAs($user);
-            $browser->visitRoute('peticion.edit', ['peticion' => $petition]);
+            $browser->visitRoute('petition.edit', ['petition' => $petition]);
 
             // Assert information
             $browser->assertInputValue('presale_name', $petition->presale_name);
@@ -317,7 +317,7 @@ class PetitionTest extends DuskTestCase
 
             $this->assertEquals(
                 $correctedPresale->name,
-                $petition->presale_name,
+                $petition->presale_name
             );
             $this->assertEquals($correctedPresale->url, $petition->presale_url);
             $this->assertEquals($otherEditorial->id, $petition->editorial_id);
@@ -344,12 +344,12 @@ class PetitionTest extends DuskTestCase
 
             // Travel to the editor
             $browser->loginAs($user);
-            $browser->visitRoute('peticion.index');
+            $browser->visitRoute('petition.index');
             $browser->clickLink($presale->name);
             $browser->clickLink('Editar');
 
             // Assert information
-            $browser->assertRouteIs('peticion.edit', [$petition->id]);
+            $browser->assertRouteIs('petition.edit', [$petition->id]);
             $browser->assertSelected('state', $petition->state);
 
             $browser->assertInputValue('info', $petition->info);
@@ -437,7 +437,7 @@ class PetitionTest extends DuskTestCase
             $browser->seeLink('4');
             $browser->seeLink('8');
             $browser->clickLink('4');
-            $browser->assertRouteIs('presales.index', [$editorials[0]]);
+            $browser->assertRouteIs('presales.filteredIndex', [$editorials[0]]);
             $browser->assertSee($firstPresales[0]->name);
             $browser->assertDontSee($secondPresales[0]->name);
         });

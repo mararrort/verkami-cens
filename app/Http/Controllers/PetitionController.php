@@ -108,12 +108,12 @@ class PetitionController extends Controller
         // Notify
         $telegramUsers = TelegramUser::where(
             'createdPetitions',
-            true,
+            true
         )->get();
         try {
             Notification::send(
                 $telegramUsers,
-                new PetitionCreated($petition),
+                new PetitionCreated($petition)
             );
             Log::info('Notifications have been sent');
         } catch (TelegramException $exception) {
@@ -139,13 +139,13 @@ class PetitionController extends Controller
         if (! $petition->isUpdate()) {
             $presaleUrlError = Presale::where(
                 'url',
-                $petition->presale_url,
+                $petition->presale_url
             )->exists();
         }
         if ($petition->isNewEditorial()) {
             $editorialUrlError = Editorial::where(
                 'url',
-                $petition->editorial_url,
+                $petition->editorial_url
             )->exists();
         }
         //dd([$presaleUrlError, $editorialUrlError]);
@@ -164,12 +164,12 @@ class PetitionController extends Controller
      * @param  \App\Models\Petition  $petition
      * @return \Illuminate\Http\Response
      */
-    public function edit(Petition $peticion)
+    public function edit(Petition $petition)
     {
         $editorials = Editorial::all();
 
         return view('petition.edit', [
-            'peticion' => $peticion,
+            'petition' => $petition,
             'editorials' => $editorials,
         ]);
     }
@@ -181,22 +181,22 @@ class PetitionController extends Controller
      * @param  \App\Models\Petition  $petition
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Petition $peticion)
+    public function update(Request $request, Petition $petition)
     {
-        $peticion->presale_name = $request->presale_name;
-        $peticion->presale_url = $request->presale_url;
-        $peticion->editorial_id = $request->editorial_id;
-        $peticion->editorial_name = $request->editorial_name;
-        $peticion->editorial_url = $request->editorial_url;
-        $peticion->state = $request->state;
-        $peticion->info = $request->info;
-        $peticion->start = $request->start;
-        $peticion->announced_end = $request->announced_end;
-        $peticion->end = $request->end;
+        $petition->presale_name = $request->presale_name;
+        $petition->presale_url = $request->presale_url;
+        $petition->editorial_id = $request->editorial_id;
+        $petition->editorial_name = $request->editorial_name;
+        $petition->editorial_url = $request->editorial_url;
+        $petition->state = $request->state;
+        $petition->info = $request->info;
+        $petition->start = $request->start;
+        $petition->announced_end = $request->announced_end;
+        $petition->end = $request->end;
 
-        $peticion->save();
+        $petition->save();
 
-        return redirect()->route('petition.show', ['petition' => $peticion]);
+        return redirect()->route('petition.show', ['petition' => $petition]);
     }
 
     /**
@@ -205,11 +205,11 @@ class PetitionController extends Controller
      * @param  \App\Models\Petition  $petition
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Petition $peticion)
+    public function destroy(Petition $petition)
     {
-        $peticion->delete();
+        $petition->delete();
 
-        return redirect()->route('peticion.index');
+        return redirect()->route('petition.index');
     }
 
     /**
@@ -219,40 +219,40 @@ class PetitionController extends Controller
      * The editorial will be new if the field editorial_id is null.
      * If the editorial is new, it will be created and persisted.
      */
-    public function accept(Petition $peticion)
+    public function accept(Petition $petition)
     {
         // Get the editorial
-        if ($peticion->editorial_id) {
-            $editorial = Editorial::find($peticion->editorial_id);
+        if ($petition->editorial_id) {
+            $editorial = Editorial::find($petition->editorial_id);
         } else {
             $editorial = new Editorial();
-            $editorial->name = $peticion->editorial_name;
-            $editorial->url = $peticion->editorial_url;
+            $editorial->name = $petition->editorial_name;
+            $editorial->url = $petition->editorial_url;
             $editorial->id = UUID::uuid4();
             $editorial->save();
         }
 
         // Get the presale
-        if ($peticion->presale_id) {
-            $presale = Presale::find($peticion->presale_id);
+        if ($petition->presale_id) {
+            $presale = Presale::find($petition->presale_id);
         } else {
             $presale = new Presale();
             $presale->id = UUID::uuid4();
-            $presale->name = $peticion->presale_name;
-            $presale->url = $peticion->presale_url;
+            $presale->name = $petition->presale_name;
+            $presale->url = $petition->presale_url;
             $presale->editorial_id = $editorial->id;
         }
 
         // Notify
-        if ($peticion->isNotificable()) {
+        if ($petition->isNotificable()) {
             $telegramUsers = TelegramUser::where(
                 'createdPetitions',
-                true,
+                true
             )->get();
             try {
                 Notification::send(
                     $telegramUsers,
-                    new PetitionAccepted($peticion, $editorial, $presale),
+                    new PetitionAccepted($petition, $editorial, $presale)
                 );
                 Log::info('Notifications have been sent');
             } catch (TwitterException $exception) {
@@ -266,24 +266,24 @@ class PetitionController extends Controller
             }
         }
 
-        $presale->state = $peticion->state;
+        $presale->state = $petition->state;
 
-        $presale->start = $peticion->start;
-        $presale->announced_end = $peticion->announced_end;
-        $presale->end = $peticion->end;
+        $presale->start = $petition->start;
+        $presale->announced_end = $petition->announced_end;
+        $presale->end = $petition->end;
 
         // Save the status
         try {
             $presale->save();
         } catch (QueryException $exception) {
             return redirect()->route('petition.show', [
-                'petition' => $peticion,
+                'petition' => $petition,
                 'error' => true,
             ]);
         }
 
-        $peticion->delete();
+        $petition->delete();
 
-        return redirect()->route('peticion.index');
+        return redirect()->route('petition.index');
     }
 }

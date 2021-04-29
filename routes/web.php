@@ -19,55 +19,83 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::redirect('/', '/preventas');
+// Main
+Route::redirect("/", "/preventas");
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
+// Auth
+Route::get("/dashboard", function () {
+    return view("dashboard");
 })
-    ->middleware(['auth'])
-    ->name('dashboard');
+    ->middleware(["auth"])
+    ->name("dashboard");
 
-require __DIR__.'/auth.php';
+require __DIR__ . "/auth.php";
 
-Route::resource('editorial', EditorialController::class)->only(['index']);
+// Editorial
+Route::resource("editorial", EditorialController::class)->only(["index"]);
 
-Route::get('preventas/{editorial?}', [PresaleController::class, 'index'])->name(
-    'presales.index',
-);
+// Presales
+Route::name("presales")->group(function () {
+    Route::get("/preventas", [PresaleController::class, "index"])->name(
+        ".index"
+    );
 
-Route::resource('peticion', PetitionController::class)->only(['store']);
-Route::get('/peticion/create/{presale?}', [
+    Route::get("preventas/{editorial}", [
+        PresaleController::class,
+        "index"
+    ])->name(".filteredIndex");
+
+    Route::get("/preventas/{column}/{order}", [
+        PresaleController::class,
+        "index"
+    ])
+        ->where(["column" => "(Nombre|Editorial|Estado|Financiacion|EntregaA|EntregaR|Puntualidad)", "order" => "(ASC|DESC)"])
+        ->name(".orderedIndex");
+
+    Route::get("/preventas/{editorial}/{column}/{order}", [
+        PresaleController::class,
+        "index"
+    ])
+        ->where(["column" => "(Nombre|Editorial|Estado|Financiacion|EntregaA|EntregaR|Puntualidad)", "order" => "(ASC|DESC)"])
+        ->name(".filteredOrderedIndex");
+});
+
+// Petition
+Route::resource("petition", PetitionController::class)->only(["store"]);
+Route::get("/peticion/create/{presale?}", [
     PetitionController::class,
-    'create',
-])->name('peticion.create');
-Route::resource('peticion', PetitionController::class)
-    ->only(['index', 'edit', 'update', 'destroy'])
-    ->middleware('auth');
-Route::get('/peticion/show/{petition}/{error?}', [
+    "create"
+])->name("petition.create");
+Route::resource("petition", PetitionController::class)
+    ->only(["index", "edit", "update", "destroy"])
+    ->middleware("auth");
+Route::get("/peticion/show/{petition}/{error?}", [
     PetitionController::class,
-    'show',
+    "show"
 ])
-    ->middleware('auth')
-    ->name('petition.show');
-Route::post('/peticion/{peticion}/accept', [
+    ->middleware("auth")
+    ->name("petition.show");
+Route::post("/peticion/{petition}/accept", [
     PetitionController::class,
-    'accept',
+    "accept"
 ])
-    ->name('peticion.accept')
-    ->middleware('auth');
+    ->name("petition.accept")
+    ->middleware("auth");
 
-Route::resource('todo', TODOController::class)
-    ->only(['create', 'store', 'edit', 'update', 'destroy'])
-    ->middleware('auth');
+// TODO
+Route::resource("todo", TODOController::class)
+    ->only(["create", "store", "edit", "update", "destroy"])
+    ->middleware("auth");
 
-Route::get('info', function () {
-    $privateTodo = TODO::where('type', 'private')->get();
-    $publicTodo = TODO::where('type', 'public')->get();
-    $undefinedTodo = TODO::where('type', 'undecided')->get();
+// Info
+Route::get("info", function () {
+    $privateTodo = TODO::where("type", "private")->get();
+    $publicTodo = TODO::where("type", "public")->get();
+    $undefinedTodo = TODO::where("type", "undecided")->get();
 
-    return view('about', [
-        'privateTodo' => $privateTodo,
-        'publicTodo' => $publicTodo,
-        'undefinedTodo' => $undefinedTodo,
+    return view("about", [
+        "privateTodo" => $privateTodo,
+        "publicTodo" => $publicTodo,
+        "undefinedTodo" => $undefinedTodo
     ]);
-})->name('info');
+})->name("info");
