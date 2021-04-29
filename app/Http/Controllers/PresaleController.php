@@ -59,10 +59,10 @@ class PresaleController extends Controller
             if (isset($column, $order)) {
                 $presales->orderBy(ColumnNames[$column], $order);
                 if ($column != "Editorial") {
-                    $presales->orderBy("editorials.name", "DESC");
+                    $presales->orderBy("editorials.name", "ASC");
                 }
                 if ($column != "Nombre") {
-                    $presales->orderBy("presales.name", "DESC");
+                    $presales->orderBy("presales.name", "ASC");
                 }
             } else {
                 // Default sorting
