@@ -20,7 +20,7 @@
         "lodash": "^4.17.19",
         "postcss": "^8.2.14",
         "postcss-import": "^14.0.1",
-        "prettier": "^2.2.1",
+        "prettier": "^2.3.0",
         "tailwindcss": "^2.1.2"
     }
 }
