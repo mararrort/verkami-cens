@@ -41,5 +41,7 @@ jobs:
       run: php artisan migrate --force
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       run: vendor/bin/phpunit
+    - name: Install last dusk chrome driver
+      run: php artisan dusk:chrome-driver
     - name: Execute dusks tests
       run: php artisan dusk
