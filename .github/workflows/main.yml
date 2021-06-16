@@ -32,6 +32,11 @@ jobs:
       with:
         # MYSQL_DATABASE - name for the default database that is created
         mysql database: verkami_cens
+    - name: Wait for MySQL
+      run: |
+        while ! mysqladmin ping --host=127.0.0.1 --password=$MYSQL_ROOT_PASSWORD --silent; do
+          sleep 1
+        done
     - name: Create Database
       run: php artisan migrate --force
     - name: Execute tests (Unit and Feature tests) via PHPUnit
