@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
                     $presale = \App\Models\Presale::factory()->for($editorial)->create();
                     if (rand(0, 1)) {
                         \App\Models\Petition::factory()->presale($presale)->create();
+                        \App\Models\MPU::factory()->for($presale)->create();
                     }
                 }
             }

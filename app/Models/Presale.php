@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Editorial;
+use App\Models\MPU;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -72,5 +73,9 @@ class Presale extends Model
     public function isFinished(): bool
     {
         return $this->state == 'Entregado';
+    }
+
+    public function MPUs() {
+        return $this->hasMany(MPU::class);
     }
 }
