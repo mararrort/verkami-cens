@@ -243,6 +243,22 @@ class PetitionController extends Controller
             $presale->editorial_id = $editorial->id;
         }
 
+        $presale->state = $petition->state;
+
+        $presale->start = $petition->start;
+        $presale->announced_end = $petition->announced_end;
+        $presale->end = $petition->end;
+
+        // Save the status
+        try {
+            $presale->save();
+        } catch (QueryException $exception) {
+            return redirect()->route('petition.show', [
+                'petition' => $petition,
+                'error' => true,
+            ]);
+        }
+
         // Notify
         if ($petition->isNotificable()) {
             $telegramUsers = TelegramUser::where(
@@ -264,22 +280,6 @@ class PetitionController extends Controller
                     'exception' => $exception,
                 ]);
             }
-        }
-
-        $presale->state = $petition->state;
-
-        $presale->start = $petition->start;
-        $presale->announced_end = $petition->announced_end;
-        $presale->end = $petition->end;
-
-        // Save the status
-        try {
-            $presale->save();
-        } catch (QueryException $exception) {
-            return redirect()->route('petition.show', [
-                'petition' => $petition,
-                'error' => true,
-            ]);
         }
 
         $petition->delete();
