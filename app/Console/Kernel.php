@@ -48,7 +48,7 @@ class Kernel extends ConsoleKernel
                     $mpu->save();
                 }
             })
-            ->daily()
+            ->dailyAt('12:00')
             ->environments(["production"]);
     }
 
