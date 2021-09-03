@@ -1,4 +1,4 @@
-La preventa sin finalizar de {{ $presale->getMarkdown() }} lleva sin actualizaciones registradas desde {{ $presale->updated_at }}.
+La preventa sin finalizar de {{ $presale->getMarkdown() }} lleva sin actualizaciones registradas desde {{ $lastUpdate }}.
 
 ¿La información es correcta?
 

@@ -9,6 +9,9 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\Telegram\TelegramChannel;
 use NotificationChannels\Telegram\TelegramMessage;
+use NotificationChannels\Twitter\TwitterChannel;
+use NotificationChannels\Twitter\TwitterStatusUpdate;
+use Carbon\Carbon;
 
 class MPU extends Notification
 {
@@ -23,6 +26,9 @@ class MPU extends Notification
     public function __construct(Presale $presale)
     {
         $this->presale = $presale;
+        $this->lastUpdate = Carbon::parse($this->presale->updated_at)
+            ->locale("es")
+            ->toFormattedDateString();
     }
 
     /**
@@ -33,7 +39,7 @@ class MPU extends Notification
      */
     public function via($notifiable)
     {
-        return [TelegramChannel::class];
+        return [TelegramChannel::class, TwitterChannel::class];
     }
 
     /**
@@ -46,6 +52,31 @@ class MPU extends Notification
     {
         return TelegramMessage::create()
             ->to($notifiable->id)
-            ->view("telegram.MPU", ["presale" => $this->presale]);
+            ->view("telegram.MPU", [
+                "presale" => $this->presale,
+                "lastUpdate" => $this->lastUpdate
+            ]);
+    }
+
+    /**
+     * Send a tweet with the MPU.
+     *
+     * @param TelegramUser $notifiable Irrelevant
+     * @return TwitterStatusUpdate
+     **/
+    public function toTwitter($notifiable)
+    {
+        $twitter =
+            "La preventa sin finalizar de \"" .
+            $this->presale->name .
+            "\" lleva sin actualizaciones registradas desde " .
+            $this->lastUpdate .
+            ". Se tiene registrado que actualmente se encuentra en el estado: \"" .
+            $this->presale->state .
+            "\". ¿Es correcto?";
+
+        Log::info("A tweet will be send", ["tweet" => $tweet]);
+
+        return new TwitterStatusUpdate($tweet);
     }
 }
