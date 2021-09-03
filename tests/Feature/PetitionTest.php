@@ -102,16 +102,4 @@ class PetitionTest extends TestCase
 
         $this->assertFalse($petition->isNewLate());
     }
-
-    public function test_send_notifications_correctly()
-    {
-        $editorial = Editorial::factory()->create();
-        $startedPresale = Presale::factory()->for($editorial)->state(['state' => 'Recaudando'])->create();
-
-        $petition = Petition::factory()->presale($startedPresale)->state(['state' => 'Pendiente de entrega'])->create();
-        $this->assertTrue($petition->isNotificable());
-
-        $petition = Petition::factory()->editorial($editorial)->state(['state' => 'Pendiente de entrega'])->create();
-        $this->assertTrue($petition->isNotificable());
-    }
 }
