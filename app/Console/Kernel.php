@@ -48,7 +48,7 @@ class Kernel extends ConsoleKernel
                     $mpu->save();
                 }
             })
-            ->dailyAt('12:00')
+            ->dailyAt("12:00")
             ->environments(["production"]);
     }
 
@@ -71,9 +71,11 @@ class Kernel extends ConsoleKernel
      * * They are not finished.
      * * Last update was more than a week ago.
      * * They have not get an MPU or have not an MPU newer than a week ago.
+     * * Current date is not early than announced end one.
      */
     public static function getPresale()
     {
+        $now = Carbon::now();
         $date = Carbon::now()->subWeek();
         $presale = Presale::where("state", "!=", "Entregado")
             ->whereDate("updated_at", "<=", $date)
@@ -83,6 +85,11 @@ class Kernel extends ConsoleKernel
                     ->from("m_p_u_s")
                     ->whereColumn("m_p_u_s.presale_id", "presales.id")
                     ->whereDate("m_p_u_s.created_at", ">=", $date);
+            })
+            ->where(function ($query) use ($now) {
+                $query
+                    ->whereDate("announced_end", "<", $now)
+                    ->orWhereNull("announced_end");
             })
             ->inRandomOrder()
             ->first();
