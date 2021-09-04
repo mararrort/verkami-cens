@@ -75,8 +75,6 @@ class MPU extends Notification
             $this->presale->state .
             "\". ¿Es correcto?";
 
-        Log::info("A tweet will be send", ["tweet" => $tweet]);
-
         return new TwitterStatusUpdate($tweet);
     }
 }
