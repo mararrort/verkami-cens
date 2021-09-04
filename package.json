@@ -13,7 +13,7 @@
     "devDependencies": {
         "@prettier/plugin-php": "^0.17.4",
         "@tailwindcss/forms": "^0.3.3",
-        "alpinejs": "^3.3.0",
+        "alpinejs": "^3.3.1",
         "autoprefixer": "^10.3.3",
         "axios": "^0.21",
         "laravel-mix": "^6.0.29",
