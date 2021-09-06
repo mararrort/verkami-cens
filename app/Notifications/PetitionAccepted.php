@@ -93,13 +93,13 @@ class PetitionAccepted extends Notification
             '. Juegos pendientes de entregar: '.
             (string)count($this->editorial->getNotFinishedPresales());
 
-        $unfinishedLatePresales = (string)count($this->editorial->getNotFinishedLatePresales());
+        $unfinishedLatePresales = count($this->editorial->getNotFinishedLatePresales());
 
         if ($unfinishedLatePresales) {
             $tweet =
                 $tweet.
                 ' (De los cuales '.
-                $unfinishedLatePresales.
+                (string) $unfinishedLatePresales.
                 ' con retraso)';
         }
 
