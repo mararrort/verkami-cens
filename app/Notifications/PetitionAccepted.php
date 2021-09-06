@@ -87,27 +87,15 @@ class PetitionAccepted extends Notification
      **/
     public function toTwitter($notifiable)
     {
-        $editorialName = $this->petition->isNewEditorial()
-            ? $this->petition->editorial_name
-            : $this->editorial->name;
-
-        $unfinishedPresales = (string) ($this->petition->isNewNotFinished()
-            ? count($this->editorial->getNotFinishedPresales()) + 1
-            : count($this->editorial->getNotFinishedPresales()));
-
-        $unfinishedLatePresales =
-            (string) (! $this->petition->isFinished() &&
-            $this->petition->isNewLate()
-                ? count($this->editorial->getNotFinishedLatePresales()) + 1
-                : count($this->editorial->getNotFinishedLatePresales()));
-
         $tweet =
             'Se ha actualizado información respecto a la editorial '.
-            $editorialName.
+            $this->editorial->name.
             '. Juegos pendientes de entregar: '.
-            $unfinishedPresales;
+            (string)count($this->editorial->getNotFinishedPresales());
 
-        if ($unfinishedLatePresales != '0') {
+        $unfinishedLatePresales = (string)count($this->editorial->getNotFinishedLatePresales());
+
+        if ($unfinishedLatePresales) {
             $tweet =
                 $tweet.
                 ' (De los cuales '.
