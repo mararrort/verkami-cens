@@ -76,7 +76,7 @@ class Kernel extends ConsoleKernel
     public static function getPresale()
     {
         $now = Carbon::now();
-        $date = Carbon::now()->subWeek();
+        $date = Carbon::now()->subMonth();
         $presale = Presale::where("state", "!=", "Entregado")
             ->whereDate("updated_at", "<=", $date)
             ->whereNotExists(function ($query) use ($date) {
