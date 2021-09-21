@@ -66,7 +66,7 @@ class MPU extends Notification
      **/
     public function toTwitter($notifiable)
     {
-        $twitter =
+        $tweet =
             "La preventa sin finalizar de \"" .
             $this->presale->name .
             "\" lleva sin actualizaciones registradas desde " .

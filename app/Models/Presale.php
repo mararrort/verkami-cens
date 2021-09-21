@@ -63,18 +63,6 @@ class Presale extends Model
         return '['.$this->name.']('.$this->url.')';
     }
 
-    /**
-     * Returns if the presale is not finished.
-     *
-     * Just checks the state
-     *
-     * @return bool
-     **/
-    public function isFinished(): bool
-    {
-        return $this->state == 'Entregado';
-    }
-
     public function MPUs() {
         return $this->hasMany(MPU::class);
     }

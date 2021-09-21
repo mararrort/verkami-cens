@@ -72,61 +72,6 @@ class Petition extends Model
     }
 
     /**
-     * Check if the petition makes another presale goes late.
-     *
-     * It first check if it is an update and then the presale previous state.
-     *
-     * @return bool
-     **/
-    public function isNewLate(): bool
-    {
-        return $this->isUpdate()
-            ? (! $this->presale->isLate() && $this->isLate()
-                ? true
-                : false)
-            : false;
-    }
-
-    /**
-     * Check if the petition makes the company has another presale to finish.
-     *
-     * Conditions where this returns true:
-     * * The petition creates a new presale which is not finished.
-     * * The petition updates a presale and old state was "Entregado"
-     *   or "Recaudando" and new it is not
-     *
-     * @return bool
-     **/
-    public function isNewNotFinished(): bool
-    {
-        $return = false;
-
-        if (! $this->isUpdate() && $this->state != 'Entregado') {
-            $return = true;
-        } elseif (
-            $this->isUpdate() &&
-            in_array($this->presale->state, ['Recaudando', 'Entregado']) &&
-            ! in_array($this->state, ['Recaudando', 'Entregado'])
-        ) {
-            $return = true;
-        }
-
-        return $return;
-    }
-
-    /**
-     * Returns if the presale will not be finished.
-     *
-     * Just checks the state
-     *
-     * @return bool
-     **/
-    public function isFinished(): bool
-    {
-        return $this->state == 'Entregado';
-    }
-
-    /**
      * Returns if the petition creates a new editorial.
      *
      * @return bool
