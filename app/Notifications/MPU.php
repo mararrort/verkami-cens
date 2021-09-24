@@ -67,11 +67,9 @@ class MPU extends Notification
     public function toTwitter($notifiable)
     {
         $tweet =
-            "La preventa sin finalizar de \"" .
+            "Se tiene registrado que la preventa \"" .
             $this->presale->name .
-            "\" lleva sin actualizaciones registradas desde " .
-            $this->lastUpdate .
-            ". Se tiene registrado que actualmente se encuentra en el estado: \"" .
+            "\" se encuentra en estado \"" .
             $this->presale->state .
             "\". ¿Es correcto?";
 
