@@ -3,14 +3,16 @@
 namespace App\Console;
 
 use App\Models\Presale;
-use App\Moodels\MPU;
+use App\Models\MPU;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Notification;
 use App\Models\TelegramUser;
 use Illuminate\Support\Facades\DB;
 use App\Notifications\MPU as MPUNotification;
+use GuzzleHttp\Exception\ClientException;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\Log;
 
 class Kernel extends ConsoleKernel
 {
@@ -37,10 +39,19 @@ class Kernel extends ConsoleKernel
                 $presale = $this->getPresale();
 
                 if ($presale) {
-                    Notification::send(
-                        $telegramUsers,
-                        new MPUNotification($presale)
-                    );
+                    foreach ($telegramUsers as $telegramUser) {
+                        Log::info("A Telegram message will be send to the client " . $telegramUser->id);
+                        try {
+                            Notification::send(
+                                $telegramUser,
+                                new MPUNotification($presale)
+                            );
+                        } catch (ClientException $exception) {
+                            Log::warning("Cannot send a Telegram message to the client " . $telegramUser->id . ". It will be removed from the DDBB");
+                            $telegramUser->delete();
+                        }
+                    }
+
                     $mpu = new MPU();
 
                     $mpu->presale_id = $presale->id;

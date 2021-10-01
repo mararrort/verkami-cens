@@ -7,7 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
+ * App\Models\Petition
+ *
  * @property-read Presale $presale;
+ * @property-read \App\Models\Editorial $editorial
+ * @property-read \App\Models\Presale $presale
+ * @method static \Database\Factories\PetitionFactory factory(...$parameters)
+ * @method static \Illuminate\Database\Eloquent\Builder|Petition newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Petition newQuery()
+ * @method static \Illuminate\Database\Query\Builder|Petition onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Petition query()
+ * @method static \Illuminate\Database\Query\Builder|Petition withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Petition withoutTrashed()
+ * @mixin \Eloquent
  */
 class Petition extends Model
 {

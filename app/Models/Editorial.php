@@ -7,8 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 use Ramsey\Uuid\Uuid;
 
 /**
+ * App\Models\Editorial
+ *
  * @property-read Uuid id
  * @property-read Presales[] presales
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Presale[] $presales
+ * @property-read int|null $presales_count
+ * @method static \Database\Factories\EditorialFactory factory(...$parameters)
+ * @method static \Illuminate\Database\Eloquent\Builder|Editorial newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Editorial newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Editorial query()
+ * @mixin \Eloquent
  */
 class Editorial extends Model
 {
