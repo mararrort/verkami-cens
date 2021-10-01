@@ -243,29 +243,6 @@ class PetitionController extends Controller
             $presale->editorial_id = $editorial->id;
         }
 
-        // Notify
-        if ($petition->isNotificable()) {
-            $telegramUsers = TelegramUser::where(
-                'createdPetitions',
-                true
-            )->get();
-            try {
-                Notification::send(
-                    $telegramUsers,
-                    new PetitionAccepted($petition, $editorial, $presale)
-                );
-                Log::info('Notifications have been sent');
-            } catch (TwitterException $exception) {
-                Log::error('The tweet has not been send', [
-                    'exception' => $exception,
-                ]);
-            } catch (TelegramException $exception) {
-                Log::error('The telegram message has not been send', [
-                    'exception' => $exception,
-                ]);
-            }
-        }
-
         $presale->state = $petition->state;
 
         $presale->start = $petition->start;
@@ -279,6 +256,28 @@ class PetitionController extends Controller
             return redirect()->route('petition.show', [
                 'petition' => $petition,
                 'error' => true,
+            ]);
+        }
+
+        // Notify
+
+        $telegramUsers = TelegramUser::where(
+            'createdPetitions',
+            true
+        )->get();
+        try {
+            Notification::send(
+                $telegramUsers,
+                new PetitionAccepted($petition, $editorial, $presale)
+            );
+            Log::info('Notifications have been sent');
+        } catch (TwitterException $exception) {
+            Log::error('The tweet has not been send', [
+                'exception' => $exception,
+            ]);
+        } catch (TelegramException $exception) {
+            Log::error('The telegram message has not been send', [
+                'exception' => $exception,
             ]);
         }
 
