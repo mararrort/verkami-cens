@@ -9,10 +9,10 @@ use Illuminate\Support\Facades\Notification;
 use App\Models\TelegramUser;
 use Illuminate\Support\Facades\DB;
 use App\Notifications\MPU as MPUNotification;
-use GuzzleHttp\Exception\ClientException;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\Log;
+use NotificationChannels\Telegram\Exceptions\CouldNotSendNotification;
 
 class Kernel extends ConsoleKernel
 {
@@ -46,7 +46,7 @@ class Kernel extends ConsoleKernel
                                 $telegramUser,
                                 new MPUNotification($presale)
                             );
-                        } catch (ClientException $exception) {
+                        } catch (CouldNotSendNotification $exception) {
                             Log::warning("Cannot send a Telegram message to the client " . $telegramUser->id . ". It will be removed from the DDBB");
                             $telegramUser->delete();
                         }
