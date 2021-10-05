@@ -39,7 +39,11 @@ class MPU extends Notification
      */
     public function via($notifiable)
     {
-        return [TelegramChannel::class, TwitterChannel::class];
+        if ($notifiable->isControlGroup()) {
+            return [TelegramChannel::class, TwitterChannel::class];
+        } else {
+            return [TelegramChannel::class];
+        }
     }
 
     /**
