@@ -11,16 +11,16 @@
         "prettier": "prettier"
     },
     "devDependencies": {
-        "@prettier/plugin-php": "^0.16.3",
-        "@tailwindcss/forms": "^0.3.2",
-        "alpinejs": "^2.7.3",
-        "autoprefixer": "^10.2.6",
-        "axios": "^0.21",
-        "laravel-mix": "^6.0.19",
+        "@prettier/plugin-php": "^0.17.6",
+        "@tailwindcss/forms": "^0.3.4",
+        "alpinejs": "^3.5.1",
+        "autoprefixer": "^10.3.7",
+        "axios": "^0.24",
+        "laravel-mix": "^6.0.39",
         "lodash": "^4.17.19",
-        "postcss": "^8.3.0",
+        "postcss": "^8.3.11",
         "postcss-import": "^14.0.1",
-        "prettier": "^2.3.0",
-        "tailwindcss": "^2.1.4"
+        "prettier": "^2.4.1",
+        "tailwindcss": "^2.2.19"
     }
 }

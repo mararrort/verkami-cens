@@ -7,7 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
+ * App\Models\Petition
+ *
  * @property-read Presale $presale;
+ * @property-read \App\Models\Editorial $editorial
+ * @property-read \App\Models\Presale $presale
+ * @method static \Database\Factories\PetitionFactory factory(...$parameters)
+ * @method static \Illuminate\Database\Eloquent\Builder|Petition newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Petition newQuery()
+ * @method static \Illuminate\Database\Query\Builder|Petition onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Petition query()
+ * @method static \Illuminate\Database\Query\Builder|Petition withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Petition withoutTrashed()
+ * @mixin \Eloquent
  */
 class Petition extends Model
 {
@@ -72,61 +84,6 @@ class Petition extends Model
     }
 
     /**
-     * Check if the petition makes another presale goes late.
-     *
-     * It first check if it is an update and then the presale previous state.
-     *
-     * @return bool
-     **/
-    public function isNewLate(): bool
-    {
-        return $this->isUpdate()
-            ? (! $this->presale->isLate() && $this->isLate()
-                ? true
-                : false)
-            : false;
-    }
-
-    /**
-     * Check if the petition makes the company has another presale to finish.
-     *
-     * Conditions where this returns true:
-     * * The petition creates a new presale which is not finished.
-     * * The petition updates a presale and old state was "Entregado"
-     *   or "Recaudando" and new it is not
-     *
-     * @return bool
-     **/
-    public function isNewNotFinished(): bool
-    {
-        $return = false;
-
-        if (! $this->isUpdate() && $this->state != 'Entregado') {
-            $return = true;
-        } elseif (
-            $this->isUpdate() &&
-            in_array($this->presale->state, ['Recaudando', 'Entregado']) &&
-            ! in_array($this->state, ['Recaudando', 'Entregado'])
-        ) {
-            $return = true;
-        }
-
-        return $return;
-    }
-
-    /**
-     * Returns if the presale will not be finished.
-     *
-     * Just checks the state
-     *
-     * @return bool
-     **/
-    public function isFinished(): bool
-    {
-        return $this->state == 'Entregado';
-    }
-
-    /**
      * Returns if the petition creates a new editorial.
      *
      * @return bool
@@ -134,54 +91,5 @@ class Petition extends Model
     public function isNewEditorial(): bool
     {
         return is_null($this->editorial_id);
-    }
-
-    /**
-     * Check if a notification should be send.
-     *
-     * A notification should be send when either the amount of presales to
-     * finish or the amount of late presales to finish change.
-     *
-     * @return bool
-     **/
-    public function isNotificable(): bool
-    {
-        $notificable = false;
-
-        if (
-            ! $this->isUpdate() &&
-            in_array($this->state, [
-                'Pendiente de entrega',
-                'Parcialmente entregado',
-            ])
-        ) {
-            $notificable = true;
-        } elseif (
-            $this->isUpdate() &&
-            ! in_array($this->presale->state, [
-                'Pendiente de entrega',
-                'Parcialmente entregado',
-            ]) &&
-            in_array($this->state, [
-                'Pendiente de entrega',
-                'Parcialmente entregado',
-            ])
-        ) {
-            $notificable = true;
-        } elseif (
-            $this->isUpdate() &&
-            in_array($this->presale->state, [
-                'Pendiente de entrega',
-                'Parcialmente entregado',
-            ]) &&
-            ! in_array($this->state, [
-                'Pendiente de entrega',
-                'Parcialmente entregado',
-            ])
-        ) {
-            $notificable = true;
-        }
-
-        return $notificable;
     }
 }

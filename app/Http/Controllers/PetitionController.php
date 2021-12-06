@@ -10,15 +10,13 @@ use App\Notifications\PetitionAccepted;
 use App\Notifications\PetitionCreated;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use NotificationChannels\Telegram\Exceptions\CouldNotSendNotification as TelegramException;
 use NotificationChannels\Twitter\Exceptions\CouldNotSendNotification as TwitterException;
 use Ramsey\Uuid\Uuid;
+use GuzzleHttp\Exception\ClientException;
 
 class PetitionController extends Controller
 {
@@ -136,7 +134,7 @@ class PetitionController extends Controller
     {
         $presaleUrlError = false;
         $editorialUrlError = false;
-        if (! $petition->isUpdate()) {
+        if (!$petition->isUpdate()) {
             $presaleUrlError = Presale::where(
                 'url',
                 $petition->presale_url
@@ -243,29 +241,6 @@ class PetitionController extends Controller
             $presale->editorial_id = $editorial->id;
         }
 
-        // Notify
-        if ($petition->isNotificable()) {
-            $telegramUsers = TelegramUser::where(
-                'createdPetitions',
-                true
-            )->get();
-            try {
-                Notification::send(
-                    $telegramUsers,
-                    new PetitionAccepted($petition, $editorial, $presale)
-                );
-                Log::info('Notifications have been sent');
-            } catch (TwitterException $exception) {
-                Log::error('The tweet has not been send', [
-                    'exception' => $exception,
-                ]);
-            } catch (TelegramException $exception) {
-                Log::error('The telegram message has not been send', [
-                    'exception' => $exception,
-                ]);
-            }
-        }
-
         $presale->state = $petition->state;
 
         $presale->start = $petition->start;
@@ -280,6 +255,33 @@ class PetitionController extends Controller
                 'petition' => $petition,
                 'error' => true,
             ]);
+        }
+
+        // Notify
+
+        $telegramUsers = TelegramUser::where(
+            'createdPetitions',
+            true
+        )->get();
+        foreach ($telegramUsers as $telegramUser) {
+            Log::info("A Telegram message will be send to the client " . $telegramUser->id);
+            try {
+                Notification::send(
+                    $telegramUser,
+                    new PetitionAccepted($petition, $editorial, $presale)
+                );
+            } catch (TwitterException $exception) {
+                Log::error('The tweet has not been send', [
+                    'exception' => $exception,
+                ]);
+            } catch (TelegramException $exception) {
+                Log::error('The telegram message has not been send', [
+                    'exception' => $exception,
+                ]);
+            } catch (ClientException $exception) {
+                Log::warning("Cannot send a Telegram message to the client " . $telegramUser->id . ". It will be removed from the DDBB");
+                $telegramUser->delete();
+            }
         }
 
         $petition->delete();

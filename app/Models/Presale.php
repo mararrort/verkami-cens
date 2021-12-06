@@ -3,12 +3,23 @@
 namespace App\Models;
 
 use App\Models\Editorial;
+use App\Models\MPU;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
+ * App\Models\Presale
+ *
  * @property string name
  * @property string state
+ * @property-read \Illuminate\Database\Eloquent\Collection|MPU[] $MPUs
+ * @property-read int|null $m_p_us_count
+ * @property-read Editorial $editorial
+ * @method static \Database\Factories\PresaleFactory factory(...$parameters)
+ * @method static \Illuminate\Database\Eloquent\Builder|Presale newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Presale newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Presale query()
+ * @mixin \Eloquent
  */
 class Presale extends Model
 {
@@ -62,15 +73,7 @@ class Presale extends Model
         return '['.$this->name.']('.$this->url.')';
     }
 
-    /**
-     * Returns if the presale is not finished.
-     *
-     * Just checks the state
-     *
-     * @return bool
-     **/
-    public function isFinished(): bool
-    {
-        return $this->state == 'Entregado';
+    public function MPUs() {
+        return $this->hasMany(MPU::class);
     }
 }
