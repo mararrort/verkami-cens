@@ -42,7 +42,7 @@ Route::name('presales')->group(function () {
 });
 
 // Petition
-Route::resource('petition', PetitionController::class)->only(['store']);
+Route::resource('petition', PetitionController::class)->only(['store'])->middleware(['throttle:petitionCreate']);
 Route::get('/peticion/create/{presale?}', [
     PetitionController::class,
     'create',
