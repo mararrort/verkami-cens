@@ -1,4 +1,6 @@
 import 'datatables.net-bs4'
 $( function () {
-    $("#editorialsTableId").DataTable();
+    $("#editorialsTableId").DataTable({
+        "order": [ 1, 'desc' ]
+    });
 } );

@@ -42,20 +42,6 @@ Route::name('presales')->group(function () {
         PresaleController::class,
         'index',
     ])->name('.filteredIndex');
-
-    Route::get('/preventas/{column}/{order}', [
-        PresaleController::class,
-        'index',
-    ])
-        ->where(['column' => '(Nombre|Editorial|Estado|Financiacion|EntregaA|EntregaR|Puntualidad)', 'order' => '(ASC|DESC)'])
-        ->name('.orderedIndex');
-
-    Route::get('/preventas/{editorial}/{column}/{order}', [
-        PresaleController::class,
-        'index',
-    ])
-        ->where(['column' => '(Nombre|Editorial|Estado|Financiacion|EntregaA|EntregaR|Puntualidad)', 'order' => '(ASC|DESC)'])
-        ->name('.filteredOrderedIndex');
 });
 
 // Petition
