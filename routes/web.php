@@ -3,9 +3,6 @@
 use App\Http\Controllers\EditorialController;
 use App\Http\Controllers\PetitionController;
 use App\Http\Controllers\PresaleController;
-use App\Http\Controllers\TODOController;
-use App\Models\Presale;
-use App\Models\TODO;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -66,20 +63,5 @@ Route::post('/peticion/{petition}/accept', [
     ->name('petition.accept')
     ->middleware('auth');
 
-// TODO
-Route::resource('todo', TODOController::class)
-    ->only(['create', 'store', 'edit', 'update', 'destroy'])
-    ->middleware('auth');
-
 // Info
-Route::get('info', function () {
-    $privateTodo = TODO::where('type', 'private')->get();
-    $publicTodo = TODO::where('type', 'public')->get();
-    $undefinedTodo = TODO::where('type', 'undecided')->get();
-
-    return view('about', [
-        'privateTodo' => $privateTodo,
-        'publicTodo' => $publicTodo,
-        'undefinedTodo' => $undefinedTodo,
-    ]);
-})->name('info');
+Route::view('info', 'about')->name('info');

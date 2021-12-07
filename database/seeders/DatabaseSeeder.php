@@ -35,7 +35,6 @@ class DatabaseSeeder extends Seeder
             }
         }
 
-        \App\Models\TODO::factory(8)->create();
         \App\Models\Petition::factory(8)->create();
 
         $telegramUser = new \App\Models\TelegramUser();
