@@ -18,117 +18,19 @@
 
 <div class="row">
     <div class="col-auto">
-        <table class="table">
+        <table id="presalesTableId" class="table">
             <caption>
                 Listado de preventas registradas.
             </caption>
             <thead>
                 <tr>
-                    <th>Nombre <a href="
-                        @if($editorial) 
-                            {{route('presales.filteredOrderedIndex', ['editorial' => $editorial, 'column' => 'Nombre', 'order' => 'ASC'])}}
-                        @else 
-                            {{route('presales.orderedIndex', ['column' => 'Nombre', 'order' => 'ASC'])}}
-                        @endif">
-                        <i class="bi bi-arrow-up-short"></i></a> 
-                        <a href=
-                       " @if($editorial) 
-                            {{route('presales.filteredOrderedIndex', ['editorial' => $editorial, 'column' => 'Nombre', 'order' => 'DESC']) }}
-                        @else 
-                            {{route('presales.orderedIndex', ['column' => 'Nombre', 'order' => 'DESC'])}}
-                        @endif">
-                        <i class="bi bi-arrow-down-short"></i></a>
-                    </th>
-                    <th>Editorial <a href="
-                        @if($editorial) 
-                            {{route('presales.filteredOrderedIndex', ['editorial' => $editorial, 'column' => 'Editorial', 'order' => 'ASC'])}}
-                        @else 
-                            {{route('presales.orderedIndex', ['column' => 'Editorial', 'order' => 'ASC'])}}
-                        @endif">
-                        <i class="bi bi-arrow-up-short"></i></a> 
-                        <a href=
-                       " @if($editorial) 
-                            {{route('presales.filteredOrderedIndex', ['editorial' => $editorial, 'column' => 'Editorial', 'order' => 'DESC']) }}
-                        @else 
-                            {{route('presales.orderedIndex', ['column' => 'Editorial', 'order' => 'DESC'])}}
-                        @endif">
-                        <i class="bi bi-arrow-down-short"></i></a>
-                    </th>
-                    <th>Estado <a href="
-                        @if($editorial) 
-                            {{route('presales.filteredOrderedIndex', ['editorial' => $editorial, 'column' => 'Estado', 'order' => 'ASC'])}}
-                        @else 
-                            {{route('presales.orderedIndex', ['column' => 'Estado', 'order' => 'ASC'])}}
-                        @endif">
-                        <i class="bi bi-arrow-up-short"></i></a> 
-                        <a href=
-                       " @if($editorial) 
-                            {{route('presales.filteredOrderedIndex', ['editorial' => $editorial, 'column' => 'Estado', 'order' => 'DESC']) }}
-                        @else 
-                            {{route('presales.orderedIndex', ['column' => 'Estado', 'order' => 'DESC'])}}
-                        @endif">
-                        <i class="bi bi-arrow-down-short"></i></a>
-                    </th>
-                    <th>F. de financiación <a href="
-                        @if($editorial) 
-                            {{route('presales.filteredOrderedIndex', ['editorial' => $editorial, 'column' => 'Financiacion', 'order' => 'ASC'])}}
-                        @else 
-                            {{route('presales.orderedIndex', ['column' => 'Financiacion', 'order' => 'ASC'])}}
-                        @endif">
-                        <i class="bi bi-arrow-up-short"></i></a> 
-                        <a href=
-                       " @if($editorial) 
-                            {{route('presales.filteredOrderedIndex', ['editorial' => $editorial, 'column' => 'Financiacion', 'order' => 'DESC']) }}
-                        @else 
-                            {{route('presales.orderedIndex', ['column' => 'Financiacion', 'order' => 'DESC'])}}
-                        @endif">
-                        <i class="bi bi-arrow-down-short"></i></a>
-                    </th>
-                    <th>F. de entrega anunciada <a href="
-                        @if($editorial) 
-                            {{route('presales.filteredOrderedIndex', ['editorial' => $editorial, 'column' => 'EntregaA', 'order' => 'ASC'])}}
-                        @else 
-                            {{route('presales.orderedIndex', ['column' => 'EntregaA', 'order' => 'ASC'])}}
-                        @endif">
-                        <i class="bi bi-arrow-up-short"></i></a> 
-                        <a href=
-                       " @if($editorial) 
-                            {{route('presales.filteredOrderedIndex', ['editorial' => $editorial, 'column' => 'EntregaA', 'order' => 'DESC']) }}
-                        @else 
-                            {{route('presales.orderedIndex', ['column' => 'EntregaA', 'order' => 'DESC'])}}
-                        @endif">
-                        <i class="bi bi-arrow-down-short"></i></a>
-                    </th>
-                    <th>F. de entrega <a href="
-                        @if($editorial) 
-                            {{route('presales.filteredOrderedIndex', ['editorial' => $editorial, 'column' => 'EntregaR', 'order' => 'ASC'])}}
-                        @else 
-                            {{route('presales.orderedIndex', ['column' => 'EntregaR', 'order' => 'ASC'])}}
-                        @endif">
-                        <i class="bi bi-arrow-up-short"></i></a> 
-                        <a href=
-                       " @if($editorial) 
-                            {{route('presales.filteredOrderedIndex', ['editorial' => $editorial, 'column' => 'EntregaR', 'order' => 'DESC']) }}
-                        @else 
-                            {{route('presales.orderedIndex', ['column' => 'EntregaR', 'order' => 'DESC'])}}
-                        @endif">
-                        <i class="bi bi-arrow-down-short"></i></a>
-                    </th>
-                    <th>Puntualidad <a href="
-                        @if($editorial) 
-                            {{route('presales.filteredOrderedIndex', ['editorial' => $editorial, 'column' => 'Puntualidad', 'order' => 'ASC'])}}
-                        @else 
-                            {{route('presales.orderedIndex', ['column' => 'Puntualidad', 'order' => 'ASC'])}}
-                        @endif">
-                        <i class="bi bi-arrow-up-short"></i></a> 
-                        <a href=
-                       " @if($editorial) 
-                            {{route('presales.filteredOrderedIndex', ['editorial' => $editorial, 'column' => 'Puntualidad', 'order' => 'DESC']) }}
-                        @else 
-                            {{route('presales.orderedIndex', ['column' => 'Puntualidad', 'order' => 'DESC'])}}
-                        @endif">
-                        <i class="bi bi-arrow-down-short"></i></a>
-                    </th>
+                    <th>Nombre</th>
+                    <th>Editorial</th>
+                    <th>Estado </th>
+                    <th>F. de financiación</th>
+                    <th>F. de entrega anunciada</th>
+                    <th>F. de entrega</th>
+                    <th>Puntualidad</th>
                 </tr>
             </thead>
             <tbody>
@@ -148,10 +50,14 @@
                     <td>{{$item->end ? $item->end->format('Y-m') : '-'}}</td>
                     <td>{{ $item->state == "Recaudando" ?
                         "-" : ($item->isLate() ? "No" : "Si") }}</td>
-                <tr>
+                </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
 </div>
+@endsection
+
+@section('js')
+    <script src="/js/presales.js"></script>
 @endsection

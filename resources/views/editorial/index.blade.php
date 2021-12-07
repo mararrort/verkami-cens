@@ -16,7 +16,7 @@
 </div>
 <div class="row">
     <div class="col">
-        <table class="table">
+        <table id="editorialsTableId" class="table">
             <caption>
                 Listado de editoriales y resumen del estado de sus preventas.
             </caption>
@@ -40,10 +40,14 @@
                     <td>{{count($editorial->getFinishedLatePresales())}}</td>
                     <td>{{count($editorial->getNotFinishedPresales())}}</td>
                     <td>{{count($editorial->getNotFinishedLatePresales())}}</td>
-                <tr>
+                </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
 </div>
+@endsection
+
+@section('js')
+    <script src="/js/editorials.js"></script>
 @endsection
