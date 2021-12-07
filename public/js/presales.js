@@ -26471,7 +26471,9 @@ __webpack_require__.r(__webpack_exports__);
 /* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 
 $(function () {
-  $("#presalesTableId").DataTable();
+  $("#presalesTableId").DataTable({
+    "order": [4, 'desc']
+  });
 });
 })();
 

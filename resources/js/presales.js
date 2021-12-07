@@ -1,5 +1,7 @@
 import 'datatables.net-bs4'
 
 $( function () {
-    $("#presalesTableId").DataTable();
+    $("#presalesTableId").DataTable({
+        "order": [ 4, 'desc' ]
+    });
 } );

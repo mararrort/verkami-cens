@@ -13,15 +13,8 @@ class PresaleController extends Controller
      * All the parameters are optional.
      * If $editorial is defined, it must be the identificator to one editorial,
      * and all the listed presales will be owned by it.
-     * Both $column or $order must be either defined or undefined.
-     * If $column is defined, it must be Nombre.
-     * If $order is defined, it must be either ASC or DESC.
-     * If $column and $order are defined, the returned list will be ordered
-     * by the given column in the given order.
      *
      * @param Editorial $editorial
-     * @param string $column
-     * @param string $order
      *
      * @return \Illuminate\Http\Response
      */
