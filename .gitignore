@@ -8,5 +8,3 @@
 .phpunit.result.cache
 docker-compose.override.yml
 npm-debug.log
-/public/css
-/public/js
