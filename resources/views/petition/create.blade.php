@@ -99,6 +99,8 @@
                     <option @if(isset($presale) && $presale->state == "Pendiente de entrega") selected @endif>Pendiente de entrega</option>
                     <option @if(isset($presale) && $presale->state == "Parcialmente entregado") selected @endif>Parcialmente entregado</option>
                     <option @if(isset($presale) && $presale->state == "Entregado") selected @endif>Entregado</option>
+                    <option @if(isset($presale) && $presale->state == "Entregado, faltan recompensas") selected @endif>Entregado, faltan recompensas</option>
+                    <option @if(isset($presale) && $presale->state == "Abandonado") selected @endif>Abandonado</option>
                 </select>
                 @error('state')
                     <div class="alert alert-danger">{{ $message }}</div>

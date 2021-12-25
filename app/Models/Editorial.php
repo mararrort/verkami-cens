@@ -38,22 +38,22 @@ class Editorial extends Model
      * Returns the presales which are not finished.
      *
      * A presale is not finshed wheneer the state is different from 'Entregado'
-     * @return Presale[] */
+     * @return Collection */
     public function getNotFinishedPresales()
     {
         return $this->hasMany(Presale::class)
-            ->whereNotIn('state', ['Entregado', 'Recaudando'])
+            ->whereNotIn('state', ['Entregado', 'Abandonado'])
             ->get();
     }
 
     /**
      * Returns the presales which have finished late.
      *
-     * @return Presale[] */
+     * @return Collection */
     public function getFinishedLatePresales()
     {
         $presales = $this->hasMany(Presale::class)
-            ->where('state', 'Entregado')
+            ->whereIn('state', ['Entregado', 'Entregado, faltan recompensas'])
             ->get();
 
         $filtered = $presales->filter(function ($value) {

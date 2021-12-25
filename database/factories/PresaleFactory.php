@@ -26,6 +26,8 @@ class PresaleFactory extends Factory
             'Pendiente de entrega',
             'Parcialmente entregado',
             'Entregado',
+            'Entregado, faltan recompensas',
+            'Abandonado'
         ]);
 
         $start = $this->faker->dateTimeBetween('-5 years');

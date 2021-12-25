@@ -54,6 +54,8 @@ Se intenta crear una editorial con una URL ya usada.
             <option @if($petition->presale->state == "Pendiente de entrega") selected @endif>Pendiente de entrega</option>
             <option @if($petition->presale->state == "Parcialmente entregado") selected @endif>Parcialmente entregado</option>
             <option @if($petition->presale->state == "Entregado") selected @endif>Entregado</option>
+            <option @if($petition->presale->state == "Entregado, faltan recompensas") selected @endif>Entregado, faltan recompensas</option>
+            <option @if($petition->presale->state == "Abandonado") selected @endif>Abandonado</option>
         </select>
     </div>
     @endif
@@ -64,6 +66,8 @@ Se intenta crear una editorial con una URL ya usada.
             <option @if($petition->state == "Pendiente de entrega") selected @endif>Pendiente de entrega</option>
             <option @if($petition->state == "Parcialmente entregado") selected @endif>Parcialmente entregado</option>
             <option @if($petition->state == "Entregado") selected @endif>Entregado</option>
+            <option @if($petition->state == "Entregado, faltan recompensas") selected @endif>Entregado, faltan recompensas</option>
+            <option @if($petition->state == "Abandonado") selected @endif>Abandonado</option>
         </select>
     </div>
 </div>

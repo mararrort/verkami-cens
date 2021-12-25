@@ -77,6 +77,8 @@ class PetitionController extends Controller
                     'Pendiente de entrega',
                     'Parcialmente entregado',
                     'Entregado',
+                    'Entregado, faltan recompensas',
+                    'Abandonado'
                 ]),
             ],
             'info' => 'nullable|string',

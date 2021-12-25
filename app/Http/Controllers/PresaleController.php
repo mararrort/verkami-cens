@@ -32,15 +32,6 @@ class PresaleController extends Controller
             $presales->where('editorials.id', $editorial->id);
         }
 
-        // Default sorting
-        // The orderByRaw solution has been got here: https://stackoverflow.com/a/25954745
-        $presales
-            ->orderByRaw(
-                'FIELD(state, "Sin Definir", "Recaudando", "Pendiente de entrega", "Parcialmente entregado", "Entregado")'
-            )
-            ->orderBy('editorials.name', 'ASC')
-            ->orderBy('presales.name', 'ASC');
-
         $presales = $presales->get();
 
         return view('presale.index', [

@@ -4,9 +4,7 @@
 <div class="row">
     <div class="col-md-auto">
         <h1>Listado de preventas</h1>
-        <p>A continuación se muestra un listado de las preventas registradas, 
-        separadas en cinco tablas en función de su estado (Recaudando, Pendiente de entrega,
-        Parcialmente entregado, Entregado).</p>
+        <p>A continuación se muestra un listado de las preventas registradas.</p>
         <p>Los nombres de las preventas son enlaces al sitio web donde se gestionaron
         (Comunmente Verkami).</p>
         <p>La clasificación de su estado se basa en la última información accedida.</p>

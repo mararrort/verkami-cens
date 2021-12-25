@@ -79,6 +79,8 @@
                         <option @if($petition->state == "Pendiente de entrega") selected @endif>Pendiente de entrega</option>
                         <option @if($petition->state == "Parcialmente entregado") selected @endif>Parcialmente entregado</option>
                         <option @if($petition->state == "Entregado") selected @endif>Entregado</option>
+                        <option @if($petition->state == "Entregado, faltan recompensas") selected @endif>Entregado, faltan recompensas</option>
+                        <option @if($petition->state == "Abandonado") selected @endif>Abandonado</option>
                     </select>
                     @error('state')
                         <div class="alert alert-danger">{{ $message }}</div>
