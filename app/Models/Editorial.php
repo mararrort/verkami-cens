@@ -7,12 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use Ramsey\Uuid\Uuid;
 
 /**
- * App\Models\Editorial
+ * App\Models\Editorial.
  *
  * @property-read Uuid id
  * @property-read Presales[] presales
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Presale[] $presales
  * @property-read int|null $presales_count
+ *
  * @method static \Database\Factories\EditorialFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Editorial newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Editorial newQuery()
@@ -38,7 +39,9 @@ class Editorial extends Model
      * Returns the presales which are not finished.
      *
      * A presale is not finshed wheneer the state is different from 'Entregado'
-     * @return Collection */
+     *
+     * @return Collection
+     */
     public function getNotFinishedPresales()
     {
         return $this->hasMany(Presale::class)
@@ -49,7 +52,8 @@ class Editorial extends Model
     /**
      * Returns the presales which have finished late.
      *
-     * @return Collection */
+     * @return Collection
+     */
     public function getFinishedLatePresales()
     {
         $presales = $this->hasMany(Presale::class)
@@ -68,7 +72,9 @@ class Editorial extends Model
      *
      * A presale is not finshed wheneer the state is different from 'Entregado'.
      * A presale is late when the late attribute is true.
-     * @return Presale[] */
+     *
+     * @return Presale[]
+     */
     public function getNotFinishedLatePresales()
     {
         $presales = $this->getNotFinishedPresales();
@@ -81,7 +87,9 @@ class Editorial extends Model
 
     /**
      * Returns the text formated as Markdown for Telegram.
-     * @return string */
+     *
+     * @return string
+     */
     public function getMarkdown(): string
     {
         return '['.$this->name.']('.$this->url.')';

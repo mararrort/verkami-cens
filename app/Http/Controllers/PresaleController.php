@@ -14,8 +14,7 @@ class PresaleController extends Controller
      * If $editorial is defined, it must be the identificator to one editorial,
      * and all the listed presales will be owned by it.
      *
-     * @param Editorial $editorial
-     *
+     * @param  Editorial  $editorial
      * @return \Illuminate\Http\Response
      */
     public function index(

@@ -36,7 +36,7 @@ class PetitionCreated extends Notification
     }
 
     /**
-     * @param TelegramUser[] $notifiable
+     * @param  TelegramUser[]  $notifiable
      */
     public function toTelegram($notifiable)
     {
