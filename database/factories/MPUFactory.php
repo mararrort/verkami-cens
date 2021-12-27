@@ -22,7 +22,7 @@ class MPUFactory extends Factory
     public function definition()
     {
         return [
-            'created_at' => $this->faker->dateTimeBetween('-1 year', 'now')
+            'created_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
         ];
     }
 }

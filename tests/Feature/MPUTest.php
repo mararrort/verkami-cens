@@ -3,8 +3,8 @@
 namespace Tests\Feature;
 
 use App\Models\Editorial;
-use App\Models\Presale;
 use App\Models\MPU;
+use App\Models\Presale;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -13,6 +13,7 @@ use Tests\TestCase;
 class MPUTest extends TestCase
 {
     use WithFaker;
+
     /**
      * A basic feature test example.
      *
@@ -43,7 +44,7 @@ class MPUTest extends TestCase
 
         $this->assertNotNull($presale);
 
-        $this->assertNotEquals($presale->state, "Entregado");
+        $this->assertNotEquals($presale->state, 'Entregado');
         $date = Carbon::now()->subWeek();
         foreach ($presale->MPUs() as $MPU) {
             $this->assertLessThan($date, $MPU->updated_at);

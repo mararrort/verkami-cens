@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * App\Models\MPU
+ * App\Models\MPU.
  *
  * @property-read Presale $presale
+ *
  * @method static \Database\Factories\MPUFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|MPU newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|MPU newQuery()
@@ -20,7 +21,8 @@ class MPU extends Model
 {
     use HasFactory;
 
-    public function presale() {
+    public function presale()
+    {
         return $this->belongsTo(Presale::class);
     }
 }

@@ -8,6 +8,7 @@ use App\Models\Presale;
 use App\Models\TelegramUser;
 use App\Notifications\PetitionAccepted;
 use App\Notifications\PetitionCreated;
+use GuzzleHttp\Exception\ClientException;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -16,7 +17,6 @@ use Illuminate\Validation\Rule;
 use NotificationChannels\Telegram\Exceptions\CouldNotSendNotification as TelegramException;
 use NotificationChannels\Twitter\Exceptions\CouldNotSendNotification as TwitterException;
 use Ramsey\Uuid\Uuid;
-use GuzzleHttp\Exception\ClientException;
 
 class PetitionController extends Controller
 {
@@ -78,7 +78,7 @@ class PetitionController extends Controller
                     'Parcialmente entregado',
                     'Entregado',
                     'Entregado, faltan recompensas',
-                    'Abandonado'
+                    'Abandonado',
                 ]),
             ],
             'info' => 'nullable|string',
@@ -129,14 +129,14 @@ class PetitionController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Petition  $petition
-     * @param  bool $error
+     * @param  bool  $error
      * @return \Illuminate\Http\Response
      */
     public function show(Petition $petition, $error = false)
     {
         $presaleUrlError = false;
         $editorialUrlError = false;
-        if (!$petition->isUpdate()) {
+        if (! $petition->isUpdate()) {
             $presaleUrlError = Presale::where(
                 'url',
                 $petition->presale_url
@@ -266,7 +266,7 @@ class PetitionController extends Controller
             true
         )->get();
         foreach ($telegramUsers as $telegramUser) {
-            Log::info("A Telegram message will be send to the client " . $telegramUser->id);
+            Log::info('A Telegram message will be send to the client '.$telegramUser->id);
             try {
                 Notification::send(
                     $telegramUser,
@@ -281,7 +281,7 @@ class PetitionController extends Controller
                     'exception' => $exception,
                 ]);
             } catch (ClientException $exception) {
-                Log::warning("Cannot send a Telegram message to the client " . $telegramUser->id . ". It will be removed from the DDBB");
+                Log::warning('Cannot send a Telegram message to the client '.$telegramUser->id.'. It will be removed from the DDBB');
                 $telegramUser->delete();
             }
         }
