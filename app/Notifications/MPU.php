@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use App\Models\Presale;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -11,7 +12,6 @@ use NotificationChannels\Telegram\TelegramChannel;
 use NotificationChannels\Telegram\TelegramMessage;
 use NotificationChannels\Twitter\TwitterChannel;
 use NotificationChannels\Twitter\TwitterStatusUpdate;
-use Carbon\Carbon;
 
 class MPU extends Notification
 {
@@ -27,7 +27,7 @@ class MPU extends Notification
     {
         $this->presale = $presale;
         $this->lastUpdate = Carbon::parse($this->presale->updated_at)
-            ->locale("es")
+            ->locale('es')
             ->toFormattedDateString();
     }
 
@@ -49,33 +49,33 @@ class MPU extends Notification
     /**
      * Get the mail representation of the notification.
      *
-     * @param TelegramUser[] $notifiable
+     * @param  TelegramUser[]  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toTelegram($notifiable)
     {
         return TelegramMessage::create()
             ->to($notifiable->id)
-            ->view("telegram.MPU", [
-                "presale" => $this->presale,
-                "lastUpdate" => $this->lastUpdate
+            ->view('telegram.MPU', [
+                'presale' => $this->presale,
+                'lastUpdate' => $this->lastUpdate,
             ]);
     }
 
     /**
      * Send a tweet with the MPU.
      *
-     * @param TelegramUser $notifiable Irrelevant
+     * @param  TelegramUser  $notifiable  Irrelevant
      * @return TwitterStatusUpdate
      **/
     public function toTwitter($notifiable)
     {
         $tweet =
-            "Se tiene registrado que la preventa \"" .
-            $this->presale->name .
-            "\" se encuentra en estado \"" .
-            $this->presale->state .
-            "\". ¿Es correcto?";
+            'Se tiene registrado que la preventa "'.
+            $this->presale->name.
+            '" se encuentra en estado "'.
+            $this->presale->state.
+            '". ¿Es correcto?';
 
         return new TwitterStatusUpdate($tweet);
     }

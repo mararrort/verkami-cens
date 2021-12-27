@@ -30,6 +30,7 @@ class PetitionAccepted extends Notification
 
     /**
      * Create a new notification instance.
+     *
      * @param Petition
      * @param Editorial
      * @param Presale
@@ -48,7 +49,7 @@ class PetitionAccepted extends Notification
     /**
      * Get the notification's delivery channels.
      *
-     * @param  TelegramUser $notifiable
+     * @param  TelegramUser  $notifiable
      * @return array
      */
     public function via($notifiable)
@@ -61,7 +62,7 @@ class PetitionAccepted extends Notification
     }
 
     /**
-     * @param TelegramUser $notifiable
+     * @param  TelegramUser  $notifiable
      * @return TelegramMessage;
      */
     public function toTelegram($notifiable)
@@ -82,7 +83,7 @@ class PetitionAccepted extends Notification
     /**
      * Send a tweet with the petition information.
      *
-     * @param TelegramUser $notifiable Irrelevant
+     * @param  TelegramUser  $notifiable  Irrelevant
      * @return TwitterStatusUpdate
      **/
     public function toTwitter($notifiable)
@@ -91,7 +92,7 @@ class PetitionAccepted extends Notification
             'Se ha actualizado información respecto a la editorial '.
             $this->editorial->name.
             '. Juegos pendientes de entregar: '.
-            (string)count($this->editorial->getNotFinishedPresales());
+            (string) count($this->editorial->getNotFinishedPresales());
 
         $unfinishedLatePresales = count($this->editorial->getNotFinishedLatePresales());
 

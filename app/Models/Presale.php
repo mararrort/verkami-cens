@@ -8,13 +8,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * App\Models\Presale
+ * App\Models\Presale.
  *
  * @property string name
  * @property string state
  * @property-read \Illuminate\Database\Eloquent\Collection|MPU[] $MPUs
  * @property-read int|null $m_p_us_count
  * @property-read Editorial $editorial
+ *
  * @method static \Database\Factories\PresaleFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Presale newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Presale newQuery()
@@ -67,13 +68,16 @@ class Presale extends Model
 
     /**
      * Returns the text formated as Markdown for Telegram.
-     * @return string */
+     *
+     * @return string
+     */
     public function getMarkdown(): string
     {
         return '['.$this->name.']('.$this->url.')';
     }
 
-    public function MPUs() {
+    public function MPUs()
+    {
         return $this->hasMany(MPU::class);
     }
 }

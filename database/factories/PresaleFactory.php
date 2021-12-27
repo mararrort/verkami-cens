@@ -27,7 +27,7 @@ class PresaleFactory extends Factory
             'Parcialmente entregado',
             'Entregado',
             'Entregado, faltan recompensas',
-            'Abandonado'
+            'Abandonado',
         ]);
 
         $start = $this->faker->dateTimeBetween('-5 years');
@@ -45,7 +45,7 @@ class PresaleFactory extends Factory
             'start' => $start,
             'announced_end' => $announcedEnd,
             'end' => $end ?? null,
-            'updated_at' => $this->faker->dateTimeBetween('-1 year', 'now')
+            'updated_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
         ];
     }
 
