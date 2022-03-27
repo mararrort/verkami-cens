@@ -60,6 +60,7 @@ class Kernel extends ConsoleKernel
                 }
             })
             ->dailyAt('12:00')
+            ->weekdays()
             ->environments(['production']);
     }
 
