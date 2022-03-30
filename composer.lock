@@ -6283,16 +6283,16 @@
         },
         {
             "name": "laravel/dusk",
-            "version": "v6.22.1",
+            "version": "v6.22.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/dusk.git",
-                "reference": "bc9fd27ea167746ba0616a7661e6b5bd4a80c472"
+                "reference": "f62afe10fd37c96b1e1e9afe17174961cc2b0f0a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/dusk/zipball/bc9fd27ea167746ba0616a7661e6b5bd4a80c472",
-                "reference": "bc9fd27ea167746ba0616a7661e6b5bd4a80c472",
+                "url": "https://api.github.com/repos/laravel/dusk/zipball/f62afe10fd37c96b1e1e9afe17174961cc2b0f0a",
+                "reference": "f62afe10fd37c96b1e1e9afe17174961cc2b0f0a",
                 "shasum": ""
             },
             "require": {
@@ -6350,9 +6350,9 @@
             ],
             "support": {
                 "issues": "https://github.com/laravel/dusk/issues",
-                "source": "https://github.com/laravel/dusk/tree/v6.22.1"
+                "source": "https://github.com/laravel/dusk/tree/v6.22.2"
             },
-            "time": "2022-02-12T17:43:36+00:00"
+            "time": "2022-03-24T14:57:29+00:00"
         },
         {
             "name": "laravel/sail",
