@@ -6283,16 +6283,16 @@
         },
         {
             "name": "laravel/dusk",
-            "version": "v6.22.2",
+            "version": "v6.22.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/dusk.git",
-                "reference": "f62afe10fd37c96b1e1e9afe17174961cc2b0f0a"
+                "reference": "f42844d5a7eace45d199d276bb2bc23fec788256"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/dusk/zipball/f62afe10fd37c96b1e1e9afe17174961cc2b0f0a",
-                "reference": "f62afe10fd37c96b1e1e9afe17174961cc2b0f0a",
+                "url": "https://api.github.com/repos/laravel/dusk/zipball/f42844d5a7eace45d199d276bb2bc23fec788256",
+                "reference": "f42844d5a7eace45d199d276bb2bc23fec788256",
                 "shasum": ""
             },
             "require": {
@@ -6350,9 +6350,9 @@
             ],
             "support": {
                 "issues": "https://github.com/laravel/dusk/issues",
-                "source": "https://github.com/laravel/dusk/tree/v6.22.2"
+                "source": "https://github.com/laravel/dusk/tree/v6.22.3"
             },
-            "time": "2022-03-24T14:57:29+00:00"
+            "time": "2022-04-04T15:12:34+00:00"
         },
         {
             "name": "laravel/sail",
@@ -7822,16 +7822,16 @@
         },
         {
             "name": "sebastian/environment",
-            "version": "5.1.3",
+            "version": "5.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/environment.git",
-                "reference": "388b6ced16caa751030f6a69e588299fa09200ac"
+                "reference": "1b5dff7bb151a4db11d49d90e5408e4e938270f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/388b6ced16caa751030f6a69e588299fa09200ac",
-                "reference": "388b6ced16caa751030f6a69e588299fa09200ac",
+                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/1b5dff7bb151a4db11d49d90e5408e4e938270f7",
+                "reference": "1b5dff7bb151a4db11d49d90e5408e4e938270f7",
                 "shasum": ""
             },
             "require": {
@@ -7873,7 +7873,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/environment/issues",
-                "source": "https://github.com/sebastianbergmann/environment/tree/5.1.3"
+                "source": "https://github.com/sebastianbergmann/environment/tree/5.1.4"
             },
             "funding": [
                 {
@@ -7881,7 +7881,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-09-28T05:52:38+00:00"
+            "time": "2022-04-03T09:37:03+00:00"
         },
         {
             "name": "sebastian/exporter",
