@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|Petition query()
  * @method static \Illuminate\Database\Query\Builder|Petition withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Petition withoutTrashed()
+ *
  * @mixin \Eloquent
  */
 class Petition extends Model
