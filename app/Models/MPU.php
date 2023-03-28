@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|MPU newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|MPU newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|MPU query()
+ *
  * @mixin \Eloquent
  */
 class MPU extends Model
