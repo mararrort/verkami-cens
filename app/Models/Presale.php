@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Presale newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Presale newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Presale query()
+ *
  * @mixin \Eloquent
  */
 class Presale extends Model
