@@ -14,6 +14,7 @@ use Illuminate\Notifications\Notifiable;
  * @method static \Illuminate\Database\Eloquent\Builder|TelegramUser newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|TelegramUser newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|TelegramUser query()
+ *
  * @mixin \Eloquent
  */
 class TelegramUser extends Model
