@@ -18,6 +18,7 @@ use Ramsey\Uuid\Uuid;
  * @method static \Illuminate\Database\Eloquent\Builder|Editorial newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Editorial newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Editorial query()
+ *
  * @mixin \Eloquent
  */
 class Editorial extends Model
