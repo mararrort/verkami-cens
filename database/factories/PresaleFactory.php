@@ -66,7 +66,7 @@ class PresaleFactory extends Factory
     /**
      * The presale will be unfinished.
      *
-     * @return array
+     * @return Factory
      **/
     public function unfinished()
     {
