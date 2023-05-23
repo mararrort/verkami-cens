@@ -41,7 +41,7 @@ class MPU extends Notification
     public function via($notifiable)
     {
         if ($notifiable->isControlGroup()) {
-        return [TelegramChannel::class/*, TwitterChannel::class*/];
+            return [TelegramChannel::class/*, TwitterChannel::class*/];
         } else {
             return [TelegramChannel::class];
         }
@@ -50,7 +50,7 @@ class MPU extends Notification
     /**
      * Get the mail representation of the notification.
      *
-     * @param  TelegramUser $notifiable
+     * @param  TelegramUser  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toTelegram($notifiable)
