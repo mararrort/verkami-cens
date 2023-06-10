@@ -50,7 +50,7 @@ class MPU extends Notification
     /**
      * Get the mail representation of the notification.
      *
-     * @param  TelegramUser $notifiable
+     * @param  TelegramUser  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toTelegram($notifiable)
