@@ -45,17 +45,17 @@ class Kernel extends ConsoleKernel
                     $mpu->save();
 
                     foreach ($telegramUsers as $telegramUser) {
-                        Log::info('A Telegram message will be send to the client ' . $telegramUser->id);
+                        Log::info('A Telegram message will be send to the client '.$telegramUser->id);
                         try {
                             Notification::send(
                                 $telegramUser,
                                 new MPUNotification($presale)
                             );
                         } catch (CouldNotSendNotification $exception) {
-                            Log::warning('Cannot send a Telegram message to the client ' . $telegramUser->id . '. It will be removed from the DDBB');
+                            Log::warning('Cannot send a Telegram message to the client '.$telegramUser->id.'. It will be removed from the DDBB');
                             $telegramUser->delete();
                         } catch (Exception $exception) {
-                            Log::warning("There has been an exception");
+                            Log::warning('There has been an exception');
                         }
                     }
                 }
@@ -72,7 +72,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__ . '/Commands');
+        $this->load(__DIR__.'/Commands');
 
         require base_path('routes/console.php');
     }
