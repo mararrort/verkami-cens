@@ -7,6 +7,7 @@ use App\Models\Presale;
 use App\Models\TelegramUser;
 use App\Notifications\MPU as MPUNotification;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\DB;
@@ -39,24 +40,24 @@ class Kernel extends ConsoleKernel
                 $presale = $this->getPresale();
 
                 if ($presale) {
+                    $mpu = new MPU();
+                    $mpu->presale_id = $presale->id;
+                    $mpu->save();
+
                     foreach ($telegramUsers as $telegramUser) {
-                        Log::info('A Telegram message will be send to the client '.$telegramUser->id);
+                        Log::info('A Telegram message will be send to the client ' . $telegramUser->id);
                         try {
                             Notification::send(
                                 $telegramUser,
                                 new MPUNotification($presale)
                             );
                         } catch (CouldNotSendNotification $exception) {
-                            Log::warning('Cannot send a Telegram message to the client '.$telegramUser->id.'. It will be removed from the DDBB');
+                            Log::warning('Cannot send a Telegram message to the client ' . $telegramUser->id . '. It will be removed from the DDBB');
                             $telegramUser->delete();
+                        } catch (Exception $exception) {
+                            Log::warning("There has been an exception");
                         }
                     }
-
-                    $mpu = new MPU();
-
-                    $mpu->presale_id = $presale->id;
-
-                    $mpu->save();
                 }
             })
             ->dailyAt('12:00')
@@ -71,7 +72,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }
