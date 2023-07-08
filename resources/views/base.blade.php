@@ -39,6 +39,11 @@
         @yield('body')
     </div>
 </body>
+<footer>
+    <div class="container">
+        <a rel="me" href="https://mastorol.es/@roltrasos">Sígueme en Mastodon</a>
+    </div>
+</footer>
 @yield('js')
 
 </html>
