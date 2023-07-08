@@ -9,7 +9,7 @@
     <div class="col-md-auto">
         <h1>{{$presale ? "Solicitar modificación" : "Solicitar adición"}}</h1>
         @if($presale)
-        <p>Si deseas modificar otra cosa, deberás pedírmelo a <a href="https://twitter.com/roltrasos">mi cuenta de Twitter</a> o <a href="https://t.me/SafeForCrowdfunding">grupo de Telegram</a>.</p>
+        <p>Si deseas modificar otra cosa, deberás pedírmelo en <a href="https://t.me/SafeForCrowdfunding">el grupo de Telegram</a>.</p>
         @else
         <p>Rellena los campos con información sobre la preventa a añadir.
         Tras enviar la solicitud, se te redirigirá al índice de preventas.
