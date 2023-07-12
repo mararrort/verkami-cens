@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Log;
 use NotificationChannels\Telegram\TelegramChannel;
 use NotificationChannels\Telegram\TelegramMessage;
 
-
 class PetitionAccepted extends Notification
 {
     use Queueable;
