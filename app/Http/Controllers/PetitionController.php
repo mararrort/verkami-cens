@@ -7,7 +7,6 @@ use App\Models\Petition;
 use App\Models\Presale;
 use App\Models\TelegramUser;
 use App\Notifications\PetitionAccepted;
-use App\Notifications\PetitionCreated;
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -15,7 +14,6 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\Rule;
 use NotificationChannels\Telegram\Exceptions\CouldNotSendNotification as TelegramException;
-use NotificationChannels\Twitter\Exceptions\CouldNotSendNotification as TwitterException;
 use Ramsey\Uuid\Uuid;
 
 class PetitionController extends Controller
@@ -255,10 +253,6 @@ class PetitionController extends Controller
                     $telegramUser,
                     new PetitionAccepted($petition, $editorial, $presale)
                 );
-            } catch (TwitterException $exception) {
-                Log::error('The tweet has not been send', [
-                    'exception' => $exception,
-                ]);
             } catch (TelegramException $exception) {
                 Log::error('The telegram message has not been send', [
                     'exception' => $exception,

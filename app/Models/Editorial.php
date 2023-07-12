@@ -9,7 +9,7 @@ use Ramsey\Uuid\Uuid;
 /**
  * App\Models\Editorial.
  *
- * @property-read Uuid id
+ * @property Uuid id
  * @property-read Presales[] presales
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Presale[] $presales
  * @property-read int|null $presales_count

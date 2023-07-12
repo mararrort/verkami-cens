@@ -5,13 +5,9 @@ namespace App\Notifications;
 use App\Models\Presale;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\Telegram\TelegramChannel;
 use NotificationChannels\Telegram\TelegramMessage;
-use NotificationChannels\Twitter\TwitterChannel;
-use NotificationChannels\Twitter\TwitterStatusUpdate;
 
 class MPU extends Notification
 {
@@ -40,11 +36,7 @@ class MPU extends Notification
      */
     public function via($notifiable)
     {
-        if ($notifiable->isControlGroup()) {
-            return [TelegramChannel::class, TwitterChannel::class];
-        } else {
-            return [TelegramChannel::class];
-        }
+        return [TelegramChannel::class];
     }
 
     /**
@@ -61,23 +53,5 @@ class MPU extends Notification
                 'presale' => $this->presale,
                 'lastUpdate' => $this->lastUpdate,
             ]);
-    }
-
-    /**
-     * Send a tweet with the MPU.
-     *
-     * @param  TelegramUser  $notifiable  Irrelevant
-     * @return TwitterStatusUpdate
-     **/
-    public function toTwitter($notifiable)
-    {
-        $tweet =
-            'Se tiene registrado que la preventa "'.
-            $this->presale->name.
-            '" se encuentra en estado "'.
-            $this->presale->state.
-            '". ¿Es correcto?';
-
-        return new TwitterStatusUpdate($tweet);
     }
 }
