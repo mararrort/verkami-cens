@@ -23,11 +23,7 @@ jobs:
       run: chmod -R 777 storage bootstrap/cache
     - name: Start MySQL
       # You may pin to the exact commit or the version.
-      # uses: samin/mysql-action@4dd1210f1d6b9c2468adec44066ef4a97b8f07f3
-      uses: docker://mysql@latest
-      with:
-        # MYSQL_DATABASE - name for the default database that is created
-        mysql database: verkami_cens
+      uses: docker://mysql:latest
     - name: Wait for MySQL
       run: |
         while ! mysqladmin ping --host=127.0.0.1 --password=$MYSQL_ROOT_PASSWORD --silent; do
