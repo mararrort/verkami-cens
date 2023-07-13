@@ -1,10 +1,10 @@
-name: Tests
-
 on: [pull_request, workflow_dispatch]
+permissions:
+  contents: write
+  pull-requests: write
 
 jobs:
   laravel-tests:
-
     runs-on: ubuntu-latest
     env:
       APP_URL: "http://127.0.0.1:8000"
@@ -42,3 +42,13 @@ jobs:
       run: php artisan serve --no-reload &
     - name: Run Dusk Tests
       run: php artisan dusk
+    - name: Dependabot metadata
+      id: metadata
+      uses: dependabot/fetch-metadata@v1
+      with:
+        github-token: "${{ secrets.GITHUB_TOKEN }}"
+    - name: Enable auto-merge for Dependabot PRs
+      run: gh pr merge --auto --merge "$PR_URL"
+      env:
+        PR_URL: ${{github.event.pull_request.html_url}}
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
