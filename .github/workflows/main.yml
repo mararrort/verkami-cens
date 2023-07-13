@@ -8,18 +8,18 @@ jobs:
     runs-on: ubuntu-latest
     services:
       mysql:
-        image: mysql:latest
+        image: mysql
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: true
           MYSQL_DATABASE: verkami_cens
         ports:
-          - 3306/tcp
+          - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
     - uses: shivammathur/setup-php@v2
       with:
-        php-version: '8.1'
+        php-version: '8.2'
         extensions: mysql
     - uses: actions/checkout@v2
     - name: Copy .env
@@ -28,24 +28,15 @@ jobs:
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
     - name: Generate key
       run: php artisan key:generate
-    - name: Directory Permissions
-      run: chmod -R 777 storage bootstrap/cache
     - name: Create Database
-      run: php artisan migrate --force
-      env:
-        DB_PORT: ${{ job.services.mysql.ports['3306'] }}
+      run: php artisan migrate --force --seed
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       run: vendor/bin/phpunit
-      env:
-        DB_PORT: ${{ job.services.mysql.ports['3306'] }}
     - name: Upgrade Chrome Driver
-      run: php artisan dusk:chrome-driver `/opt/google/chrome/chrome --version | cut -d " " -f3 | cut -d "." -f1`
+      run: php artisan dusk:chrome-driver --detect
     - name: Start Chrome Driver
       run: ./vendor/laravel/dusk/bin/chromedriver-linux &
     - name: Run Laravel Server
       run: php artisan serve --no-reload &
     - name: Run Dusk Tests
-      env:
-        DB_PORT: ${{ job.services.mysql.ports['3306'] }}
-        APP_URL: "http://127.0.0.1:8000"
       run: php artisan dusk
