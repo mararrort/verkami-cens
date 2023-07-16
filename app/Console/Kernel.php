@@ -3,14 +3,13 @@
 namespace App\Console;
 
 use App\Models\MPU;
+use App\Models\pending_update_presales;
 use App\Models\Presale;
 use App\Models\TelegramUser;
 use App\Notifications\MPU as MPUNotification;
-use Carbon\Carbon;
 use Exception;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
 use NotificationChannels\Telegram\Exceptions\CouldNotSendNotification;
@@ -77,37 +76,11 @@ class Kernel extends ConsoleKernel
         require base_path('routes/console.php');
     }
 
-    /**
-     * Get the presale to send an MPU about.
-     *
-     * It will filter the presales where:
-     * * They are not finished.
-     * * Last update was more than a week ago.
-     * * They have not get an MPU or have not an MPU newer than a week ago.
-     * * Current date is not early than announced end one.
-     */
-    public static function getPresale()
+    public static function getPresale() : ?Presale
     {
-        $now = Carbon::now();
-        $date = Carbon::now()->subMonth();
-        $presale = Presale::where('state', '!=', 'Entregado')
-            ->where('state', '!=', 'Abandonado')
-            ->whereDate('updated_at', '<=', $date)
-            ->whereNotExists(function ($query) use ($date) {
-                $query
-                    ->select(DB::raw(1))
-                    ->from('m_p_u_s')
-                    ->whereColumn('m_p_u_s.presale_id', 'presales.id')
-                    ->whereDate('m_p_u_s.created_at', '>=', $date);
-            })
-            ->where(function ($query) use ($now) {
-                $query
-                    ->whereDate('announced_end', '<', $now)
-                    ->orWhereNull('announced_end');
-            })
-            ->inRandomOrder()
-            ->first();
-
-        return $presale;
+        $pup = pending_update_presales::all();
+        if ($pup) {
+            return $pup[0]->presale;
+        }
     }
 }

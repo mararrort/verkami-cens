@@ -8,9 +8,9 @@ DROP TABLE IF EXISTS `editorials`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `editorials` (
-  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -23,11 +23,11 @@ DROP TABLE IF EXISTS `failed_jobs`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `failed_jobs` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`)
@@ -40,7 +40,7 @@ CREATE TABLE `m_p_u_s` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `presale_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `presale_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `m_p_u_s_presale_id_foreign` (`presale_id`),
   CONSTRAINT `m_p_u_s_presale_id_foreign` FOREIGN KEY (`presale_id`) REFERENCES `presales` (`id`)
@@ -51,7 +51,7 @@ DROP TABLE IF EXISTS `migrations`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `migrations` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -60,28 +60,36 @@ DROP TABLE IF EXISTS `password_resets`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `password_resets` (
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   KEY `password_resets_email_index` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `pending_update_presales`;
+/*!50001 DROP VIEW IF EXISTS `pending_update_presales`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `pending_update_presales` AS SELECT 
+ 1 AS `id`,
+ 1 AS `lastMPU`*/;
+SET character_set_client = @saved_cs_client;
 DROP TABLE IF EXISTS `petitions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `petitions` (
-  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `presale_id` char(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `presale_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `presale_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `editorial_id` char(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `editorial_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `editorial_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `state` enum('Recaudando','Pendiente de entrega','Parcialmente entregado','Entregado','Entregado, faltan recompensas', 'Abandonado') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `presale_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `presale_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `presale_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `editorial_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `editorial_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `editorial_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `state` enum('Recaudando','Pendiente de entrega','Parcialmente entregado','Entregado','Entregado, faltan recompensas','Abandonado') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `info` text COLLATE utf8mb4_unicode_ci,
+  `info` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `start` date DEFAULT NULL,
   `announced_end` date DEFAULT NULL,
   `end` date DEFAULT NULL,
@@ -98,11 +106,11 @@ DROP TABLE IF EXISTS `presales`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `presales` (
-  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `state` enum('Recaudando','Pendiente de entrega','Parcialmente entregado','Entregado','Entregado, faltan recompensas', 'Abandonado') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `editorial_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `state` enum('Recaudando','Pendiente de entrega','Parcialmente entregado','Entregado','Entregado, faltan recompensas','Abandonado') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `editorial_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `start` date DEFAULT NULL,
@@ -143,17 +151,30 @@ DROP TABLE IF EXISTS `users`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `users` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+/*!50001 DROP VIEW IF EXISTS `pending_update_presales`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `pending_update_presales` AS select `presales`.`id` AS `id`,max(`m_p_u_s`.`created_at`) AS `lastMPU` from (`presales` left join `m_p_u_s` on((`presales`.`id` = `m_p_u_s`.`presale_id`))) where ((`presales`.`state` in ('Pendiente de entrega','Parcialmente entregado')) and (`presales`.`announced_end` < now())) group by `presales`.`id` having ((`lastMPU` < (now() - interval 1 month)) or (`lastMPU` is null)) order by `presales`.`announced_end` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -166,7 +187,7 @@ INSERT INTO `migrations` VALUES (27,'2014_10_12_100000_create_password_resets_ta
 INSERT INTO `migrations` VALUES (28,'2019_08_19_000000_create_failed_jobs_table',1);
 INSERT INTO `migrations` VALUES (29,'2021_04_02_173337_create_empresas_table',1);
 INSERT INTO `migrations` VALUES (30,'2021_04_02_183502_create_preventas_table',1);
-INSERT INTO `migrations` VALUES (31,'2021_04_04_024645_añadir_tarde_a_preventas',1);
+INSERT INTO `migrations` VALUES (31,'2021_04_04_024645_aÃ±adir_tarde_a_preventas',1);
 INSERT INTO `migrations` VALUES (32,'2021_04_04_030434_create_solicitud_adicion_preventas_table',1);
 INSERT INTO `migrations` VALUES (33,'2021_04_04_154414_petitions_improvement',1);
 INSERT INTO `migrations` VALUES (34,'2021_04_06_204024_create_t_o_d_o_s_table',1);

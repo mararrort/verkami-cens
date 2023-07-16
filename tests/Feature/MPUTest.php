@@ -5,13 +5,14 @@ namespace Tests\Feature;
 use App\Models\Editorial;
 use App\Models\MPU;
 use App\Models\Presale;
-use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class MPUTest extends TestCase
 {
+    use RefreshDatabase;
     use WithFaker;
 
     /**
@@ -21,33 +22,42 @@ class MPUTest extends TestCase
      */
     public function test_retrieve_valid_presale()
     {
-        // Creates the material
-        $editorial = Editorial::factory()->create();
-        $presales = Presale::factory(8)
-            ->for($editorial)
+        Presale::factory()
+            ->count(10)
+            ->state(new Sequence(
+                ['state' => 'Recaudando'], 
+                ['state' => 'Entregado'], 
+                ['state' => 'Abandonado'], 
+                ['state' => 'Entregado, faltan recompensas']))
+            ->for(Editorial::factory())
             ->create();
-        foreach ($presales as $presale) {
-            if ($this->faker->boolean()) {
-                MPU::factory()
-                    ->for($presale)
-                    ->create();
-            }
+
+        $this->assertDatabaseCount('pending_update_presales', 0);
+
+        $toDeliverPresales = Presale::factory()
+            ->count(10)
+            ->state(new Sequence(
+                ['state' => 'Pendiente de entrega'], 
+                ['state' => 'Parcialmente entregado']))
+            ->for(Editorial::factory())
+            ->create();
+
+        foreach ($toDeliverPresales as $value) {
+            $createdAt = $this->faker->dateTimeBetween('-2 weeks', '-1 day');
+            MPU::factory()->state(['created_at' => $createdAt])->for($value)->create();
         }
+
+        $this->assertDatabaseCount('pending_update_presales', 0);
 
         Presale::factory()
-            ->for($editorial)
-            ->unfinished()
-            ->state(['updated_at' => $this->faker->dateTimeBetween('-1 year', '-2 weeks')])
+            ->count(10)
+            ->state(new Sequence(
+                ['state' => 'Pendiente de entrega'], 
+                ['state' => 'Parcialmente entregado']))
+            ->state(['announced_end' => '2022-01-01'])
+            ->for(Editorial::factory())
             ->create();
 
-        $presale = \App\Console\Kernel::getPresale();
-
-        $this->assertNotNull($presale);
-
-        $this->assertNotEquals($presale->state, 'Entregado');
-        $date = Carbon::now()->subWeek();
-        foreach ($presale->MPUs() as $MPU) {
-            $this->assertLessThan($date, $MPU->updated_at);
-        }
+        $this->assertDatabaseCount('pending_update_presales', 10);
     }
 }

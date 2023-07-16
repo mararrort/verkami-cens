@@ -10,6 +10,7 @@ use Tests\TestCase;
 
 class EditorialTest extends TestCase
 {
+    use RefreshDatabase;
     /**
      * Ensure the method getNotFinishedLatePresales works.
      *
